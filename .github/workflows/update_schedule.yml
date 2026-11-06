@@ -11,18 +11,20 @@ permissions:
 
 jobs:
   update-schedule:
-    runs-on: ubuntu-latest
+    # Stała wersja systemu, aby uniknąć automatycznej migracji ubuntu-latest
+    runs-on: ubuntu-24.04
+
     steps:
       - name: Pobierz repozytorium
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Zainstaluj Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
       - name: Zainstaluj biblioteki do czytania PDF i strony PANS
-        run: pip install requests beautifulsoup4 pdfplumber
+        run: python -m pip install --upgrade pip requests beautifulsoup4 pdfplumber
 
       - name: Sprawdź stronę PANS i przetwórz PDF
         run: python updater.py
