@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="pl" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Plan Zajęć BN 1 | PANS Koszalin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            oled: '#0b0f19',
+            panel: '#111827',
+            card: '#1a2234',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior-y: contain;
+    }
+    /* Niestandardowy pasek przewijania dla ciemnego motywu */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0f19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+    .pinch-zone {
+      touch-action: pan-y;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-cyan-500 selection:text-slate-950">
+
+  <!-- POWIADOMIENIE TOAST -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500/95 text-slate-950 font-semibold shadow-2xl border border-emerald-300">
+    <span id="toastIcon" class="text-lg">✓</span>
+    <span id="toastMsg" class="text-sm">Skopiowano do schowka!</span>
+  </div>
+
+          <!--div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-mono font-bold text-lg shrink-0"-->
+          <div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-mono font-bold text-lg shrink-0 shadow-inner">
+            BN1
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white">PANS Koszalin • Plan Zajęć</h1>
+              <span class="px-2 py-0.5 text-[11px] font-mono uppercase tracking-wider bg-cyan-500/15 text-cyan-300 rounded-md border border-cyan-500/30">Rok I • Stacjonarne</span>
+            </div>
+            <div class="text-xs text-slate-400 mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span class="flex items-center gap-1.5">
+                <span id="syncDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="sourceFileLabel" class="font-mono text-slate-300">plan bn 1 stacjonarne 2026 11 06</span>
+              </span>
+              <span id="lastCheckLabel" class="text-slate-500 font-mono text-[11px]">Ostatnia synchr.: wbudowana baza PDF</span>
+              <button onclick="reloadLiveSchedule(true)" class="text-cyan-400 hover:text-cyan-300 underline font-mono text-[11px] flex items-center gap-1" title="Sprawdź czy na serwerze jest nowszy plik schedule.json">
+                ↻ Odśwież dane
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRZEŁĄCZNIK WIDOKÓW: DZIEŃ / TYDZIEŃ / MIESIĄC -->
+        <nav class="grid grid-cols-3 bg-oled p-1 rounded-xl border border-slate-800 shrink-0">
+          <button id="navDay" onclick="switchView('day')" class="px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-cyan-500 text-slate-950 shadow-md">
+            Dzień
+          </button>
+          <button id="navWeek" onclick="switchView('week')" class="px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-400 hover:text-white">
+            Tydzień
+          </button>
+          <button id="navMonth" onclick="switchView('month')" class="px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-400 hover:text-white">
+            Miesiąc
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- WIDOK 1: POJEDYNCZY DZIEŃ (DOMYŚLNY)       -->
+    <!-- ========================================== -->
+    <section id="viewDay" class="space-y-4 flex-1">
+      
+      <!-- Pasek szybkiej nawigacji daty -->
+      <div class="bg-panel border border-slate-800/90 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2 shadow-md">
+        <div class="flex items-center gap-1.5">
+          <button onclick="changeDay(-1)" class="px-3 py-2 bg-slate-800/80 hover:bg-slate-700 active:scale-95 text-slate-200 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-1 border border-slate-700/60">
+            <span>←</span> <span class="hidden sm:inline">Poprzedni</span>
+          </button>
+          <button onclick="goToDate('2026-11-06')" class="px-3 py-2 bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 rounded-xl text-xs sm:text-sm font-semibold transition">
+            Dziś (06.11)
+          </button>
+          <button onclick="goToDate('2026-11-07')" class="px-3 py-2 bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 rounded-xl text-xs sm:text-sm font-semibold transition">
+            Sobota (07.11)
+          </button>
+          <button onclick="changeDay(1)" class="px-3 py-2 bg-slate-800/80 hover:bg-slate-700 active:scale-95 text-slate-200 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-1 border border-slate-700/60">
+            <span class="hidden sm:inline">Następny</span> <span>→</span>
+          </button>
+        </div>
+
+        <!-- Przyciski eksportu TXT -->
+        <div class="flex items-center gap-2 ml-auto">
+          <button onclick="copyCurrentDayTxt()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-1.5">
+            <span>📋</span> <span>Kopiuj TXT</span>
+          </button>
+          <button onclick="downloadCurrentDayTxt()" class="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-semibold rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/10">
+            <span>📥</span> <span>Pobierz .txt</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Główna Karta Dnia (Wizualna prezentacja zgodna z układem) -->
+      <div id="dayCardContainer" class="bg-panel border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl">
+        <!-- Renderowane dynamicznie przez JS -->
+      </div>
+
+      <!-- Podgląd czystego formatu TXT na dole ekranu -->
+      <div class="bg-oled border border-slate-800/90 rounded-2xl overflow-hidden shadow-lg">
+        <div class="bg-slate-900/90 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+            <span class="text-xs font-mono uppercase tracking-wider text-slate-300 font-semibold">Podgląd wydruku / eksportu TXT</span>
+          </div>
+          <span id="txtFilenamePreview" class="text-xs font-mono text-slate-400">plan_2026-11-06.txt</span>
+        </div>
+        <pre id="rawTxtPreview" class="p-4 sm:p-5 text-xs sm:text-sm font-mono text-slate-200 overflow-x-auto leading-relaxed select-all whitespace-pre"></pre>
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- WIDOK 2: TYDZIEŃ (Z GESTEM PINCH-TO-ZOOM)  -->
+    <!-- ========================================== -->
+    <section id="viewWeek" class="hidden space-y-4 flex-1 pinch-zone">
+      
+      <!-- Pasek kontroli tygodnia i powiększenia (Zoom) -->
+      <div class="bg-panel border border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-md">
+        <div class="flex items-center justify-between md:justify-start gap-2">
+          <button onclick="changeWeek(-1)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs sm:text-sm font-medium border border-slate-700">← Poprzedni tydz.</button>
+          <h2 id="weekRangeTitle" class="text-sm sm:text-base font-bold text-white font-mono px-2">02.11 – 08.11.2026</h2>
+          <button onclick="changeWeek(1)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs sm:text-sm font-medium border border-slate-700">Następny tydz. →</button>
+        </div>
+
+        <!-- Kontrolka Pinch-to-Zoom / Suwak -->
+        <div class="flex flex-wrap items-center justify-between md:justify-end gap-3 bg-oled px-3 py-2 rounded-xl border border-slate-800">
+          <span class="text-xs text-slate-400 flex items-center gap-1">
+            <span>🤏</span> <span class="hidden sm:inline">Pinch-to-Zoom lub suwak:</span>
+          </span>
+          <input id="zoomRangeSlider" type="range" min="0" max="1" step="1" value="0" onchange="setWeekZoom(this.value === '1')" class="w-14 accent-cyan-400 cursor-pointer" title="Przełącz poziom szczegółowości tygodnia">
+          <div class="inline-flex rounded-lg bg-slate-900 p-0.5 border border-slate-800">
+            <button id="btnZoomCompact" onclick="setWeekZoom(false)" class="px-2.5 py-1 rounded-md text-xs font-medium transition bg-slate-800 text-slate-200">
+              − Zwiń
+            </button>
+            <button id="btnZoomExpanded" onclick="setWeekZoom(true)" class="px-2.5 py-1 rounded-md text-xs font-medium transition text-slate-400 hover:text-white">
+              + Rozwiń pełny spis
+            </button>
+          </div>
+          <button onclick="downloadWeekTxt()" class="px-2.5 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition" title="Pobierz cały tydzień w TXT">
+            📥 Tydzień .txt
+          </button>
+        </div>
+      </div>
+
+      <!-- Kontener na 7 dni tygodnia -->
+      <div id="weekDaysContainer" class="space-y-3">
+        <!-- Renderowane dynamicznie przez JS -->
+      </div>
+
+    </section>
+
+    <!-- ========================================== -->
+    <!-- WIDOK 3: MIESIĄC (SIATKA KALENDARZA)       -->
+    <!-- ========================================== -->
+    <section id="viewMonth" class="hidden space-y-4 flex-1">
+      
+      <div class="bg-panel border border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <button onclick="changeMonth(-1)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs sm:text-sm font-medium border border-slate-700">←</button>
+          <h2 id="monthTitle" class="text-base sm:text-lg font-bold text-white capitalize min-w-[160px] text-center">Listopad 2026</h2>
+          <button onclick="changeMonth(1)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs sm:text-sm font-medium border border-slate-700">→</button>
+        </div>
+
+        <!-- Szybkie skoki do miesięcy z planu PDF -->
+        <div class="flex flex-wrap items-center gap-1.5 text-xs">
+          <button onclick="jumpToMonth(2026, 9)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Paź 26</button>
+          <button onclick="jumpToMonth(2026, 10)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Lis 26</button>
+          <button onclick="jumpToMonth(2026, 11)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Gru 26</button>
+          <button onclick="jumpToMonth(2027, 0)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Sty 27</button>
+          <button onclick="jumpToMonth(2027, 1)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Lut 27</button>
+        </div>
+      </div>
+
+      <!-- Legenda Kalendarza -->
+      <div class="flex flex-wrap items-center gap-4 px-2 text-xs text-slate-400">
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded bg-emerald-500/30 border border-emerald-400"></span>
+          <span>Zajęcia STACJONARNE</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded bg-indigo-500/30 border border-indigo-400"></span>
+          <span>Zajęcia ZDALNE</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded bg-slate-900 border border-slate-800"></span>
+          <span>Dzień wolny</span>
+        </div>
+      </div>
+
+      <!-- Siatka Dni Tygodnia -->
+      <div class="bg-panel border border-slate-800 rounded-2xl p-3 sm:p-5 shadow-xl">
+        <div class="grid grid-cols-7 gap-1.5 sm:gap-2 text-center text-xs font-mono uppercase text-slate-400 font-semibold mb-2">
+          <div>Pn</div><div>Wt</div><div>Śr</div><div>Cz</div><div>Pt</div>
+          <div class="text-cyan-400">Sb</div><div class="text-cyan-400">Nd</div>
+        </div>
+        <div id="monthGrid" class="grid grid-cols-7 gap-1.5 sm:gap-2">
+          <!-- Renderowane dynamicznie przez JS -->
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <script>
+    // ============================================================================
+    // BAZA DANYCH PLANU ZAJĘĆ (Wyciągnięta i zgrupowana z przesłanego pliku PDF)
+    // ============================================================================
+    const SCHEDULE_DB = {
+      // PAŹDZIERNIK 2026
+      "2026-10-01": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "14:15-15:00", title: "Spotkanie z kierownikiem ZBN", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "3" },
+          { time: "15:00-16:30", title: "Szkolenie biblioteczne", lecturer: "mgr Beata Zuber", type: "Ćw.", room: "Aula 6" },
+          { time: "16:45-18:15", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł.", room: "104" },
+          { time: "18:30-20:00", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "104" }
+        ]
+      },
+      "2026-10-02": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł./Ćw.", room: "11" },
+          { time: "16:45-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw.", room: "11" }
+        ]
+      },
+      "2026-10-03": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "09:45-11:15", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Wykł.", room: "106" },
+          { time: "11:30-13:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw.", room: "106" },
+          { time: "13:15-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "HALA SPORTOWA" }
+        ]
+      },
+      "2026-10-05": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-16:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "16:45-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw." }
+        ]
+      },
+      "2026-10-07": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł.", room: "106" },
+          { time: "16:45-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "106" },
+          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł.", room: "106" }
+        ]
+      },
+      "2026-10-08": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł.", room: "106" },
+          { time: "18:30-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw.", room: "106" }
+        ]
+      },
+      "2026-10-09": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł.", room: "105" },
+          { time: "16:45-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "105" }
+        ]
+      },
+      "2026-10-10": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "08:00-10:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" },
+          { time: "10:30-14:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw./Wykł.", room: "105" },
+          { time: "14:00-14:45", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "105" },
+          { time: "15:00-18:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "105" },
+          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "10-BIBLIOTEKA" }
+        ]
+      },
+      "2026-10-14": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł." },
+          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł." }
+        ]
+      },
+      "2026-10-15": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
+          { time: "18:30-19:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw." },
+          { time: "19:15-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." }
+        ]
+      },
+      "2026-10-16": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "16:45-18:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw." },
+          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
+        ]
+      },
+      "2026-10-17": {
+        mode: "ZDALNE",
+        items: [
+          { time: "16:45-20:00", title: "Bezpieczeństwo i higiena pracy", lecturer: "mgr Halina Grobelna", type: "Ćw." }
+        ]
+      },
+      "2026-10-20": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "16:45-19:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" }
+        ]
+      },
+      "2026-10-21": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł.", room: "107" },
+          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "107" }
+        ]
+      },
+      "2026-10-23": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "16:45-18:15", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw.", room: "020" },
+          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "10-BIBLIOTEKA" }
+        ]
+      },
+      "2026-10-24": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "09:45-13:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw.", room: "11" },
+          { time: "13:15-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "HALA SPORTOWA" },
+          { time: "16:45-20:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "11" }
+        ]
+      },
+      "2026-10-25": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "08:00-11:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "106" }
+        ]
+      },
+      "2026-10-27": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "16:45-19:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" }
+        ]
+      },
+      "2026-10-28": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "106" },
+          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "106" }
+        ]
+      },
+      "2026-10-29": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "106" },
+          { time: "16:45-18:15", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "106" }
+        ]
+      },
+      "2026-10-30": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "106" },
+          { time: "16:45-18:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "106" },
+          { time: "18:30-20:00", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "HALA SPORTOWA" }
+        ]
+      },
+      "2026-10-31": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-09:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "09:45-11:15", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "11:30-14:45", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Wykł." },
+          { time: "15:00-18:15", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
+          { time: "18:30-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw." }
+        ]
+      },
+
+      // LISTOPAD 2026
+      "2026-11-04": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł." },
+          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł." }
+        ]
+      },
+      "2026-11-05": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
+          { time: "18:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." }
+        ]
+      },
+      "2026-11-06": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-18:15", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
+          { time: "18:30-20:00", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." }
+        ]
+      },
+      "2026-11-07": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-09:30", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł./Ćw." },
+          { time: "09:45-13:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Wykł." },
+          { time: "13:15-14:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
+          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "16:45-20:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Wykł." }
+        ]
+      },
+      "2026-11-08": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-08:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
+          { time: "08:45-09:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." },
+          { time: "09:45-10:30", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
+          { time: "10:30-11:15", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." },
+          { time: "11:30-13:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
+          { time: "13:15-14:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
+        ]
+      },
+      "2026-11-12": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-16:30", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
+          { time: "16:45-18:15", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł." },
+          { time: "18:30-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." }
+        ]
+      },
+      "2026-11-13": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." },
+          { time: "16:45-18:15", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
+          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
+        ]
+      },
+      "2026-11-14": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-11:15", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "11:30-13:00", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." },
+          { time: "13:15-16:30", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." }
+        ]
+      },
+      "2026-11-15": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-13:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł./Ćw." },
+          { time: "13:15-15:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
+        ]
+      },
+      "2026-11-17": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "16:45-19:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" }
+        ]
+      },
+      "2026-11-18": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-11-19": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-11-20": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" },
+          { time: "16:45-17:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
+          { time: "17:30-18:15", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-11-21": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "09:45-13:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw.", room: "BRAK SALI" },
+          { time: "13:15-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" },
+          { time: "16:45-20:00", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-11-22": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "08:00-12:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-11-24": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "16:45-19:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" }
+        ]
+      },
+      "2026-11-25": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
+          { time: "16:45-18:15", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-11-26": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-11-27": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
+          { time: "16:45-18:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-11-28": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-10:30", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Wykł." },
+          { time: "10:30-13:00", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "13:00-13:45", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "16:45-20:00", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł." }
+        ]
+      },
+      "2026-11-29": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-11:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "12:15-13:45", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł." }
+        ]
+      },
+
+      // GRUDZIEŃ 2026
+      "2026-12-02": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł./Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-12-03": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-12-04": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "17:45-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-12-05": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "09:45-12:15", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw.", room: "BRAK SALI" },
+          { time: "13:15-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-12-09": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "16:45-17:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "17:45-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł." }
+        ]
+      },
+      "2026-12-10": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
+          { time: "18:30-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." }
+        ]
+      },
+      "2026-12-11": {
+        mode: "ZDALNE",
+        items: [
+          { time: "16:45-18:15", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
+          { time: "18:30-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw." }
+        ]
+      },
+      "2026-12-12": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "08:00-12:15", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-12-13": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "08:00-10:30", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
+          { time: "10:30-11:15", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-12-16": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2026-12-17": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-16:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw." },
+          { time: "16:45-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw." }
+        ]
+      },
+      "2026-12-18": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-17:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw./Wykł." },
+          { time: "17:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw." }
+        ]
+      },
+      "2026-12-19": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-08:45", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "08:45-10:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "10:30-11:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "11:30-14:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
+        ]
+      },
+      "2026-12-20": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-11:15", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Wykł." },
+          { time: "13:15-17:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł./Ćw." }
+        ]
+      },
+
+      // STYCZEŃ 2027
+      "2027-01-07": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
+          { time: "18:30-19:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł." },
+          { time: "19:15-20:00", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł." }
+        ]
+      },
+      "2027-01-08": {
+        mode: "ZDALNE",
+        items: [
+          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
+          { time: "16:45-17:30", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
+          { time: "17:30-18:15", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw." },
+          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
+        ]
+      },
+      "2027-01-09": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-09:30", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
+          { time: "09:45-12:15", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Wykł." },
+          { time: "12:15-13:00", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł." },
+          { time: "13:15-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." }
+        ]
+      },
+      "2027-01-10": {
+        mode: "ZDALNE",
+        items: [
+          { time: "08:00-11:15", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Wykł." },
+          { time: "11:30-14:45", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł." }
+        ]
+      },
+      "2027-01-13": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "16:45-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-14": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "16:45-18:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-15": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-15:45", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "15:45-18:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-16": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "08:00-09:30", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
+          { time: "09:45-13:00", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" },
+          { time: "13:15-14:45", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-17": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "08:00-09:30", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" },
+          { time: "09:45-13:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-20": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "BRAK SALI" },
+          { time: "16:45-18:15", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-21": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-22": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-23": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "08:00-09:30", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" },
+          { time: "09:45-13:00", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" },
+          { time: "15:00-20:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-24": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "08:00-11:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" },
+          { time: "11:30-14:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
+          { time: "15:00-20:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-27": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-28": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-29": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-18:15", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
+          { time: "18:30-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      },
+      "2027-01-30": {
+        mode: "ZDALNE",
+        items: [
+          { time: "09:45-11:15", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
+          { time: "11:30-13:00", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." }
+        ]
+      },
+      // LUTY 2027
+      "2027-02-02": {
+        mode: "STACJONARNE",
+        items: [
+          { time: "15:00-16:30", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" }
+        ]
+      }
+    };
+
+    // ============================================================================
+    // SYNCHRONIZACJA NA ŻYWO Z PLIKIEM SCHEDULE.JSON (GitHub / Cloudflare Pages)
+    // ============================================================================
+    async function reloadLiveSchedule(manual = false) {
+      try {
+        const response = await fetch('./schedule.json?t=' + Date.now(), { cache: 'no-store' });
+        if (!response.ok) throw new Error('Brak zewnętrznego pliku schedule.json');
+        const liveData = await response.json();
+
+        if (liveData && liveData.days && typeof liveData.days === 'object') {
+          Object.assign(SCHEDULE_DB, liveData.days);
+          if (liveData.source_label) {
+            document.getElementById('sourceFileLabel').textContent = liveData.source_label;
+          }
+          if (liveData.last_updated) {
+            document.getElementById('lastCheckLabel').textContent = `Synchr.: ${liveData.last_updated}`;
+          }
+          renderCurrentActiveView();
+          if (manual) showToast('Pobrano najnowszy plan z serwera!');
+        }
+      } catch (err) {
+        // W trybie lokalnym lub przed pierwszym uruchomieniem robota używamy kompletnej wbudowanej bazy
+        if (manual) {
+          showToast('Używasz aktualnej wbudowanej bazy planu (2026/2027)');
+        }
+      }
+    }
+
+    function renderCurrentActiveView() {
+      if (currentView === 'day') renderDayView();
+      else if (currentView === 'week') renderWeekView();
+      else if (currentView === 'month') renderMonthView();
+    }
+
+    // ============================================================================
+    // STAN APLIKACJI
+    // ============================================================================
+    let currentView = 'day'; // 'day' | 'week' | 'month'
+    let selectedDate = '2026-11-06'; // Domyślnie bieżący dzień (piątek 6.11.2026)
+    let weekExpanded = false; // Stan zoomu semantycznego w widoku tygodnia
+    let calendarYear = 2026;
+    let calendarMonth = 10; // 0-indexed (10 = Listopad)
+
+    const WEEKDAYS_PL = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+    const MONTHS_PL = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
+
+    // ============================================================================
+    // FUNKCJE POMOCNICZE FORMATOWANIA DAT I TEKSTU (ŚCISŁY WZÓR UŻYTKOWNIKA)
+    // ============================================================================
+    function toPolishDateDots(isoDate) {
+      const [y, m, d] = isoDate.split('-');
+      return `${d}.${m}.${y}`;
+    }
+
+    function getWeekdayName(isoDate) {
+      const [y, m, d] = isoDate.split('-').map(Number);
+      const dateObj = new Date(y, m - 1, d);
+      return WEEKDAYS_PL[dateObj.getDay()];
+    }
+
+    function addDays(isoDate, delta) {
+      const [y, m, d] = isoDate.split('-').map(Number);
+      const dateObj = new Date(y, m - 1, d);
+      dateObj.setDate(dateObj.getDate() + delta);
+      const ny = dateObj.getFullYear();
+      const nm = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const nd = String(dateObj.getDate()).padStart(2, '0');
+      return `${ny}-${nm}-${nd}`;
+    }
+
+    /**
+     * Generuje dokładny ciąg znaków TXT zgodny z wymaganiami użytkownika:
+     * =================
+     * 07.11.2026 ZDALNE
+     * =================
+     * 08:00-09:30 | Administracja publiczna
+     *               dr Artur Dąbek (Wykł.)
+     */
+    function generateDayTxtString(isoDate) {
+      const dateDots = toPolishDateDots(isoDate);
+      const dayData = SCHEDULE_DB[isoDate];
+      const indent = "              "; // 14 spacji dokładnie pod pionową kreskę "HH:MM-HH:MM | "
+
+      if (!dayData || !dayData.items || dayData.items.length === 0) {
+        return [
+          "=================",
+          `${dateDots} WOLNE`,
+          "=================",
+          "Brak zaplanowanych zajęć."
+        ].join("\n");
+      }
+
+      const headerLine = `${dateDots} ${dayData.mode}`;
+      const blocks = dayData.items.map(item => {
+        const line1 = `${item.time} | ${item.title}`;
+        const line2 = `${indent}${item.lecturer} (${item.type})`;
+        if (dayData.mode === "STACJONARNE" && item.room) {
+          const line3 = `${indent}SALA:${item.room}`;
+          return `${line1}\n${line2}\n${line3}`;
+        }
+        return `${line1}\n${line2}`;
+      });
+
+      return [
+        "=================",
+        headerLine,
+        "=================",
+        blocks.join("\n\n")
+      ].join("\n");
+    }
+
+    // ============================================================================
+    // RENDEROWANIE WIDOKU DNIA
+    // ============================================================================
+    function renderDayView() {
+      const container = document.getElementById('dayCardContainer');
+      const dayData = SCHEDULE_DB[selectedDate];
+      const dateDots = toPolishDateDots(selectedDate);
+      const weekday = getWeekdayName(selectedDate);
+
+      // Aktualizacja podglądu TXT na dole
+      document.getElementById('txtFilenamePreview').textContent = `plan_${selectedDate}.txt`;
+      document.getElementById('rawTxtPreview').textContent = generateDayTxtString(selectedDate);
+
+      if (!dayData || !dayData.items || dayData.items.length === 0) {
+        container.innerHTML = `
+          <div class="font-mono text-sm sm:text-base">
+            <div class="text-slate-500 select-none">=================</div>
+            <div class="flex items-center gap-3 py-1">
+              <span class="text-lg sm:text-xl font-bold text-slate-200">${dateDots} WOLNE</span>
+              <span class="text-xs px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-400 font-sans">${weekday}</span>
+            </div>
+            <div class="text-slate-500 select-none mb-6">=================</div>
+            <div class="py-8 text-center bg-oled/60 rounded-xl border border-slate-800/80 font-sans">
+              <div class="text-3xl mb-2">☕</div>
+              <p class="text-slate-300 font-medium">Brak zaplanowanych zajęć w tym dniu.</p>
+              <p class="text-xs text-slate-500 mt-1">Użyj przycisków powyżej lub przejdź do widoku Tygodnia / Miesiąca.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const isRemote = dayData.mode === 'ZDALNE';
+      const badgeColor = isRemote
+        ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
+        : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+
+      const itemsHtml = dayData.items.map(item => `
+        <div class="group py-3.5 first:pt-1 last:pb-1 border-b border-slate-800/70 last:border-none">
+          <!-- Wiersz 1: Godzina | Przedmiot -->
+          <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-0 font-mono">
+            <div class="shrink-0 flex items-center">
+              <span class="text-cyan-400 font-bold text-sm sm:text-base tracking-tight">${item.time}</span>
+              <span class="text-slate-500 mx-2.5 font-normal">|</span>
+            </div>
+            <div class="text-white font-bold text-sm sm:text-base leading-snug">
+              ${item.title}
+            </div>
+          </div>
+
+          <!-- Wiersz 2: Wykładowca (Typ) - wcięty dokładnie pod nazwą przedmiotu -->
+          <div class="sm:pl-[14ch] mt-1 font-mono text-xs sm:text-sm text-slate-300">
+            ${item.lecturer} <span class="text-cyan-300/90 font-semibold">(${item.type})</span>
+          </div>
+
+          <!-- Wiersz 3: SALA:NUMER (tylko jeśli STACJONARNE) -->
+          ${!isRemote && item.room ? `
+            <div class="sm:pl-[14ch] mt-1.5 font-mono">
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold tracking-wide ${
+                item.room.includes('BRAK')
+                  ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
+                  : 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
+              }">
+                SALA:${item.room}
+              </span>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+
+      container.innerHTML = `
+        <div>
+          <!-- Nagłówek w stylu: ================= / DD.MM.YYYY TRYB / ================= -->
+          <div class="bg-oled p-4 rounded-xl border border-slate-800 mb-4 font-mono">
+            <div class="text-slate-600 text-xs sm:text-sm tracking-widest select-none">=================</div>
+            <div class="flex flex-wrap items-center justify-between gap-2 my-1">
+              <div class="flex items-center gap-2.5">
+                <span class="text-base sm:text-xl font-bold tracking-tight text-white">${dateDots}</span>
+                <span class="px-2.5 py-0.5 text-xs sm:text-sm font-bold rounded-md border ${badgeColor}">
+                  ${dayData.mode}
+                </span>
+              </div>
+              <span class="text-xs sm:text-sm text-slate-400 font-sans font-medium">${weekday} • ${dayData.items.length} blok(i)</span>
+            </div>
+            <div class="text-slate-600 text-xs sm:text-sm tracking-widest select-none">=================</div>
+          </div>
+
+          <!-- Lista bloków zajęć -->
+          <div class="divide-y divide-slate-800/60 px-1">
+            ${itemsHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    // ============================================================================
+    // RENDEROWANIE WIDOKU TYGODNIA (Z OBSŁUGĄ PINCH-TO-ZOOM)
+    // ============================================================================
+    function getMondayOfWeek(isoDate) {
+      const [y, m, d] = isoDate.split('-').map(Number);
+      const dateObj = new Date(y, m - 1, d);
+      const day = dateObj.getDay();
+      const diff = dateObj.getDate() - day + (day === 0 ? -6 : 1); // Poniedziałek jako 1. dzień
+      dateObj.setDate(diff);
+      const ny = dateObj.getFullYear();
+      const nm = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const nd = String(dateObj.getDate()).padStart(2, '0');
+      return `${ny}-${nm}-${nd}`;
+    }
+
+    function renderWeekView() {
+      const mondayIso = getMondayOfWeek(selectedDate);
+      const sundayIso = addDays(mondayIso, 6);
+      document.getElementById('weekRangeTitle').textContent = `${toPolishDateDots(mondayIso).slice(0,5)} – ${toPolishDateDots(sundayIso)}`;
+
+      // Aktualizacja przycisków stanu Zoomu
+      const btnCompact = document.getElementById('btnZoomCompact');
+      const btnExpanded = document.getElementById('btnZoomExpanded');
+      const zoomSlider = document.getElementById('zoomRangeSlider');
+      if (zoomSlider) zoomSlider.value = weekExpanded ? '1' : '0';
+
+      if (weekExpanded) {
+        btnExpanded.className = "px-2.5 py-1 rounded-md text-xs font-semibold transition bg-cyan-500 text-slate-950 shadow";
+        btnCompact.className = "px-2.5 py-1 rounded-md text-xs font-medium transition text-slate-400 hover:text-white";
+      } else {
+        btnCompact.className = "px-2.5 py-1 rounded-md text-xs font-semibold transition bg-cyan-500 text-slate-950 shadow";
+        btnExpanded.className = "px-2.5 py-1 rounded-md text-xs font-medium transition text-slate-400 hover:text-white";
+      }
+
+      const container = document.getElementById('weekDaysContainer');
+      let html = '';
+
+      for (let i = 0; i < 7; i++) {
+        const dayIso = addDays(mondayIso, i);
+        const dayDots = toPolishDateDots(dayIso);
+        const weekdayName = getWeekdayName(dayIso);
+        const dayData = SCHEDULE_DB[dayIso];
+        const hasClasses = dayData && dayData.items && dayData.items.length > 0;
+        const isSelected = dayIso === selectedDate;
+
+        const modeBadge = !hasClasses
+          ? `<span class="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-800/90 text-slate-500">WOLNE</span>`
+          : dayData.mode === 'ZDALNE'
+            ? `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">ZDALNE</span>`
+            : `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">STACJONARNE</span>`;
+
+        const summaryHours = hasClasses
+          ? `${dayData.items[0].time.split('-')[0]}–${dayData.items[dayData.items.length - 1].time.split('-')[1]}`
+          : 'Brak zajęć';
+
+        // Szczegółowa rozpiska (widoczna po rozsunięciu palcami lub rozwinięciu dnia)
+        let detailsHtml = '';
+        if (hasClasses) {
+          const isRemote = dayData.mode === 'ZDALNE';
+          const rows = dayData.items.map(item => `
+            <div class="py-2.5 border-b border-slate-800/70 last:border-none font-mono text-xs sm:text-sm">
+              <div class="flex flex-col sm:flex-row sm:items-baseline">
+                <span class="text-cyan-400 font-bold shrink-0">${item.time} <span class="text-slate-500 font-normal mx-1">|</span></span>
+                <span class="text-white font-bold">${item.title}</span>
+              </div>
+              <div class="sm:pl-[14ch] text-slate-300 mt-0.5">
+                ${item.lecturer} <span class="text-cyan-300">(${item.type})</span>
+              </div>
+              ${!isRemote && item.room ? `
+                <div class="sm:pl-[14ch] mt-1">
+                  <span class="px-1.5 py-0.5 rounded text-[11px] font-bold ${
+                    item.room.includes('BRAK') ? 'bg-amber-500/15 text-amber-300' : 'bg-emerald-500/15 text-emerald-300'
+                  }">SALA:${item.room}</span>
+                </div>
+              ` : ''}
+            </div>
+          `).join('');
+
+          detailsHtml = `
+            <div id="weekDayDetails-${dayIso}" class="${weekExpanded ? 'block' : 'hidden'} px-4 pb-4 pt-2 border-t border-slate-800/80 bg-oled/60">
+              <div class="font-mono text-xs text-slate-500 mb-2">
+                <div>=================</div>
+                <div class="text-slate-200 font-bold">${dayDots} ${dayData.mode}</div>
+                <div>=================</div>
+              </div>
+              ${rows}
+              <div class="mt-3 flex flex-wrap justify-end gap-2">
+                <button onclick="copyDayTxtByIso('${dayIso}')" class="px-2.5 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-medium border border-slate-700">
+                  📋 Kopiuj TXT
+                </button>
+                <button onclick="downloadDayTxtByIso('${dayIso}')" class="px-2.5 py-1 text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 rounded-lg font-medium border border-emerald-500/30">
+                  📥 Pobierz TXT
+                </button>
+                <button onclick="openDayFromWeek('${dayIso}')" class="px-2.5 py-1 text-xs bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 rounded-lg font-medium border border-cyan-500/30">
+                  Pełny ekran dnia →
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          detailsHtml = `
+            <div id="weekDayDetails-${dayIso}" class="${weekExpanded ? 'block' : 'hidden'} px-4 py-3 border-t border-slate-800/60 bg-oled/40 text-xs font-mono text-slate-500">
+              ${dayDots} WOLNE — Brak zaplanowanych zajęć.
+            </div>
+          `;
+        }
+
+        html += `
+          <div class="bg-panel border ${isSelected ? 'border-cyan-500/60' : 'border-slate-800'} rounded-2xl overflow-hidden transition-all shadow">
+            <!-- Belka nagłówkowa dnia w widoku tygodnia -->
+            <div onclick="toggleSingleWeekDay('${dayIso}')" class="p-3.5 sm:px-5 flex items-center justify-between gap-2 cursor-pointer hover:bg-slate-800/40 select-none">
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-8 rounded-full ${hasClasses ? (dayData.mode === 'ZDALNE' ? 'bg-indigo-400' : 'bg-emerald-400') : 'bg-slate-800'}"></div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-sm sm:text-base ${hasClasses ? 'text-white' : 'text-slate-400'}">${weekdayName}</span>
+                    <span class="font-mono text-xs sm:text-sm text-slate-400">${dayDots}</span>
+                    ${modeBadge}
+                  </div>
+                  <div class="text-xs text-slate-400 mt-0.5 font-mono">
+                    ${hasClasses ? `${dayData.items.length} blok(i) • ${summaryHours}` : 'Dzień wolny od zajęć'}
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-500 font-mono hidden sm:inline">${weekExpanded ? 'Zwiń ▲' : 'Rozwiń ▼'}</span>
+              </div>
+            </div>
+            ${detailsHtml}
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    function toggleSingleWeekDay(isoDate) {
+      const el = document.getElementById(`weekDayDetails-${isoDate}`);
+      if (el) {
+        el.classList.toggle('hidden');
+      }
+    }
+
+    function openDayFromWeek(isoDate) {
+      selectedDate = isoDate;
+      switchView('day');
+    }
+
+    function setWeekZoom(expanded) {
+      weekExpanded = expanded;
+      renderWeekView();
+      showToast(expanded ? "Widok tygodnia: Rozwinięto wszystkie dni" : "Widok tygodnia: Zwinięto do pigułek");
+    }
+
+    // Obsługa gestu Pinch-to-Zoom dwoma palcami na ekranie dotykowym
+    let initialPinchDistance = null;
+    const viewWeekEl = document.getElementById('viewWeek');
+
+    viewWeekEl.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        initialPinchDistance = Math.hypot(dx, dy);
+      }
+    }, { passive: true });
+
+    viewWeekEl.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 2 && initialPinchDistance !== null) {
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const currentDist = Math.hypot(dx, dy);
+        const diff = currentDist - initialPinchDistance;
+
+        // Rozsunięcie palców (> 35px) -> Rozwiń pełny spis każdego dnia
+        if (diff > 35 && !weekExpanded) {
+          setWeekZoom(true);
+          initialPinchDistance = null;
+        }
+        // Zsunięcie palców (< -35px) -> Zwiń do zwięzłej listy
+        else if (diff < -35 && weekExpanded) {
+          setWeekZoom(false);
+          initialPinchDistance = null;
+        }
+      }
+    }, { passive: true });
+
+    viewWeekEl.addEventListener('touchend', () => {
+      initialPinchDistance = null;
+    });
+
+    // ============================================================================
+    // RENDEROWANIE WIDOKU MIESIĄCA
+    // ============================================================================
+    function renderMonthView() {
+      document.getElementById('monthTitle').textContent = `${MONTHS_PL[calendarMonth]} ${calendarYear}`;
+
+      const firstDayOfMonth = new Date(calendarYear, calendarMonth, 1).getDay();
+      const shift = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1; // Poniedziałek = 0
+      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+
+      const grid = document.getElementById('monthGrid');
+      grid.innerHTML = '';
+
+      // Puste komórki przed 1. dniem miesiąca
+      for (let i = 0; i < shift; i++) {
+        grid.innerHTML += `<div class="p-2 rounded-xl bg-oled/30 border border-transparent"></div>`;
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const iso = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const dayData = SCHEDULE_DB[iso];
+        const hasClasses = dayData && dayData.items && dayData.items.length > 0;
+        const isSelected = iso === selectedDate;
+
+        let cellStyle = 'bg-oled/70 border-slate-800/80 text-slate-400 hover:bg-slate-800/60';
+        let badgeDot = '';
+
+        if (hasClasses) {
+          if (dayData.mode === 'ZDALNE') {
+            cellStyle = 'bg-indigo-950/50 border-indigo-500/40 text-indigo-200 hover:bg-indigo-900/60 font-semibold';
+            badgeDot = `<span class="mt-1 px-1.5 py-0.5 text-[10px] font-mono rounded bg-indigo-500/20 text-indigo-300">ZDALNE (${dayData.items.length})</span>`;
+          } else {
+            cellStyle = 'bg-emerald-950/50 border-emerald-500/40 text-emerald-200 hover:bg-emerald-900/60 font-semibold';
+            badgeDot = `<span class="mt-1 px-1.5 py-0.5 text-[10px] font-mono rounded bg-emerald-500/20 text-emerald-300">STACJ. (${dayData.items.length})</span>`;
+          }
+        }
+
+        if (isSelected) {
+          cellStyle += ' ring-2 ring-cyan-400';
+        }
+
+        const cell = document.createElement('button');
+        cell.className = `min-h-[64px] sm:min-h-[82px] p-1.5 sm:p-2 rounded-xl border flex flex-col items-center justify-between transition text-center ${cellStyle}`;
+        cell.innerHTML = `
+          <span class="text-xs sm:text-sm font-mono">${d}</span>
+          <div class="hidden sm:block">${badgeDot}</div>
+          <div class="sm:hidden">
+            ${hasClasses ? `<span class="block w-2 h-2 rounded-full ${dayData.mode === 'ZDALNE' ? 'bg-indigo-400' : 'bg-emerald-400'}"></span>` : ''}
+          </div>
+        `;
+        cell.onclick = () => {
+          selectedDate = iso;
+          switchView('day');
+        };
+        grid.appendChild(cell);
+      }
+    }
+
+    // ============================================================================
+    // NAWIGACJA I AKCJE EKSPORTU DO TXT
+    // ============================================================================
+    function switchView(mode) {
+      currentView = mode;
+      document.getElementById('viewDay').classList.toggle('hidden', mode !== 'day');
+      document.getElementById('viewWeek').classList.toggle('hidden', mode !== 'week');
+      document.getElementById('viewMonth').classList.toggle('hidden', mode !== 'month');
+
+      const activeBtnClass = "px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-cyan-500 text-slate-950 shadow-md";
+      const inactiveBtnClass = "px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-400 hover:text-white";
+
+      document.getElementById('navDay').className = mode === 'day' ? activeBtnClass : inactiveBtnClass;
+      document.getElementById('navWeek').className = mode === 'week' ? activeBtnClass : inactiveBtnClass;
+      document.getElementById('navMonth').className = mode === 'month' ? activeBtnClass : inactiveBtnClass;
+
+      if (mode === 'day') renderDayView();
+      if (mode === 'week') renderWeekView();
+      if (mode === 'month') {
+        const [y, m] = selectedDate.split('-').map(Number);
+        calendarYear = y;
+        calendarMonth = m - 1;
+        renderMonthView();
+      }
+    }
+
+    function changeDay(delta) {
+      selectedDate = addDays(selectedDate, delta);
+      renderDayView();
+    }
+
+    function goToDate(isoDate) {
+      selectedDate = isoDate;
+      switchView('day');
+    }
+
+    function changeWeek(delta) {
+      selectedDate = addDays(selectedDate, delta * 7);
+      renderWeekView();
+    }
+
+    function changeMonth(delta) {
+      calendarMonth += delta;
+      if (calendarMonth > 11) {
+        calendarMonth = 0;
+        calendarYear++;
+      } else if (calendarMonth < 0) {
+        calendarMonth = 11;
+        calendarYear--;
+      }
+      renderMonthView();
+    }
+
+    function jumpToMonth(year, monthIndex) {
+      calendarYear = year;
+      calendarMonth = monthIndex;
+      renderMonthView();
+    }
+
+    function copyCurrentDayTxt() {
+      copyDayTxtByIso(selectedDate);
+    }
+
+    function copyDayTxtByIso(isoDate) {
+      const txt = generateDayTxtString(isoDate);
+      const textarea = document.createElement('textarea');
+      textarea.value = txt;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      showToast(`Skopiowano plan z dnia ${toPolishDateDots(isoDate)}!`);
+    }
+
+    function downloadTxtFile(filename, content) {
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadCurrentDayTxt() {
+      downloadDayTxtByIso(selectedDate);
+    }
+
+    function downloadDayTxtByIso(isoDate) {
+      const dateDotsUnderscore = toPolishDateDots(isoDate).replace(/\./g, '_');
+      const txt = generateDayTxtString(isoDate);
+      const filename = `plan_${dateDotsUnderscore}.txt`;
+      downloadTxtFile(filename, txt);
+      showToast(`Pobrano plik ${filename}`);
+    }
+
+    function downloadWeekTxt() {
+      const mondayIso = getMondayOfWeek(selectedDate);
+      const sundayIso = addDays(mondayIso, 6);
+      const parts = [];
+      for (let i = 0; i < 7; i++) {
+        const dIso = addDays(mondayIso, i);
+        if (SCHEDULE_DB[dIso]) {
+          parts.push(generateDayTxtString(dIso));
+        }
+      }
+      const content = parts.length > 0
+        ? parts.join("\n\n\n")
+        : `Brak zaplanowanych zajęć w tygodniu ${toPolishDateDots(mondayIso)} - ${toPolishDateDots(sundayIso)}.`;
+      const filename = `plan_BN1_tydzien_${mondayIso}_${sundayIso}.txt`;
+      downloadTxtFile(filename, content);
+      showToast(`Pobrano plan całego tygodnia (.txt)`);
+    }
+
+    let toastTimeout = null;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = message;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 2600);
+    }
+
+    // Inicjalizacja na starcie
+    window.onload = () => {
+      renderDayView();
+      reloadLiveSchedule(false);
+    };
+  </script>
+</body>
+</html>
