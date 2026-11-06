@@ -2,9 +2,8 @@ name: Aktualizacja Planu BN1 PANS
 
 on:
   schedule:
-    # Uruchamiaj co godzinę od 7:00 do 20:00 w dni robocze
     - cron: '0 7-20 * * 1-5'
-  workflow_dispatch: # Pozwala na ręczne odpalenie przyciskiem
+  workflow_dispatch:
 
 jobs:
   update-schedule:
@@ -14,6 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          node-version-file: ''
 
       - name: Set up Python
         uses: actions/setup-python@v5
