@@ -2,34 +2,35 @@ name: Aktualizacja Planu BN1 PANS
 
 on:
   schedule:
-    # Uruchamia się automatycznie co godzinę między 06:00 a 20:00
-    - cron: '0 6-20 * * *'
-  workflow_dispatch: # Pozwala też kliknąć "Run workflow" ręcznie w każdej chwili
-
-permissions:
-  contents: write
+    # Uruchamiaj co godzinę od 7:00 do 20:00 w dni robocze
+    - cron: '0 7-20 * * 1-5'
+  workflow_dispatch: # Pozwala na ręczne odpalenie przyciskiem
 
 jobs:
   update-schedule:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     steps:
-      - name: Pobierz repozytorium
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Zainstaluj Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Zainstaluj biblioteki do czytania PDF i strony PANS
-        run: pip install requests beautifulsoup4 pdfplumber
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 pdfplumber
 
-      - name: Sprawdź stronę PANS i przetwórz PDF
+      - name: Run updater script
         run: python updater.py
 
-      - name: Zapisz zaktualizowany plan w repozytorium
+      - name: Commit and push if changes detected
         run: |
-          git config user.name "PANS-Schedule-Bot"
-          git config user.email "bot@users.noreply.github.com"
+          git config --global user.name "ScheduleBot"
+          git config --global user.email "bot@users.noreply.github.com"
           git add schedule.json last_hash.txt
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Aktualizacja planu BN1 PANS" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Automatyczna aktualizacja planu zajęć" && git push)
