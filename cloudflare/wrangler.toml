@@ -11,4 +11,4 @@ id = "1631c03547ce4eddb4720d1a169f87a2"
 [vars]
 ALLOWED_ORIGIN = "https://plan.mandaro.eu"
 VAPID_SUBJECT = "mailto:szymon@mandaro.eu"
-VAPID_PUBLIC_KEY = "UZUPELNIJ_PUBLICZNY_KLUCZ_VAPID"
+VAPID_PUBLIC_KEY = "BJSqshlq5Ih5PMetK7egDT5OrTUHfx3XZBtEz-zk3kbl3VAS_7lXo7TDc1y2QtCzpi6AZ2D8HIIzgPaHZaKjiQQ"
