@@ -33,8 +33,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
-          cache-dependency-path: cloudflare/package-lock.json
 
       - name: Zainstaluj zależności Pythona
         run: python -m pip install requests beautifulsoup4 pdfplumber
