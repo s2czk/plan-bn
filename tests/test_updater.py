@@ -76,6 +76,13 @@ class NotificationDiffTests(unittest.TestCase):
         changes = build_change_notifications({"2026-11-12": old}, {"2026-11-12": new}, "abc")
         self.assertEqual({change["type"] for change in changes}, {"added", "cancelled"})
 
+    def test_group_change_is_reported(self):
+        old = {"mode": "ZDALNE", "items": [{"time": "08:00-09:30", "title": "Administracja publiczna", "lecturer": "dr A. Kowalski", "type": "ćwiczenia", "group": "grupa 1"}]}
+        new = {"mode": "ZDALNE", "items": [{"time": "08:00-09:30", "title": "Administracja publiczna", "lecturer": "dr A. Kowalski", "type": "ćwiczenia", "group": "grupa 2"}]}
+        changes = build_change_notifications({"2026-11-12": old}, {"2026-11-12": new}, "abc")
+        self.assertEqual(len(changes), 1)
+        self.assertTrue(any("Grupa:" in detail for detail in changes[0]["details"]))
+
     def test_several_changes_are_grouped_for_same_day(self):
         raw = [
             {"id": "a", "date": "2026-11-12", "type": "added", "message": "Historia"},
