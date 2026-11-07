@@ -5,7 +5,7 @@ workers_dev = true
 
 [[kv_namespaces]]
 binding = "PUSH_KV"
-id = "UZUPELNIJ_ID_NAMESPACE_KV"
+id = "00000000000000000000000000000000"
 
 [vars]
 ALLOWED_ORIGIN = "https://plan.mandaro.eu"
