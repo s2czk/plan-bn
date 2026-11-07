@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-06 20:54",
+  "last_updated": "2026-11-07 11:40",
   "source_label": "plan bn 1 stacjonarne 2026 11 06 plik",
   "days": {
     "2026-10-01": {
@@ -9,35 +9,24 @@
           "time": "14:15-15:00",
           "title": "sotkanie z kierownikiem ZBN",
           "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "3"
         },
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Szkolenie biblioteczne",
           "lecturer": "mgr Beata Żuber",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "Aula 6"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Szkolenie biblioteczne 16:00",
-          "lecturer": "mgr Beata Żuber",
-          "type": "Ćw.",
-          "room": "Aula 6"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Administracja publiczna 17:00",
-          "lecturer": "dr Artur Dąbek",
-          "type": "Wykł.",
-          "room": "104"
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Wykł./Ćw.",
+          "type": "wykład / ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "104"
         }
       ]
@@ -46,31 +35,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł.",
+          "type": "wykład / ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "11"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Historia Polski na tle historii Europy 16:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
-          "room": "11"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy od podstaw - j. niemiecki 17:00",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw.",
-          "room": "11"
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "11"
         }
       ]
@@ -79,31 +56,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii 10:00",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "Wykł.",
-          "room": "106"
-        },
-        {
-          "time": "10:30-13:00",
+          "time": "09:45-13:00",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
-          "type": "Wykł./Ćw.",
+          "type": "wykład / ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         },
         {
-          "time": "13:15-15:45",
+          "time": "13:15-16:30",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
-          "room": "HALA SPORTOWA"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Wychowanie fizyczne 16:00",
-          "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "HALA SPORTOWA"
         }
       ]
@@ -112,28 +77,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Integracja europejska 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy specjalistyczny - j. angielski 17:00",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw."
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -141,38 +96,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł.",
-          "room": "106"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna 16:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł.",
-          "room": "106"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Komunikacja interpersonalna 17:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Komunikacja interpersonalna",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
+          "type": "wykład / ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         },
         {
           "time": "18:30-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "106"
         }
       ]
@@ -181,38 +117,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
-          "room": "106"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
-          "room": "106"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
-          "room": "106"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "106"
         },
         {
           "time": "18:30-20:00",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         }
       ]
@@ -221,31 +138,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "105"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Geografia polityczna i gospodarcza 16:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł.",
-          "room": "105"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy specjalistyczny - j. angielski 17:00",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
-          "room": "105"
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "105"
         }
       ]
@@ -254,74 +159,44 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-10:15",
           "title": "Elementy samoobrony",
           "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
-          "room": "H24"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Elementy samoobrony 9:00",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
-          "room": "H24"
-        },
-        {
-          "time": "09:30-10:15",
-          "title": "Elementy samoobrony",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "H24"
         },
         {
           "time": "10:30-14:00",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
-          "type": "Ćw./Wykł.",
+          "type": "ćwiczenia / wykład",
+          "mode": "STACJONARNE",
           "room": "105"
         },
         {
           "time": "14:00-14:45",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "105"
         },
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
-          "room": "105"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Język obcy specjalistyczny - j. angielski 16:00",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
-          "room": "105"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy specjalistyczny - j. angielski 17:00",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
-          "room": "105"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Język obcy specjalistyczny - j. angielski",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "105"
         },
         {
           "time": "18:30-20:00",
           "title": "Technologia informacyjna",
           "lecturer": "mgr Jacek Moszyński",
-          "type": "Ćw.",
-          "room": "STACJONARNIE"
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
         }
       ]
     },
@@ -329,34 +204,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna 16:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Komunikacja interpersonalna 17:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Komunikacja interpersonalna",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -364,34 +223,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-19:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-19:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł./Ćw."
+          "type": "wykład / ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
           "time": "19:15-20:00",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -399,34 +242,25 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy specjalistyczny - j. angielski 17:00",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw."
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -434,16 +268,12 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "16:45-17:30",
-          "title": "Bezpieczeństwo i higiena pracy 17:00",
-          "lecturer": "mgr Halina Grobelna",
-          "type": "Ćw."
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Bezpieczeństwo i higiena pracy",
           "lecturer": "mgr Halina Grobelna",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE",
+          "group": "grupa obelna"
         }
       ]
     },
@@ -451,17 +281,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "16:45-17:30",
-          "title": "Elementy samoobrony 17:00",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
-          "room": "H24"
-        },
-        {
-          "time": "17:30-19:15",
+          "time": "16:45-19:15",
           "title": "Elementy samoobrony",
           "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "H24"
         }
       ]
@@ -470,38 +294,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
-          "room": "107"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
-          "room": "107"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
-          "room": "107"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "107"
         },
         {
           "time": "18:30-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "107"
         }
       ]
@@ -510,25 +315,20 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "16:45-17:30",
-          "title": "Język obcy od podstaw - j. niemiecki 17:00",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw.",
-          "room": "020"
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "020"
         },
         {
           "time": "18:30-20:00",
           "title": "Technologia informacyjna",
           "lecturer": "mgr Jacek Moszyński",
-          "type": "Ćw.",
-          "room": "STACJONARNIE"
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
         }
       ]
     },
@@ -536,59 +336,27 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii 10:00",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "Ćw.",
-          "room": "11"
-        },
-        {
-          "time": "10:30-13:00",
+          "time": "09:45-13:00",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "11"
         },
         {
-          "time": "13:15-15:45",
+          "time": "13:15-16:30",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "HALA SPORTOWA"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Wychowanie fizyczne 16:00",
-          "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
-          "room": "HALA SPORTOWA"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 17:00 11 Ćwiczenia I (2026/2027)",
-          "lecturer": "PANS",
-          "type": "Ćw.",
-          "room": "11"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 11 Ćwiczenia I (2026/2027) 18:00",
-          "lecturer": "PANS",
-          "type": "Ćw.",
-          "room": "11"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 11 Ćwiczenia I (2026/2027) 19:00",
-          "lecturer": "PANS",
-          "type": "Ćw.",
-          "room": "11"
-        },
-        {
-          "time": "19:15-20:00",
+          "time": "16:45-20:00",
           "title": "Kwalifikowana pierwsza pomoc medyczna 11 Ćwiczenia I (2026/2027)",
           "lecturer": "PANS",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "11"
         }
       ]
@@ -597,31 +365,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-11:15",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Język obcy specjalistyczny - j. angielski 9:00",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Język obcy specjalistyczny - j. angielski 10:00",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Język obcy specjalistyczny - j. angielski",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         }
       ]
@@ -630,17 +378,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "16:45-17:30",
-          "title": "Elementy samoobrony 17:00",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
-          "room": "H24"
-        },
-        {
-          "time": "17:30-19:15",
+          "time": "16:45-19:15",
           "title": "Elementy samoobrony",
           "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "H24"
         }
       ]
@@ -649,38 +391,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna 16:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Komunikacja interpersonalna 17:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Komunikacja interpersonalna",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         },
         {
           "time": "18:30-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         }
       ]
@@ -689,31 +412,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Historia Polski na tle historii Europy 17:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         }
       ]
@@ -722,38 +433,27 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy specjalistyczny - j. angielski 17:00",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
-          "room": "106"
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "106"
         },
         {
           "time": "18:30-20:00",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "HALA SPORTOWA"
         }
       ]
@@ -762,64 +462,39 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-09:30",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 9:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Integracja europejska 10:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "10:30-11:15",
+          "time": "09:45-11:15",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "11:30-14:45",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Geografia polityczna i gospodarcza 16:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Geografia polityczna i gospodarcza 17:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Geografia polityczna i gospodarcza",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -827,34 +502,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna 16:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Komunikacja interpersonalna 17:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Komunikacja interpersonalna",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -862,34 +521,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -897,34 +540,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Język obcy od podstaw - j. niemiecki 16:00",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy od podstaw - j. niemiecki 17:00",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Język obcy od podstaw - j. niemiecki",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -932,58 +559,39 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-09:30",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Wykł."
+          "type": "wykład / ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Administracja publiczna 9:00",
-          "lecturer": "dr Artur Dąbek",
-          "type": "Ćw."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii 10:00",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "Wykł."
-        },
-        {
-          "time": "10:30-13:00",
+          "time": "09:45-13:00",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "13:15-14:45",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 17:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -994,37 +602,43 @@
           "time": "08:00-08:45",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "08:45-09:30",
-          "title": "Historia Polski na tle historii Europy 9:00",
+          "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "09:45-10:30",
-          "title": "Geografia polityczna i gospodarcza 10:00",
+          "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "10:30-11:15",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "11:30-13:00",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
           "time": "13:15-14:45",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1032,34 +646,25 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy socjologii 17:00",
-          "lecturer": "dr Danuta Apanel",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1067,34 +672,25 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Historia Polski na tle historii Europy 16:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy od podstaw - j. niemiecki 17:00",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1102,46 +698,25 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-11:15",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Integracja europejska 9:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Integracja europejska 10:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Integracja europejska",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "11:30-13:00",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "13:15-15:45",
+          "time": "13:15-16:30",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Język obcy od podstaw - j. niemiecki 16:00",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1149,34 +724,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-13:00",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 9:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 10:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "10:30-13:00",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł./Ćw."
+          "type": "wykład / ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
           "time": "13:15-15:45",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1184,17 +743,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "16:45-17:30",
-          "title": "Elementy samoobrony 17:00",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
-          "room": "H24"
-        },
-        {
-          "time": "17:30-19:15",
+          "time": "16:45-19:15",
           "title": "Elementy samoobrony",
           "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "H24"
         }
       ]
@@ -1203,38 +756,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna 16:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Komunikacja interpersonalna 17:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Komunikacja interpersonalna",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1243,38 +777,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1283,38 +798,35 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Wychowanie fizyczne 16:00",
-          "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "16:45-17:30",
-          "title": "Historia Polski na tle historii Europy 17:00",
+          "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "17:30-18:15",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1323,45 +835,27 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii 10:00",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-13:00",
+          "time": "09:45-13:00",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "13:15-15:45",
+          "time": "13:15-16:30",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Wychowanie fizyczne 16:00",
-          "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Historia Polski na tle historii Europy 17:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1370,31 +864,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-12:00",
           "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 9:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 10:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-12:00",
-          "title": "Kwalifikowana pierwsza pomoc medyczna",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1403,17 +877,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "16:45-17:30",
-          "title": "Elementy samoobrony 17:00",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
-          "room": "H24"
-        },
-        {
-          "time": "17:30-19:15",
+          "time": "16:45-19:15",
           "title": "Elementy samoobrony",
           "lecturer": "mgr Sebastian Tałaj",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "H24"
         }
       ]
@@ -1422,38 +890,27 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Historia Polski na tle historii Europy 16:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy socjologii 17:00",
-          "lecturer": "dr Danuta Apanel",
-          "type": "Wykł.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Technologia informacyjna",
           "lecturer": "mgr Jacek Moszyński",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1462,38 +919,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1502,38 +940,27 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Historia Polski na tle historii Europy 16:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy specjalistyczny - j. angielski 17:00",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1542,46 +969,32 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-10:30",
           "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 9:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 10:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "10:30-13:00",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "13:00-13:45",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "16:45-17:30",
-          "title": "Administracja publiczna 17:00",
-          "lecturer": "dr Artur Dąbek",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1589,34 +1002,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-11:15",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 9:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 10:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "12:15-13:45",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1624,38 +1021,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna 16:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Komunikacja interpersonalna 17:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Komunikacja interpersonalna",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł.",
+          "type": "wykład / ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1664,31 +1042,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1697,17 +1055,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "17:45-18:30",
-          "title": "Technologia informacyjna 18:00",
-          "lecturer": "mgr Jacek Moszyński",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-20:00",
+          "time": "17:45-20:00",
           "title": "Technologia informacyjna",
           "lecturer": "mgr Jacek Moszyński",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1716,31 +1068,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii 10:00",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-12:15",
+          "time": "09:45-12:15",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "13:15-15:45",
+          "time": "13:15-16:30",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Wychowanie fizyczne 16:00",
-          "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1749,34 +1089,25 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "16:45-17:30",
-          "title": "Integracja europejska 17:00",
+          "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "17:45-18:30",
-          "title": "Podstawy socjologii 18:00",
-          "lecturer": "dr Danuta Apanel",
-          "type": "Wykł."
-        },
-        {
-          "time": "18:30-20:00",
+          "time": "17:45-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1784,34 +1115,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1819,22 +1134,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "16:45-17:30",
-          "title": "Język obcy od podstaw - j. niemiecki 17:00",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1842,31 +1153,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-12:15",
           "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 9:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 10:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-12:15",
-          "title": "Kwalifikowana pierwsza pomoc medyczna",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1875,31 +1166,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-10:30",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Geografia polityczna i gospodarcza 9:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Geografia polityczna i gospodarcza 10:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "10:30-11:15",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1908,38 +1187,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -1948,28 +1208,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Integracja europejska 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 17:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw."
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -1977,28 +1227,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-17:30",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Integracja europejska 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Integracja europejska 17:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "ćwiczenia / wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "17:30-20:00",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -2009,31 +1249,29 @@
           "time": "08:00-08:45",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Integracja europejska 9:00",
+          "time": "08:45-10:30",
+          "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Integracja europejska 10:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "10:30-11:15",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "11:30-14:45",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -2041,46 +1279,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-11:15",
           "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 9:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 10:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Kwalifikowana pierwsza pomoc medyczna",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
-        },
-        {
-          "time": "13:15-15:45",
+          "time": "13:15-17:30",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 17:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw."
+          "type": "wykład / ćwiczenia",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -2088,40 +1298,25 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii 17:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-19:15",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "19:15-20:00",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -2129,34 +1324,32 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "16:45-17:30",
-          "title": "Język obcy od podstaw - j. niemiecki 17:00",
+          "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
           "time": "17:30-18:15",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
           "time": "18:30-20:00",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -2164,46 +1357,32 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-09:30",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Język obcy od podstaw - j. niemiecki 9:00",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "Ćw."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii 10:00",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "Wykł."
-        },
-        {
-          "time": "10:30-12:15",
+          "time": "09:45-12:15",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "12:15-13:00",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "13:15-15:45",
+          "time": "13:15-16:30",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Historia Polski na tle historii Europy 16:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -2211,34 +1390,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-11:15",
           "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 9:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 10:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Kwalifikowana pierwsza pomoc medyczna",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "11:30-14:45",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -2246,31 +1409,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii 16:00",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy socjologii 17:00",
-          "lecturer": "dr Danuta Apanel",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2279,31 +1430,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Integracja europejska 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 17:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-20:00",
+          "time": "16:45-20:00",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw./Wykł.",
+          "type": "ćwiczenia / wykład",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2315,35 +1454,24 @@
           "time": "15:00-15:45",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 17:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "15:45-18:15",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2352,38 +1480,27 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-09:30",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Geografia polityczna i gospodarcza 9:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Wychowanie fizyczne 10:00",
-          "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-13:00",
+          "time": "09:45-13:00",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "13:15-14:45",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2392,31 +1509,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-09:30",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Administracja publiczna 9:00",
-          "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Geografia polityczna i gospodarcza 10:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-13:00",
+          "time": "09:45-13:00",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2425,38 +1530,27 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna 16:00",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy socjologii 17:00",
-          "lecturer": "dr Danuta Apanel",
-          "type": "Wykł.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
+          "time": "16:45-18:15",
           "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "Wykł.",
+          "type": "wykład",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2465,38 +1559,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Integracja europejska 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Integracja europejska 17:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Integracja europejska",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2505,38 +1580,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 17:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Technologia informacyjna",
           "lecturer": "mgr Jacek Moszyński",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2545,59 +1601,27 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-09:30",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Administracja publiczna 9:00",
-          "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Wychowanie fizyczne 10:00",
-          "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-13:00",
+          "time": "09:45-13:00",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:00-15:45",
+          "time": "15:00-20:00",
           "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 16:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 17:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-20:00",
-          "title": "Kwalifikowana pierwsza pomoc medyczna",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2606,59 +1630,27 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
+          "time": "08:00-11:00",
           "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 9:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:30-11:00",
-          "title": "Kwalifikowana pierwsza pomoc medyczna",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "11:30-14:45",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:00-15:45",
+          "time": "15:00-20:00",
           "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 16:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 17:00",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-20:00",
-          "title": "Kwalifikowana pierwsza pomoc medyczna",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2667,38 +1659,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Administracja publiczna 16:00",
-          "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Administracja publiczna 17:00",
-          "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Administracja publiczna",
-          "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Technologia informacyjna",
           "lecturer": "mgr Jacek Moszyński",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2707,38 +1680,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE 17:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2747,38 +1701,19 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-18:15",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Integracja europejska 16:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Integracja europejska 17:00",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Integracja europejska",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "18:30-20:00",
           "title": "Język obcy specjalistyczny - j. angielski",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
@@ -2787,22 +1722,18 @@
       "mode": "ZDALNE",
       "items": [
         {
-          "time": "09:45-10:30",
-          "title": "Geografia polityczna i gospodarcza 10:00",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
-        },
-        {
-          "time": "10:30-11:15",
+          "time": "09:45-11:15",
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
           "time": "11:30-13:00",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "Wykł."
+          "type": "wykład",
+          "mode": "ZDALNE"
         }
       ]
     },
@@ -2810,17 +1741,11 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-15:45",
+          "time": "15:00-16:30",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Administracja publiczna 16:00",
-          "lecturer": "dr Artur Dąbek",
-          "type": "Ćw.",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]

@@ -1,5 +1,6 @@
 {
-  "update_id": null,
-  "last_updated": null,
+  "schema_version": 1,
+  "update_id": "c3df297dc87f",
+  "last_updated": "2026-11-07 11:40",
   "changes": []
 }
