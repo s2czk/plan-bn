@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - 'updater.py'
+      - 'index.html'
+      - 'sw.js'
+      - 'manifest.webmanifest'
+      - 'icon.svg'
       - 'tests/**'
       - '.github/workflows/update_schedule.yml'
   schedule:
