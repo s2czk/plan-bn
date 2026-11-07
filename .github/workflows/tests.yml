@@ -7,6 +7,7 @@ on:
     branches: [main, final-plan-parser-push]
     paths:
       - 'updater.py'
+      - 'requirements.txt'
       - 'index.html'
       - 'sw.js'
       - 'cloudflare/**'
@@ -28,6 +29,8 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: requirements.txt
 
       - name: Przygotuj Node.js
         uses: actions/setup-node@v4
@@ -35,7 +38,7 @@ jobs:
           node-version: '22'
 
       - name: Zainstaluj zależności Pythona
-        run: python -m pip install requests beautifulsoup4 pdfplumber
+        run: python -m pip install -r requirements.txt
 
       - name: Uruchom testy
         run: python -m unittest discover -s tests -v

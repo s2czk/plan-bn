@@ -11,6 +11,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class FrontendChecks(unittest.TestCase):
+    def test_python_dependencies_file_exists_and_is_used(self):
+        requirements = (ROOT / "requirements.txt").read_text(encoding="utf-8")
+        for package in ("requests", "beautifulsoup4", "pdfplumber"):
+            self.assertRegex(requirements, rf"(?m)^{package}([<=>!~]|$)")
+        schedule_workflow = (ROOT / ".github" / "workflows" / "update_schedule.yml").read_text(encoding="utf-8")
+        tests_workflow = (ROOT / ".github" / "workflows" / "tests.yml").read_text(encoding="utf-8")
+        for workflow in (schedule_workflow, tests_workflow):
+            self.assertIn("cache-dependency-path: requirements.txt", workflow)
+            self.assertIn("python -m pip install -r requirements.txt", workflow)
+
     def test_manifest_is_valid_and_pwa_ready(self):
         manifest = json.loads((ROOT / "manifest.webmanifest").read_text(encoding="utf-8"))
         self.assertEqual(manifest["background_color"], "#0D1630")
