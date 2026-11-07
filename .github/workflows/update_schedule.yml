@@ -71,14 +71,14 @@ jobs:
               raise SystemExit(0)
 
           body = json.dumps({"notifications": notifications}, ensure_ascii=False).encode("utf-8")
-          request = urllib.request.Request(
-              worker + "/dispatch",
-              data=body,
-              headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"},
-              method="POST",
-          )
           last_error = None
           for attempt in range(3):
+              request = urllib.request.Request(
+                  worker + "/dispatch",
+                  data=body,
+                  headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"},
+                  method="POST",
+              )
               try:
                   with urllib.request.urlopen(request, timeout=30) as response:
                       print(response.read().decode("utf-8"))
@@ -95,5 +95,6 @@ jobs:
         run: |
           git config user.name "PANS-Schedule-Bot"
           git config user.email "bot@users.noreply.github.com"
-          git add schedule.json last_hash.txt parser_version.txt update_sequence.txt notifications.json
+          git add schedule.json last_hash.txt parser_version.txt notifications.json
+          if [ -f update_sequence.txt ]; then git add update_sequence.txt; fi
           git diff --cached --quiet || (git commit -m "Aktualizacja planu zajęć PANS" && git push)

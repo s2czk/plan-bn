@@ -112,7 +112,7 @@ async function handleDispatch(request, env) {
   for (const item of notifications) {
     if (typeof item?.id !== "string" || !item.id) continue;
     const markerSuffix = await digestHex(item.id);
-    const bodyText = String(item.message || "W planie zajęć pojawiła się zmiana.");
+    const bodyText = String(item.push_message || item.message || "W planie zajęć pojawiła się zmiana.");
     const pushData = JSON.stringify({
       title: String(item.title || "Zmiany w planie zajęć").slice(0, 120),
       body: bodyText.slice(0, 240),

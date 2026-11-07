@@ -45,6 +45,12 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
         self.assertEqual(clean_subject_title("Podstawy filozofii 10:00"), "Podstawy filozofii")
         self.assertEqual(clean_subject_title("Administracja publiczna – wykład"), "Administracja publiczna")
 
+    def test_pdf_room_type_and_academic_year_are_removed_from_title(self):
+        self.assertEqual(
+            clean_subject_title("Kwalifikowana pierwsza pomoc medyczna 11 Ćwiczenia I (2026/2027)"),
+            "Kwalifikowana pierwsza pomoc medyczna",
+        )
+
     def test_room_does_not_get_time_suffix(self):
         sample = (
             "lis 7, 2026 "
@@ -79,6 +85,19 @@ class NotificationDiffTests(unittest.TestCase):
         new = {"mode": "ZDALNE", "items": [{"time": "18:00-19:30", "title": "Socjologia", "lecturer": "dr B. Nowak", "type": "wykład"}]}
         changes = build_change_notifications({"2026-11-12": old}, {"2026-11-12": new}, "abc")
         self.assertEqual({change["type"] for change in changes}, {"added", "cancelled"})
+
+    def test_grouped_push_message_contains_action_and_change_details(self):
+        raw = [{
+            "id": "a",
+            "date": "2026-11-12",
+            "type": "changed",
+            "message": "Ekonomia · 08:00-09:30",
+            "details": ["Godzina: 08:00-09:30 → 10:00-11:30", "Sala: 105 → 106"],
+        }]
+        grouped = group_change_notifications(raw, "hash", "2026-11-07 12:00")
+        self.assertIn("ZMIENIONO", grouped[0]["push_message"])
+        self.assertIn("Godzina:", grouped[0]["push_message"])
+        self.assertIn("Sala:", grouped[0]["push_message"])
 
     def test_group_change_is_reported(self):
         old = {"mode": "ZDALNE", "items": [{"time": "08:00-09:30", "title": "Administracja publiczna", "lecturer": "dr A. Kowalski", "type": "ćwiczenia", "group": "grupa 1"}]}
