@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700;750;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{color-scheme:dark;--bg-top:#0D1630;--bg-bottom:#17386D;--panel:#111a31;--panel-soft:#15213c;--card:#182443;--card2:#111b33;--line:rgba(154,177,224,.18);--text:#f4f6ff;--muted:#a6b5d3;--dim:#7587aa;--purple:#7659e8;--purple-soft:#a995ff;--lime:#c7f43b;--remote:#a995ff;--onsite:#70b4ff;--shadow:0 14px 34px rgba(2,8,24,.2)}
+    :root{color-scheme:dark;--bg-top:#0D1630;--bg-bottom:#17386D;--panel:#111a31;--panel-soft:#15213c;--card:#182443;--card2:#111b33;--line:rgba(154,177,224,.18);--text:#f4f6ff;--muted:#a6b5d3;--dim:#7587aa;--purple:#7659e8;--purple-soft:#a995ff;--lime:#c7f43b;--remote:#c7f43b;--onsite:#70b4ff;--shadow:0 14px 34px rgba(2,8,24,.2)}
     *{box-sizing:border-box}
     html{min-height:100%;background:var(--bg-top)}
     body{margin:0;min-height:100vh;background:linear-gradient(180deg,#0D1630 0%,#17386D 100%);background-attachment:fixed;color:var(--text);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
@@ -29,7 +29,7 @@
     .header-actions{display:flex;align-items:center;gap:7px}
     .icon-button{position:relative;width:38px;height:38px;display:grid;place-items:center;border-radius:12px;border:1px solid var(--line);background:rgba(25,39,70,.8);color:#e3eaff;transition:background .16s,border-color .16s}
     .icon-button:hover{background:rgba(72,69,139,.48);border-color:rgba(169,149,255,.5)}
-    .unread-dot{display:none;position:absolute;right:6px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 2px #172544}
+    .unread-dot{display:none;position:absolute;right:-5px;top:-5px;min-width:17px;height:17px;padding:0 4px;align-items:center;justify-content:center;border-radius:999px;background:var(--lime);color:#182441;font-size:9px;line-height:1;font-weight:800;border:2px solid #172544;box-shadow:0 2px 7px rgba(0,0,0,.25)}
     .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:5px;background:rgba(9,17,37,.72);border:1px solid var(--line);border-radius:15px}
     .tab{height:42px;border:0;border-radius:11px;background:transparent;color:#a9b9d9;font-size:13px;font-weight:650;transition:background .16s,color .16s}
     .tab.active{background:linear-gradient(110deg,#654bd0,#354b9d);color:white;box-shadow:0 5px 15px rgba(8,13,47,.35)}
@@ -40,7 +40,7 @@
     .weekday-label{font-size:12px;color:var(--muted);margin-top:3px}
     .date-right{display:flex;align-items:center;gap:8px;flex:0 0 auto}
     .mode-badge,.count-badge{border-radius:999px;padding:6px 10px;font-size:10px;font-weight:750;letter-spacing:.35px;white-space:nowrap;border:1px solid}
-    .mode-remote{color:var(--remote);background:rgba(133,105,231,.13);border-color:rgba(169,149,255,.28)}
+    .mode-remote{color:var(--lime);background:rgba(199,244,59,.13);border-color:rgba(199,244,59,.42)}
     .mode-onsite{color:var(--onsite);background:rgba(76,151,225,.12);border-color:rgba(112,180,255,.26)}
     .mode-mixed{color:var(--lime);background:rgba(199,244,59,.09);border-color:rgba(199,244,59,.25)}
     .mode-free{color:#a5b0c5;background:rgba(116,132,162,.1);border-color:rgba(116,132,162,.2)}
@@ -79,10 +79,19 @@
     .class-time{font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;color:var(--lime);white-space:nowrap;font-variant-numeric:tabular-nums;letter-spacing:-.25px}
     .class-subject{font-size:15px;font-weight:720;letter-spacing:-.25px;line-height:1.35;color:#f4f6ff;overflow-wrap:anywhere}
     .class-teacher{margin-top:5px;font-size:12px;color:#b2c0dc;line-height:1.4}
-    .class-type{color:#c3b7ff}
+    .class-type{color:#c3b7ff;font-size:11px}
+    .class-extra{display:flex;gap:9px;flex-wrap:wrap;margin-top:3px;font-size:10px;color:#9fb1d3}
+    .class-group{color:#9fb1d3}
+    .event-type{display:block;margin-top:4px;color:#c3b7ff;font-size:9px;line-height:1.35}
+    .event-meta{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:5px}
+    .event-badge{display:inline-flex;padding:3px 5px;border:1px solid rgba(112,180,255,.3);border-radius:5px;color:#9bd0ff;font-size:8px;font-weight:750}
+    .event-badge.remote{color:var(--lime);border-color:rgba(199,244,59,.45);background:rgba(199,244,59,.1)}
+    .event-badge.room{color:#dbe5fa;border-color:rgba(180,198,230,.22)}
     .class-meta{display:flex;align-items:center;gap:6px;flex-shrink:0}
     .meta-tag{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:6px 9px;border:1px solid rgba(112,180,255,.25);background:rgba(76,151,225,.1);color:#a7d1ff;font-size:10px;font-weight:750;white-space:nowrap}
-    .meta-tag.remote{border-color:rgba(169,149,255,.28);background:rgba(133,105,231,.12);color:#c7baff}
+    .meta-tag.remote{border-color:rgba(199,244,59,.42);background:rgba(199,244,59,.12);color:var(--lime)}
+    .meta-tag.onsite{border-color:rgba(112,180,255,.42);background:rgba(76,151,225,.15);color:#9bd0ff}
+    .meta-tag.room{border-color:rgba(180,198,230,.28);background:rgba(180,198,230,.1);color:#e0e9fb}
     .meta-tag.missing{border-color:rgba(199,244,59,.24);background:rgba(199,244,59,.08);color:#d8ef91}
     .empty-state{padding:30px 15px;text-align:center;border:1px dashed rgba(150,173,220,.2);border-radius:15px;background:rgba(10,20,40,.3);color:#bac8e1;font-size:13px}
     .week-toolbar,.month-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;padding:10px 12px}
@@ -131,6 +140,10 @@
     .notification-date{font-size:10px;color:#8093b8}
     .notification-title{font-size:13px;font-weight:750;margin-top:5px}
     .notification-message{font-size:12px;color:#b2c0dc;line-height:1.5;margin-top:4px}
+    .notification-change{padding:7px 0;border-top:1px solid rgba(150,173,220,.10);font-size:11px;color:#d8e3f8;line-height:1.4}
+    .notification-change:first-child{border-top:0}
+    .notification-item[role=button]{cursor:pointer}
+    .notification-item[role=button]:focus-visible{outline:2px solid #a995ff;outline-offset:2px}
     .notification-details{font-size:11px;color:#91a4c8;line-height:1.5;margin-top:6px}
     .panel-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
     .panel-note{font-size:11px;color:#8fa2c6;line-height:1.5;margin-top:14px}
@@ -159,7 +172,7 @@
       </div>
       <div class="header-actions">
         <button class="icon-button" id="focusSearch" aria-label="Wyszukaj przedmiot" title="Wyszukaj"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg></button>
-        <button class="icon-button" id="openNotifications" aria-label="Powiadomienia" title="Powiadomienia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 9a6 6 0 0 0-12 0c0 6.5-2.5 7-2.5 9h17C20.5 16 18 15.5 18 9ZM10 21h4"/></svg><i class="unread-dot" id="unreadDot"></i></button>
+        <button class="icon-button" id="openNotifications" aria-label="Powiadomienia" title="Powiadomienia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 9a6 6 0 0 0-12 0c0 6.5-2.5 7-2.5 9h17C20.5 16 18 15.5 18 9ZM10 21h4"/></svg><span class="unread-dot" id="unreadDot" aria-label="Nieprzeczytane powiadomienia"></span></button>
         <button class="icon-button" id="openSettings" aria-label="Ustawienia" title="Ustawienia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></svg></button>
       </div>
     </header>
@@ -235,15 +248,15 @@
     <aside class="side-panel" role="dialog" aria-modal="true" aria-labelledby="notificationsTitle">
       <div class="panel-heading"><h2 id="notificationsTitle">Powiadomienia</h2><button class="icon-button" data-close="notificationsOverlay" aria-label="Zamknij">×</button></div>
       <div id="notificationList" class="notification-list"><div class="empty-state">Ładowanie powiadomień…</div></div>
-      <div class="panel-actions"><button class="action-button" id="markNotificationsRead">Oznacz jako przeczytane</button><button class="action-button primary" id="enableNotifications">Włącz powiadomienia</button></div>
-      <p class="panel-note">Powiadomienia informują o dodaniu lub odwołaniu zajęć oraz zmianach godzin, sal, prowadzących i trybu. Komunikaty systemowe są wyświetlane, gdy aplikacja jest otwarta lub działa w tle. Pełne powiadomienia push przy zamkniętej aplikacji wymagają dodatkowego serwera push.</p>
+      <div class="panel-actions"><button class="action-button" id="markNotificationsRead">Oznacz wszystkie jako przeczytane</button><button class="action-button primary" id="enableNotifications">Włącz powiadomienia</button></div>
+      <p class="panel-note" id="pushStatus">Powiadomienia na tym urządzeniu. Włącz je, aby otrzymywać informacje o zmianach również po zamknięciu strony.</p>
     </aside>
   </div>
 
   <div class="overlay" id="settingsOverlay" hidden>
     <aside class="side-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
       <div class="panel-heading"><h2 id="settingsTitle">Ustawienia</h2><button class="icon-button" data-close="settingsOverlay" aria-label="Zamknij">×</button></div>
-      <div class="setting-row"><div><strong>Powiadomienia systemowe</strong><p>Komunikaty o zmianach planu na tym urządzeniu.</p></div><button class="action-button primary" id="settingsNotifications">Włącz</button></div>
+      <div class="setting-row"><div><strong>Powiadomienia systemowe</strong><p>Komunikaty o zmianach planu na tym urządzeniu.</p></div><button class="action-button primary" id="settingsNotifications">Włącz powiadomienia</button></div>
       <div class="setting-row"><div><strong>Instalacja aplikacji</strong><p>Dodaj plan do ekranu głównego lub menu aplikacji.</p></div><button class="action-button" id="installApp">Zainstaluj</button></div>
       <div class="setting-row"><div><strong>Odśwież plan</strong><p>Pobierz najnowszy plik z repozytorium.</p></div><button class="action-button" id="refreshData">Odśwież</button></div>
       <p class="panel-note">Wersja internetowa korzysta z aktualnego pliku schedule.json. Instalacja PWA i pamięć offline działają po udostępnieniu strony przez HTTPS.</p>
@@ -251,9 +264,12 @@
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="./push-config.js"></script>
   <script>
     'use strict';
-    const state={days:{},lastUpdated:null,sourceLabel:'',view:'day',selectedDate:localISODate(),month:null,notifications:[],pendingInstall:null};
+    const queryDate=new URLSearchParams(location.search).get('date');
+    const validQueryDate=queryDate&&/^\d{4}-\d{2}-\d{2}$/.test(queryDate)?queryDate:localISODate();
+    const state={days:{},lastUpdated:null,sourceLabel:'',view:'day',selectedDate:validQueryDate,month:null,notifications:[],pendingInstall:null};
     const $=id=>document.getElementById(id);
     const weekdays=['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];
     const weekdaysShort=['Nd','Pn','Wt','Śr','Cz','Pt','Sb'];
@@ -270,7 +286,7 @@
     function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(lastToastTimer);lastToastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
     function dayData(iso){return state.days[iso]||null}
     function itemMode(item,day){return item.mode||day?.mode||'STACJONARNE'}
-    function modeOf(day){if(!day||!day.items?.length)return 'WOLNE';const modes=new Set(day.items.map(i=>itemMode(i,day)));return modes.size>1?'MIESZANE':(modes.has('ZDALNE')?'ZDALNE':'STACJONARNE')}
+    function modeOf(day){if(!day||!day.items?.length)return 'WOLNE';const modes=new Set(day.items.map(i=>itemMode(i,day)));return modes.size>1||modes.has('MIESZANE')?'MIESZANE':(modes.has('ZDALNE')?'ZDALNE':'STACJONARNE')}
     function modeClass(mode){return mode==='ZDALNE'?'mode-remote':mode==='STACJONARNE'?'mode-onsite':mode==='MIESZANE'?'mode-mixed':'mode-free'}
     function filteredItems(day){const q=$('subjectSearch').value.trim().toLocaleLowerCase('pl');return (day?.items||[]).filter(item=>!q||[item.title,item.lecturer,item.type,item.room].filter(Boolean).join(' ').toLocaleLowerCase('pl').includes(q))}
     function selectedDateChange(iso){state.selectedDate=iso;state.month=parseISO(iso).getMonth();renderAll();window.scrollTo({top:0,behavior:'smooth'})}
@@ -287,14 +303,18 @@
         const iso=addDays(monday,i),d=parseISO(iso),data=dayData(iso),modes=new Set((data?.items||[]).map(x=>itemMode(x,data)));
         const btn=document.createElement('button');btn.type='button';btn.className='date-chip'+(iso===state.selectedDate?' active':'');
         btn.innerHTML='<span class="day-name">'+weekdaysShort[d.getDay()]+'</span><span class="day-number">'+String(d.getDate()).padStart(2,'0')+'</span>';
-        if(modes.size){const dots=document.createElement('span');dots.className='date-markers';if(modes.has('STACJONARNE')){const dot=document.createElement('i');dots.append(dot)}if(modes.has('ZDALNE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}btn.append(dots)}
+        if(modes.size){const dots=document.createElement('span');dots.className='date-markers';if(modes.has('STACJONARNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dots.append(dot)}if(modes.has('ZDALNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}btn.append(dots)}
         btn.addEventListener('click',()=>selectedDateChange(iso));container.append(btn);
       }
     }
     function classCard(item,day){
-      const mode=itemMode(item,day),remote=mode==='ZDALNE',mixed=mode==='MIESZANE';
-      const tag=remote?'<span class="meta-tag remote">ZDALNE</span>':(item.room&&item.room!=='BRAK SALI'?'<span class="meta-tag">SALA '+esc(item.room)+'</span>':(item.room==='BRAK SALI'?'<span class="meta-tag missing">BRAK SALI</span>':'<span class="meta-tag">STACJONARNIE</span>'));
-      return '<article class="class-card '+(remote?'remote':mixed?'mixed':'')+'"><div class="class-info"><div class="class-line"><span class="class-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="class-subject">'+esc(item.title)+'</span></div><div class="class-teacher">'+esc(item.lecturer||'Prowadzący niepodany')+' <span class="class-type">('+esc(item.type||'Zajęcia')+')</span></div></div><div class="class-meta">'+tag+'</div></article>';
+      const mode=itemMode(item,day),tags=[];
+      if(mode==='ZDALNE')tags.push('<span class="meta-tag remote">ZDALNE</span>');
+      else if(mode==='STACJONARNE')tags.push('<span class="meta-tag onsite">STACJONARNE</span>');
+      else tags.push('<span class="meta-tag remote">ZDALNE</span><span class="meta-tag onsite">STACJONARNE</span>');
+      if(item.room)tags.push('<span class="meta-tag room">'+esc(item.room)+'</span>');
+      const group=item.group?'<span class="class-group">'+esc(item.group)+'</span>':'';
+      return '<article class="class-card '+(mode==='ZDALNE'?'remote':mode==='MIESZANE'?'mixed':'')+'"><div class="class-info"><div class="class-line"><span class="class-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="class-subject">'+esc(item.title)+'</span></div><div class="class-teacher">'+esc(item.lecturer||'Prowadzący niepodany')+'</div><div class="class-extra"><span class="class-type">'+esc(item.type||'zajęcia')+'</span>'+group+'</div></div><div class="class-meta">'+tags.join('')+'</div></article>';
     }
     function renderDay(){
       const day=dayData(state.selectedDate),items=filteredItems(day),host=$('dayClasses');
@@ -309,7 +329,14 @@
         const iso=addDays(mon,i),d=parseISO(iso),day=dayData(iso),items=filteredItems(day);
         const col=document.createElement('div');col.className='week-day'+(iso===state.selectedDate?' selected':'');
         const head=document.createElement('button');head.className='week-day-header';head.innerHTML='<div class="day-name">'+weekdaysMon[i]+'</div><div class="day-date">'+String(d.getDate()).padStart(2,'0')+'</div>';head.addEventListener('click',()=>selectedDateChange(iso));col.append(head);
-        if(items.length){items.forEach(item=>{const remote=itemMode(item,day)==='ZDALNE';const event=document.createElement('button');event.className='week-event'+(remote?' remote':'');event.innerHTML='<span class="event-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="event-title">'+esc(item.title)+'</span><span class="event-room">'+(remote?'ZDALNE':(item.room?'SALA '+esc(item.room):'STACJONARNE'))+'</span>';event.addEventListener('click',()=>selectedDateChange(iso));col.append(event)})}
+        if(items.length){items.forEach(item=>{
+          const mode=itemMode(item,day),remote=mode==='ZDALNE';
+          const event=document.createElement('button');event.className='week-event'+(remote?' remote':'');
+          const badges=mode==='ZDALNE'?'<span class="event-badge remote">ZDALNE</span>':mode==='STACJONARNE'?'<span class="event-badge">STACJONARNE</span>':'<span class="event-badge remote">ZDALNE</span><span class="event-badge">STACJONARNE</span>';
+          const room=item.room?'<span class="event-badge room">'+esc(item.room)+'</span>':'';
+          event.innerHTML='<span class="event-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="event-title">'+esc(item.title)+'</span><span class="event-type">'+esc(item.type||'zajęcia')+(item.group?' · '+esc(item.group):'')+'</span><span class="event-meta">'+badges+room+'</span>';
+          event.addEventListener('click',()=>selectedDateChange(iso));col.append(event);
+        })}
         else{const empty=document.createElement('div');empty.className='week-empty';empty.textContent='—';col.append(empty)}
         host.append(col);
       }
@@ -326,8 +353,8 @@
         const num=document.createElement('span');num.className='daynum';num.textContent=dayNum;cell.append(num);
         const dots=document.createElement('span');dots.className='dots';
         const modes=new Set(items.map(item=>itemMode(item,data)));
-        if(modes.has('STACJONARNE')){const dot=document.createElement('i');dots.append(dot)}
-        if(modes.has('ZDALNE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}
+        if(modes.has('STACJONARNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dots.append(dot)}
+        if(modes.has('ZDALNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}
         cell.append(dots);cell.addEventListener('click',()=>selectedDateChange(iso));host.append(cell);
       }
     }
@@ -367,60 +394,93 @@
         await loadNotifications(false);
       }
     }
-    const readIdsKey='pansPlanReadNotificationsV1',sentIdsKey='pansPlanSentNotificationsV1';
+    const readIdsKey='pansPlanReadNotificationsV1';
     function getStoredSet(key){try{return new Set(JSON.parse(localStorage.getItem(key)||'[]'))}catch(e){return new Set()}}
-    function saveStoredSet(key,set){localStorage.setItem(key,JSON.stringify([...set].slice(-300)))}
+    function saveStoredSet(key,set){localStorage.setItem(key,JSON.stringify([...set].slice(-500)))}
     function updateUnreadDot(){
       const read=getStoredSet(readIdsKey),unread=state.notifications.filter(n=>!read.has(n.id)).length;
-      $('unreadDot').style.display=unread?'block':'none';
+      const badge=$('unreadDot');badge.textContent=unread>99?'99+':String(unread);badge.style.display=unread?'inline-flex':'none';
     }
+    function notificationTypeLabel(type){return type==='added'?'DODANO':type==='cancelled'?'USUNIĘTO':type==='changed'?'ZMIENIONO':'ZMIANA'}
     function renderNotifications(){
       const host=$('notificationList');host.innerHTML='';
-      if(!state.notifications.length){host.innerHTML='<div class="empty-state">Nie ma nowych zmian w planie.</div>';updateUnreadDot();return}
+      if(!state.notifications.length){host.innerHTML='<div class="empty-state">Brak zmian w planie z ostatnich 7 dni.</div>';updateUnreadDot();return}
       const read=getStoredSet(readIdsKey);
       state.notifications.slice().reverse().forEach(item=>{
-        const el=document.createElement('article');el.className='notification-item'+(read.has(item.id)?'':' unread');
-        const type=item.type==='added'?'Dodano':item.type==='cancelled'?'Odwołano':'Zmieniono';
-        el.innerHTML='<div class="notification-top"><span class="notification-type">'+type+'</span><span class="notification-date">'+esc(item.date||'')+'</span></div><div class="notification-title">'+esc(item.title||'Zmiana w planie')+'</div><div class="notification-message">'+esc(item.message||'Zaktualizowano harmonogram.')+'</div>'+(item.details?.length?'<div class="notification-details">'+item.details.map(esc).join('<br>')+'</div>':'');
+        const events=Array.isArray(item.events)?item.events:[item];
+        const details=events.map(event=>'<div class="notification-change"><strong>'+notificationTypeLabel(event.type)+' · '+esc(event.message||event.title||'Zajęcia')+'</strong>'+(Array.isArray(event.details)&&event.details.length?'<div class="notification-details">'+event.details.map(esc).join('<br>')+'</div>':'')+'</div>').join('');
+        const el=document.createElement('article');el.className='notification-item'+(read.has(item.id)?'':' unread');el.tabIndex=0;el.setAttribute('role','button');el.setAttribute('aria-label','Otwórz plan na '+esc(item.date||'wybrany dzień'));
+        el.innerHTML='<div class="notification-top"><span class="notification-type">'+esc(item.title||'Zmiany w planie')+'</span><span class="notification-date">'+esc(item.date||'')+'</span></div><div class="notification-message">'+esc(item.message||'Zaktualizowano harmonogram.')+'</div><div class="notification-details">'+details+'</div>';
+        const open=()=>openNotification(item);
+        el.addEventListener('click',open);el.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();open()}});
         host.append(el);
       });
       updateUnreadDot();
     }
-    async function dispatchSystemNotifications(newItems){
-      if(!newItems.length||!('Notification'in window)||Notification.permission!=='granted'||localStorage.getItem('pansPlanSystemNotifications')!=='yes')return;
-      const sent=getStoredSet(sentIdsKey);
-      for(const item of newItems){
-        if(sent.has(item.id))continue;
-        try{
-          const title=item.title||'Zmiana w planie zajęć';
-          const body=item.message||'Zaktualizowano harmonogram.';
-          if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.ready;await reg.showNotification(title,{body,icon:'./icon.svg',tag:item.id,data:{url:'./'}})}
-          else new Notification(title,{body,icon:'./icon.svg',tag:item.id});
-          sent.add(item.id);
-        }catch(e){}
-      }
-      saveStoredSet(sentIdsKey,sent);
+    function markRead(showToast=true){
+      const read=getStoredSet(readIdsKey);state.notifications.forEach(n=>read.add(n.id));saveStoredSet(readIdsKey,read);renderNotifications();if(showToast)toast('Oznaczono wszystkie jako przeczytane');
     }
-    async function loadNotifications(allowSystem=false){
+    function openNotification(item){
+      if(item.id){const read=getStoredSet(readIdsKey);read.add(item.id);saveStoredSet(readIdsKey,read)}
+      closePanel('notificationsOverlay');state.view='day';document.querySelectorAll('.tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.view==='day'));document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id==='dayView'));
+      if(item.date&&/^\d{4}-\d{2}-\d{2}$/.test(item.date))selectedDateChange(item.date);else renderAll();
+      renderNotifications();
+    }
+    async function loadNotifications(){
       try{
         const response=await fetch('./notifications.json?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);
-        const data=await response.json(),oldIds=new Set(state.notifications.map(x=>x.id));
-        state.notifications=Array.isArray(data.changes)?data.changes:[];
+        const data=await response.json();state.notifications=Array.isArray(data.changes)?data.changes:[];
         renderNotifications();
-        if(allowSystem){const fresh=state.notifications.filter(x=>!oldIds.has(x.id));await dispatchSystemNotifications(fresh)}
       }catch(e){state.notifications=[];renderNotifications()}
+    }
+    function pushApiUrl(){return String(window.PUSH_API_URL||'').trim().replace(/\/+$/,'')}
+    function base64UrlToBytes(value){
+      const padding='='.repeat((4-value.length%4)%4),base64=(value+padding).replace(/-/g,'+').replace(/_/g,'/');
+      return Uint8Array.from(atob(base64),character=>character.charCodeAt(0));
+    }
+    async function updateNotificationControls(){
+      let active=false;
+      try{if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.ready;active=!!(await reg.pushManager.getSubscription())}}catch(e){}
+      const configured=!!pushApiUrl();
+      $('enableNotifications').textContent=active?'Wyłącz powiadomienia':configured?'Włącz powiadomienia':'Konfiguracja Push';
+      $('settingsNotifications').textContent=active?'Wyłącz powiadomienia':configured?'Włącz powiadomienia':'Konfiguracja Push';
+      $('pushStatus').textContent=active?'Powiadomienia Push są aktywne na tym urządzeniu.':configured?'Powiadomienia Push są gotowe do włączenia na tym urządzeniu.':'Powiadomienia Push wymagają jednorazowego wdrożenia Cloudflare i wpisania adresu Workera w push-config.js.';
+    }
+    async function pushRequest(path,body){
+      const response=await fetch(pushApiUrl()+path,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});
+      if(!response.ok)throw new Error('Cloudflare Worker: HTTP '+response.status);
+      return response.json();
+    }
+    async function togglePushNotifications(){
+      const api=pushApiUrl();
+      if(!api){toast('Najpierw trzeba jednorazowo skonfigurować Cloudflare Push.');return}
+      if(!('serviceWorker'in navigator)||!('PushManager'in window)||!('Notification'in window)){toast('Ta przeglądarka nie obsługuje Web Push.');return}
+      try{
+        const reg=await navigator.serviceWorker.ready;
+        const existing=await reg.pushManager.getSubscription();
+        if(existing){
+          await pushRequest('/unsubscribe',{endpoint:existing.endpoint});
+          await existing.unsubscribe();
+          toast('Powiadomienia wyłączone na tym urządzeniu.');
+          await updateNotificationControls();
+          return;
+        }
+        let permission=Notification.permission;
+        if(permission!=='granted')permission=await Notification.requestPermission();
+        if(permission!=='granted'){toast('Nie udzielono zgody na powiadomienia.');return}
+        const config=await pushRequest('/config');
+        if(!config.publicVapidKey)throw new Error('Brak publicznego klucza VAPID.');
+        const subscription=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:base64UrlToBytes(config.publicVapidKey)});
+        try{await pushRequest('/subscribe',subscription.toJSON())}
+        catch(error){await subscription.unsubscribe();throw error}
+        toast('Powiadomienia włączone na tym urządzeniu.');
+        await updateNotificationControls();
+      }catch(error){console.error(error);toast('Nie udało się skonfigurować Push: '+error.message)}
     }
     function openPanel(id){$(id).hidden=false}
     function closePanel(id){$(id).hidden=true}
-    async function enableSystemNotifications(){
-      if(!('Notification'in window)){toast('Ta przeglądarka nie obsługuje powiadomień');return}
-      const permission=await Notification.requestPermission();
-      if(permission==='granted'){localStorage.setItem('pansPlanSystemNotifications','yes');toast('Powiadomienia systemowe włączone');await dispatchSystemNotifications(state.notifications)}
-      else{localStorage.setItem('pansPlanSystemNotifications','no');toast('Nie udzielono zgody na powiadomienia')}
-    }
-    function markRead(){const read=getStoredSet(readIdsKey);state.notifications.forEach(n=>read.add(n.id));saveStoredSet(readIdsKey,read);renderNotifications();toast('Oznaczono powiadomienia jako przeczytane')}
     $('focusSearch').addEventListener('click',()=>$('subjectSearch').focus());
-    $('openNotifications').addEventListener('click',()=>{openPanel('notificationsOverlay');renderNotifications()});
+    $('openNotifications').addEventListener('click',()=>{openPanel('notificationsOverlay');markRead(false);renderNotifications()});
     $('openSettings').addEventListener('click',()=>openPanel('settingsOverlay'));
     document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>closePanel(btn.dataset.close)));
     document.querySelectorAll('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)closePanel(el.id)}));
@@ -436,8 +496,8 @@
     $('downloadDay').addEventListener('click',()=>downloadText('plan_'+dateFile(state.selectedDate)+'.txt',dayTxt(state.selectedDate)));
     $('downloadWeek').addEventListener('click',()=>downloadText('plan_tydzien_'+dateFile(mondayOf(state.selectedDate))+'.txt',weekTxt()));
     $('markNotificationsRead').addEventListener('click',markRead);
-    $('enableNotifications').addEventListener('click',enableSystemNotifications);
-    $('settingsNotifications').addEventListener('click',enableSystemNotifications);
+    $('enableNotifications').addEventListener('click',togglePushNotifications);
+    $('settingsNotifications').addEventListener('click',togglePushNotifications);
     $('refreshData').addEventListener('click',()=>loadSchedule(false));
     $('openFilters').addEventListener('click',()=>{const field=$('subjectSearch');field.focus();field.select();toast('Wpisz nazwę przedmiotu lub prowadzącego')});
     let installEvent=null;
@@ -448,11 +508,12 @@
     });
     window.addEventListener('appinstalled',()=>toast('Aplikacja została zainstalowana'));
     window.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel('notificationsOverlay');closePanel('settingsOverlay')}});
-    if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+    if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').then(()=>updateNotificationControls()).catch(error=>{console.error(error);toast('Nie udało się uruchomić Service Worker')}))}
     state.month=parseISO(state.selectedDate).getMonth();
     renderAll();
     loadSchedule(false);
     setInterval(()=>loadSchedule(true),5*60*1000);
+    updateNotificationControls();
   </script>
 </body>
 </html>

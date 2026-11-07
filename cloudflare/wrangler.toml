@@ -1,0 +1,13 @@
+name = "plan-bn-push"
+main = "src/index.js"
+compatibility_date = "2026-11-07"
+workers_dev = true
+
+[[kv_namespaces]]
+binding = "PUSH_KV"
+id = "00000000000000000000000000000000"
+
+[vars]
+ALLOWED_ORIGIN = "https://plan.mandaro.eu"
+VAPID_SUBJECT = "mailto:szymon@mandaro.eu"
+VAPID_PUBLIC_KEY = "UZUPELNIJ_PUBLICZNY_KLUCZ_VAPID"

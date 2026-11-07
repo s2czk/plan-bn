@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+push_payload.json
+*.tmp
+cloudflare/node_modules/
+cloudflare/.wrangler/
+cloudflare/.dev.vars

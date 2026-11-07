@@ -28,6 +28,10 @@ class FrontendChecks(unittest.TestCase):
             "monthGrid",
             "szymon@mandaro.eu",
             "notifications.json",
+            "Włącz powiadomienia",
+            "push-config.js",
+            "STACJONARNE",
+            "ZDALNE",
         ):
             self.assertIn(required, html)
         self.assertNotIn(">BN1<", html)
@@ -43,6 +47,21 @@ class FrontendChecks(unittest.TestCase):
             script_path = Path(temp_dir) / "app.js"
             script_path.write_text("\n".join(scripts), encoding="utf-8")
             subprocess.run([node, "--check", str(script_path)], check=True, capture_output=True, text=True)
+
+    def test_cloudflare_worker_syntax_and_config(self):
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("Node.js is not installed in this environment")
+        worker = ROOT / "cloudflare" / "src" / "index.js"
+        subprocess.run([node, "--check", str(worker)], check=True, capture_output=True, text=True)
+        config = (ROOT / "cloudflare" / "wrangler.toml").read_text(encoding="utf-8")
+        self.assertIn('binding = "PUSH_KV"', config)
+        self.assertIn('name = "plan-bn-push"', config)
+
+    def test_push_backend_setup_is_documented(self):
+        setup = (ROOT / "cloudflare" / "README.md").read_text(encoding="utf-8")
+        for value in ("PUSH_WORKER_URL", "PUSH_DISPATCH_TOKEN", "VAPID_PRIVATE_KEY", "PUSH_KV"):
+            self.assertIn(value, setup)
 
 
 if __name__ == "__main__":

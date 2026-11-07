@@ -3,7 +3,7 @@ import io
 import json
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from urllib.parse import urljoin
 
 import pdfplumber
@@ -15,6 +15,9 @@ FALLBACK_RESOURCE_URL = "https://www.edukacja.pans-koszalin.pl/mod/resource/view
 HASH_FILE = "last_hash.txt"
 OUTPUT_JSON = "schedule.json"
 NOTIFICATIONS_JSON = "notifications.json"
+PUSH_PAYLOAD_FILE = "push_payload.json"
+PARSER_VERSION_FILE = "parser_version.txt"
+PARSER_VERSION = "2"
 
 HEADERS = {
     "User-Agent": (
@@ -52,27 +55,99 @@ def time_to_minutes(value):
     return int(match.group(1)) * 60 + int(match.group(2))
 
 
+def clean_subject_title(value):
+    """Usuwa z nazwy przedmiotu techniczne dopiski godzin, typu zajęć i grupy."""
+    title = str(value or "")
+    title = re.sub(r"\b\d{1,2}:\d{2}\b", " ", title)
+    title = re.sub(r"\b(?:grupa|gr\.?)\s*[A-Za-z0-9IVX/-]+\b", " ", title, flags=re.IGNORECASE)
+    title = re.sub(
+        r"\s*[\(\[]?\s*(?:[-–—]\s*)?(?:wykład|wykł\.?|wykładowy|ćwiczenia|ćwiczeń|ćw\.?)\s*[\)\]]?\s*$",
+        "",
+        title,
+        flags=re.IGNORECASE,
+    )
+    title = re.sub(r"\s+", " ", title).strip(" .-–—,:;")
+    return title or "Zajęcia kierunkowe BN"
+
+
+def normalize_subject_title(value):
+    """Porównawcza nazwa przedmiotu niezależna od typu zajęć i numeru grupy."""
+    title = clean_subject_title(value).casefold()
+    return re.sub(r"[^0-9a-ząćęłńóśźż]+", " ", title).strip()
+
+
+def unique_values(values):
+    result = []
+    seen = set()
+    for value in values:
+        value = str(value or "").strip()
+        key = value.casefold()
+        if value and key not in seen:
+            seen.add(key)
+            result.append(value)
+    return result
+
+
+def extract_group_labels(text):
+    groups = []
+    for match in re.finditer(r"\b(?:grupa|gr\.?)\s*([A-Za-z0-9IVX/-]+)", text or "", re.IGNORECASE):
+        groups.append("grupa " + match.group(1))
+    return unique_values(groups)
+
+
+def extract_class_types(text):
+    labels = []
+    if re.search(r"\bwyk[łl](?:ad|\.?)", text or "", re.IGNORECASE):
+        labels.append("wykład")
+    if re.search(r"\b(?:ćwiczen\w*|ćw\.?)", text or "", re.IGNORECASE):
+        labels.append("ćwiczenia")
+    return labels or ["zajęcia"]
+
+
 def merge_adjacent_blocks(raw_blocks):
-    """Scalaj tylko ciągłe bloki o identycznym przedmiocie, prowadzącym i trybie."""
+    """Scalaj kolejne wystąpienia tego samego przedmiotu; przerwy i metadane nie rozdzielają bloku."""
     ordered = sorted(raw_blocks, key=lambda item: time_to_minutes(item["start"]))
     grouped = []
-    for block in ordered:
-        if grouped:
-            previous = grouped[-1]
-            same_session = (
-                time_to_minutes(previous["end"]) == time_to_minutes(block["start"])
-                and previous["title"].strip().casefold() == block["title"].strip().casefold()
-                and previous["lecturer"].strip().casefold() == block["lecturer"].strip().casefold()
-                and previous["type"].strip().casefold() == block["type"].strip().casefold()
-                and previous["remote"] == block["remote"]
-                and previous.get("room", "") == block.get("room", "")
-            )
-            if same_session:
-                previous["end"] = block["end"]
-                continue
-        grouped.append(dict(block))
-    return grouped
 
+    for block in ordered:
+        detected_groups = unique_values(extract_group_labels(block.get("title", "")) + [block.get("group", "")])
+        title = clean_subject_title(block.get("title"))
+        key = normalize_subject_title(title)
+        if grouped and normalize_subject_title(grouped[-1]["title"]) == key:
+            current = grouped[-1]
+            if time_to_minutes(block["end"]) > time_to_minutes(current["end"]):
+                current["end"] = block["end"]
+            current["_lecturers"] = unique_values(current["_lecturers"] + [block.get("lecturer", "")])
+            current["_types"] = unique_values(current["_types"] + [block.get("type", "")])
+            current["_groups"] = unique_values(current["_groups"] + detected_groups)
+            current["_rooms"] = unique_values(current["_rooms"] + [block.get("room", "")])
+            current["_modes"] = unique_values(current["_modes"] + ["ZDALNE" if block.get("remote") else "STACJONARNE"])
+        else:
+            grouped.append({
+                "start": block["start"],
+                "end": block["end"],
+                "title": title,
+                "_lecturers": unique_values([block.get("lecturer", "")]),
+                "_types": unique_values([block.get("type", "")]),
+                "_groups": detected_groups,
+                "_rooms": unique_values([block.get("room", "")]),
+                "_modes": ["ZDALNE" if block.get("remote") else "STACJONARNE"],
+            })
+
+    result = []
+    for block in grouped:
+        modes = block.pop("_modes")
+        lecturers = block.pop("_lecturers")
+        types = block.pop("_types")
+        groups = block.pop("_groups")
+        rooms = block.pop("_rooms")
+        block["lecturer"] = " / ".join(lecturers) or "PANS"
+        block["type"] = " / ".join(types) or "zajęcia"
+        block["group"] = " / ".join(groups)
+        block["room"] = " / ".join(rooms)
+        block["mode"] = modes[0] if len(modes) == 1 else "MIESZANE"
+        result.append(block)
+    return result
 
 def parse_single_page(text):
     """Wyciąga datę i zajęcia z jednej strony PDF."""
@@ -91,6 +166,7 @@ def parse_single_page(text):
     day_number = int(date_match.group(2))
     year_number = int(date_match.group(3))
     iso_date = f"{year_number}-{month}-{day_number:02d}"
+    datetime.strptime(iso_date, "%Y-%m-%d")
 
     pattern = re.compile(r"(\d{1,2}:\d{2})\s*[-–]\s*(\d{1,2}:\d{2})")
     matches = list(pattern.finditer(text))
@@ -105,53 +181,61 @@ def parse_single_page(text):
         chunk_end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
         chunk = " ".join(text[chunk_start:chunk_end].split())
 
-        class_type = "Wykł." if re.search(r"Wyk[łl]ad", chunk, re.I) else "Ćw."
-        remote = bool(re.search(r"Zdalnie|Zda\s*dalnie", chunk, re.I))
-        room = ""
-        if not remote:
-            if re.search(r"Br[aą]k\s*sal", chunk, re.I):
-                room = "BRAK SALI"
-            elif re.search(r"HALA\s*SPORTOWA", chunk, re.I):
-                room = "HALA SPORTOWA"
-            elif re.search(r"10-BIBLIOTEKA", chunk, re.I):
-                room = "10-BIBLIOTEKA"
-            elif re.search(r"Aula\s*\d+", chunk, re.I):
-                room_match = re.search(r"Aula\s*\d+", chunk, re.I)
-                room = room_match.group(0) if room_match else ""
-            elif re.search(r"\bH\d+\b", chunk):
-                room_match = re.search(r"\bH\d+\b", chunk)
-                room = room_match.group(0) if room_match else ""
-            else:
-                room_match = re.search(r"\b(020|104|105|106|107|11|3)\b", chunk)
-                room = room_match.group(1) if room_match else "BRAK SALI"
+        class_types = extract_class_types(chunk)
+        groups = extract_group_labels(chunk)
+        remote = bool(re.search(r"Zdalnie|Zda\s*dalnie", chunk, re.IGNORECASE))
 
         lecturer_match = re.search(
             r"((?:prof\.|dr\s+hab\.|dr|mgr|mor|mar)\s+[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+\s+[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż\-]+)",
             chunk,
+            re.IGNORECASE,
         )
         lecturer = (
             lecturer_match.group(1).replace("mor ", "mgr ").replace("mar ", "mgr ")
             if lecturer_match else "PANS"
         )
-        title = chunk[:lecturer_match.start()] if lecturer_match else chunk
-        title = re.sub(r"\bWszyscy\b|\bBezpieczeństwo\s*Narodowe\b", "", title, flags=re.I)
-        title = re.sub(r"\s+", " ", title).strip(" .-–")
+
+        title_source = chunk[:lecturer_match.start()] if lecturer_match else chunk
+        title = clean_subject_title(title_source)
+        title = re.sub(r"\bWszyscy\b|\bBezpieczeństwo\s*Narodowe\b", "", title, flags=re.IGNORECASE)
+        title = re.sub(r"\s+", " ", title).strip(" .-–—")
         if not title:
             title = "Zajęcia kierunkowe BN"
+
+        room = ""
+        if not remote:
+            # Godziny w tekście PDF nie mogą zostać błędnie odczytane jako numer sali.
+            room_text = re.sub(r"\b\d{1,2}:\d{2}\b", " ", chunk)
+            if re.search(r"Br[aą]k\s*sal", room_text, re.IGNORECASE):
+                room = "BRAK SALI"
+            elif re.search(r"HALA\s*SPORTOWA", room_text, re.IGNORECASE):
+                room = "HALA SPORTOWA"
+            elif re.search(r"10-BIBLIOTEKA", room_text, re.IGNORECASE):
+                room = "10-BIBLIOTEKA"
+            elif re.search(r"Aula\s*\d+", room_text, re.IGNORECASE):
+                room_match = re.search(r"Aula\s*\d+", room_text, re.IGNORECASE)
+                room = room_match.group(0) if room_match else ""
+            elif re.search(r"\bH\d+\b", room_text):
+                room_match = re.search(r"\bH\d+\b", room_text)
+                room = room_match.group(0) if room_match else ""
+            else:
+                room_match = re.search(r"\b(020|104|105|106|107|11|3)\b", room_text)
+                room = room_match.group(1) if room_match else "BRAK SALI"
 
         raw_blocks.append({
             "start": start_time,
             "end": end_time,
             "title": title,
             "lecturer": lecturer,
-            "type": class_type,
+            "type": " / ".join(class_types),
+            "group": " / ".join(groups),
             "remote": remote,
             "room": room,
         })
 
     grouped = merge_adjacent_blocks(raw_blocks)
-    modes = {item["remote"] for item in grouped}
-    day_mode = "MIESZANE" if len(modes) > 1 else ("ZDALNE" if modes == {True} else "STACJONARNE")
+    modes = {item["mode"] for item in grouped}
+    day_mode = "MIESZANE" if len(modes) > 1 or "MIESZANE" in modes else (next(iter(modes)) if modes else "STACJONARNE")
     items = []
     for block in grouped:
         item = {
@@ -159,13 +243,14 @@ def parse_single_page(text):
             "title": block["title"],
             "lecturer": block["lecturer"],
             "type": block["type"],
-            "mode": "ZDALNE" if block["remote"] else "STACJONARNE",
+            "mode": block["mode"],
         }
-        if not block["remote"]:
-            item["room"] = block.get("room") or "BRAK SALI"
+        if block.get("group"):
+            item["group"] = block["group"]
+        if block.get("room"):
+            item["room"] = block["room"]
         items.append(item)
     return iso_date, {"mode": day_mode, "items": items}
-
 
 def event_mode(item, day):
     return item.get("mode") or day.get("mode", "STACJONARNE")
@@ -179,6 +264,7 @@ def item_fingerprint(item, day):
         item.get("type", "").strip().casefold(),
         event_mode(item, day),
         item.get("room", "").strip().casefold(),
+        item.get("group", "").strip().casefold(),
     )
 
 
@@ -193,6 +279,8 @@ def change_score(old_item, old_day, new_item, new_day):
     elif old_item.get("time", "").split("-")[0] == new_item.get("time", "").split("-")[0]:
         score += 18
     if old_item.get("type", "") == new_item.get("type", ""):
+        score += 8
+    if old_item.get("group", "").strip().casefold() == new_item.get("group", "").strip().casefold():
         score += 8
     if event_mode(old_item, old_day) == event_mode(new_item, new_day):
         score += 8
@@ -243,6 +331,8 @@ def build_change_notifications(old_days, new_days, update_id, created_at=None):
                 details.append(f'Prowadzący: {old_item.get("lecturer", "—")} → {new_item.get("lecturer", "—")}')
             if old_item.get("type") != new_item.get("type"):
                 details.append(f'Typ zajęć: {old_item.get("type", "—")} → {new_item.get("type", "—")}')
+            if old_item.get("group", "") != new_item.get("group", ""):
+                details.append(f'Grupa: {old_item.get("group") or "—"} → {new_item.get("group") or "—"}')
             old_mode, new_mode = event_mode(old_item, old_day), event_mode(new_item, new_day)
             if old_mode != new_mode:
                 details.append(f'Tryb: {old_mode} → {new_mode}')
@@ -269,7 +359,7 @@ def build_change_notifications(old_days, new_days, update_id, created_at=None):
                 "type": "cancelled",
                 "title": "Odwołano zajęcia",
                 "message": item.get("title", "Zajęcia") + " · " + item.get("time", ""),
-                "details": [item.get("lecturer", "Prowadzący niepodany")],
+                "details": [item.get("lecturer", "Prowadzący niepodany")] + (["Grupa: " + item["group"]] if item.get("group") else []),
                 "created_at": created_at,
             })
 
@@ -282,6 +372,8 @@ def build_change_notifications(old_days, new_days, update_id, created_at=None):
             details.append("Tryb: " + mode)
             if item.get("room"):
                 details.append("Sala: " + item["room"])
+            if item.get("group"):
+                details.append("Grupa: " + item["group"])
             changes.append({
                 "id": f"{update_id}-{date}-added-{len(changes)+1}",
                 "date": date,
@@ -294,18 +386,67 @@ def build_change_notifications(old_days, new_days, update_id, created_at=None):
     return changes[:150]
 
 
+def group_change_notifications(changes, update_id, created_at):
+    """Grupuje wszystkie wykryte zmiany z jednego dnia w jeden komunikat."""
+    grouped = {}
+    for change in changes:
+        grouped.setdefault(change.get("date", ""), []).append(change)
+
+    summaries = []
+    for date, events in sorted(grouped.items()):
+        count = len(events)
+        count_text = f"Wykryto {count} zmianę" if count == 1 else (
+            f"Wykryto {count} zmiany" if 2 <= count % 10 <= 4 and not 12 <= count % 100 <= 14
+            else f"Wykryto {count} zmian"
+        )
+        summaries.append({
+            "id": f"{update_id}-{date}",
+            "date": date,
+            "type": "summary",
+            "title": "Zmiany w planie zajęć",
+            "message": count_text + " w planie zajęć.",
+            "events": events,
+            "created_at": created_at,
+            "url": f"./?date={date}",
+        })
+    return summaries
+
+
+def keep_recent_notifications(notifications, now=None):
+    """Pozostawia tylko siedmiodniową historię powiadomień."""
+    now = now or datetime.now()
+    cutoff = now - timedelta(days=7)
+    kept = []
+    seen = set()
+    for item in notifications or []:
+        try:
+            created = datetime.strptime(item.get("created_at", ""), "%Y-%m-%d %H:%M")
+        except (TypeError, ValueError):
+            continue
+        if created < cutoff or created > now + timedelta(days=1):
+            continue
+        identifier = item.get("id")
+        if not identifier or identifier in seen:
+            continue
+        seen.add(identifier)
+        kept.append(item)
+    return sorted(kept, key=lambda item: item.get("created_at", ""))
+
+
 def validate_schedule(days):
     if not days:
         raise RuntimeError("Parser nie odczytał żadnego dnia — poprzedni schedule.json pozostaje bez zmian.")
     for date, day in days.items():
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
             raise ValueError(f"Nieprawidłowa data w planie: {date}")
+        datetime.strptime(date, "%Y-%m-%d")
         for item in day.get("items", []):
+            if not item.get("title", "").strip():
+                raise ValueError(f"Brak nazwy przedmiotu dla {date}")
             start, end = item["time"].split("-", 1)
             if time_to_minutes(start) >= time_to_minutes(end):
                 raise ValueError(f"Nieprawidłowy przedział czasu {item['time']} dla {date}")
     print(f"Kontrola danych: {len(days)} dni, {sum(len(d.get('items', [])) for d in days.values())} bloków zajęć.")
-
 
 def read_json_if_exists(path, default):
     if not os.path.exists(path):
@@ -314,49 +455,96 @@ def read_json_if_exists(path, default):
         return json.load(handle)
 
 
+def write_json_atomic(path, payload):
+    temporary = path + ".tmp"
+    with open(temporary, "w", encoding="utf-8") as handle:
+        json.dump(payload, handle, ensure_ascii=False, indent=2)
+    os.replace(temporary, path)
+
+
+def write_push_payload(notifications):
+    write_json_atomic(PUSH_PAYLOAD_FILE, {"notifications": notifications})
+
+
 def main():
+    parser_version = ""
+    if os.path.exists(PARSER_VERSION_FILE):
+        with open(PARSER_VERSION_FILE, "r", encoding="utf-8") as handle:
+            parser_version = handle.read().strip()
+    parser_changed = parser_version != PARSER_VERSION
+
     url, label = find_bn_resource_link()
     print(f"Pobieranie planu z: {url} ({label})")
     response = requests.get(url, headers=HEADERS, timeout=45, allow_redirects=True)
     response.raise_for_status()
     pdf_bytes = response.content
+    if b"%PDF-" not in pdf_bytes[:1024]:
+        raise RuntimeError("Pobrany zasób nie wygląda na plik PDF — poprzedni plan pozostaje bez zmian.")
     current_hash = hashlib.sha256(pdf_bytes).hexdigest()
 
-    if os.path.exists(HASH_FILE) and os.path.exists(OUTPUT_JSON):
+    old_hash = ""
+    if os.path.exists(HASH_FILE):
         with open(HASH_FILE, "r", encoding="utf-8") as handle:
-            if handle.read().strip() == current_hash:
-                print("Plik PDF nie zmienił się od ostatniego sprawdzenia.")
-                return
+            old_hash = handle.read().strip()
+
+    if old_hash == current_hash and not parser_changed and os.path.exists(OUTPUT_JSON):
+        print("PDF i wersja parsera nie zmieniły się — pomijam przetwarzanie.")
+        write_push_payload([])
+        return
 
     old_payload = read_json_if_exists(OUTPUT_JSON, {"days": {}})
     old_days = old_payload.get("days") or {}
     days_dict = {}
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
         for page in pdf.pages:
-            text = page.extract_text() or ""
-            iso_date, day_obj = parse_single_page(text)
+            page_text = page.extract_text() or ""
+            iso_date, day_obj = parse_single_page(page_text)
             if iso_date and day_obj:
                 days_dict[iso_date] = day_obj
 
     validate_schedule(days_dict)
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
-    payload = {"last_updated": now, "source_label": label, "days": days_dict}
-    changes = build_change_notifications(old_days, days_dict, current_hash[:12], now)
+    now = datetime.now()
+    now_text = now.strftime("%Y-%m-%d %H:%M")
+    payload = {"last_updated": now_text, "source_label": label, "days": days_dict}
+
+    # Zmiana logiki parsera nie jest zmianą w planie uczelni — nie wysyłamy wtedy alarmu.
+    if parser_changed or not old_days:
+        current_notifications = []
+        history = []
+        print("Przeliczenie parsera / inicjalizacja danych — bez powiadomienia o zmianach.")
+    else:
+        raw_changes = build_change_notifications(old_days, days_dict, current_hash[:12], now_text)
+        current_notifications = group_change_notifications(raw_changes, current_hash[:12], now_text)
+        previous = read_json_if_exists(NOTIFICATIONS_JSON, {"changes": []})
+        history = keep_recent_notifications(previous.get("changes", []), now)
+
+    known_ids = {item.get("id") for item in history}
+    history.extend(item for item in current_notifications if item.get("id") not in known_ids)
+    history = keep_recent_notifications(history, now)
+
     notifications = {
+        "schema_version": 1,
         "update_id": current_hash[:12],
-        "last_updated": now,
-        "changes": changes,
+        "last_updated": now_text,
+        "changes": history,
     }
 
-    with open(OUTPUT_JSON, "w", encoding="utf-8") as handle:
-        json.dump(payload, handle, ensure_ascii=False, indent=2)
-    with open(NOTIFICATIONS_JSON, "w", encoding="utf-8") as handle:
-        json.dump(notifications, handle, ensure_ascii=False, indent=2)
-    with open(HASH_FILE, "w", encoding="utf-8") as handle:
+    write_json_atomic(OUTPUT_JSON, payload)
+    write_json_atomic(NOTIFICATIONS_JSON, notifications)
+    write_push_payload(current_notifications)
+    with open(HASH_FILE + ".tmp", "w", encoding="utf-8") as handle:
         handle.write(current_hash)
+    os.replace(HASH_FILE + ".tmp", HASH_FILE)
+    with open(PARSER_VERSION_FILE + ".tmp", "w", encoding="utf-8") as handle:
+        handle.write(PARSER_VERSION)
+    os.replace(PARSER_VERSION_FILE + ".tmp", PARSER_VERSION_FILE)
 
-    print(f"Zapisano {len(days_dict)} dni planu. Wykryto {len(changes)} zmian zajęć.")
+    total_items = sum(len(day.get("items", [])) for day in days_dict.values())
+    print(f"Zapisano {len(days_dict)} dni i {total_items} bloków. Nowe powiadomienia: {len(current_notifications)}.")
 
+
+if __name__ == "__main__":
+    main()
 
 if __name__ == "__main__":
     main()
