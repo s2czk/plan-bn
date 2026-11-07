@@ -17,7 +17,7 @@ OUTPUT_JSON = "schedule.json"
 NOTIFICATIONS_JSON = "notifications.json"
 PUSH_PAYLOAD_FILE = "push_payload.json"
 PARSER_VERSION_FILE = "parser_version.txt"
-PARSER_VERSION = "2"
+PARSER_VERSION = "3"
 
 HEADERS = {
     "User-Agent": (
@@ -90,7 +90,7 @@ def unique_values(values):
 
 def extract_group_labels(text):
     groups = []
-    for match in re.finditer(r"\b(?:grupa|gr\.?)\s*([A-Za-z0-9IVX/-]+)", text or "", re.IGNORECASE):
+    for match in re.finditer(r"\b(?:grupa|gr\.?)\s*((?:[A-Z]?\d+[A-Z]?(?:[/,-][A-Z]?\d+[A-Z]?)?|[IVX]{1,4}|[A-Z]))\b", text or "", re.IGNORECASE):
         groups.append("grupa " + match.group(1))
     return unique_values(groups)
 
