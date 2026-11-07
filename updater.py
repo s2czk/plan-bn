@@ -110,6 +110,7 @@ def merge_adjacent_blocks(raw_blocks):
     grouped = []
 
     for block in ordered:
+        detected_groups = unique_values(extract_group_labels(block.get("title", "")) + [block.get("group", "")])
         title = clean_subject_title(block.get("title"))
         key = normalize_subject_title(title)
         if grouped and normalize_subject_title(grouped[-1]["title"]) == key:
@@ -118,7 +119,7 @@ def merge_adjacent_blocks(raw_blocks):
                 current["end"] = block["end"]
             current["_lecturers"] = unique_values(current["_lecturers"] + [block.get("lecturer", "")])
             current["_types"] = unique_values(current["_types"] + [block.get("type", "")])
-            current["_groups"] = unique_values(current["_groups"] + [block.get("group", "")])
+            current["_groups"] = unique_values(current["_groups"] + detected_groups)
             current["_rooms"] = unique_values(current["_rooms"] + [block.get("room", "")])
             current["_modes"] = unique_values(current["_modes"] + ["ZDALNE" if block.get("remote") else "STACJONARNE"])
         else:
@@ -128,7 +129,7 @@ def merge_adjacent_blocks(raw_blocks):
                 "title": title,
                 "_lecturers": unique_values([block.get("lecturer", "")]),
                 "_types": unique_values([block.get("type", "")]),
-                "_groups": unique_values([block.get("group", "")]),
+                "_groups": detected_groups,
                 "_rooms": unique_values([block.get("room", "")]),
                 "_modes": ["ZDALNE" if block.get("remote") else "STACJONARNE"],
             })
@@ -263,6 +264,7 @@ def item_fingerprint(item, day):
         item.get("type", "").strip().casefold(),
         event_mode(item, day),
         item.get("room", "").strip().casefold(),
+        item.get("group", "").strip().casefold(),
     )
 
 
@@ -277,6 +279,8 @@ def change_score(old_item, old_day, new_item, new_day):
     elif old_item.get("time", "").split("-")[0] == new_item.get("time", "").split("-")[0]:
         score += 18
     if old_item.get("type", "") == new_item.get("type", ""):
+        score += 8
+    if old_item.get("group", "").strip().casefold() == new_item.get("group", "").strip().casefold():
         score += 8
     if event_mode(old_item, old_day) == event_mode(new_item, new_day):
         score += 8
@@ -327,6 +331,8 @@ def build_change_notifications(old_days, new_days, update_id, created_at=None):
                 details.append(f'Prowadzący: {old_item.get("lecturer", "—")} → {new_item.get("lecturer", "—")}')
             if old_item.get("type") != new_item.get("type"):
                 details.append(f'Typ zajęć: {old_item.get("type", "—")} → {new_item.get("type", "—")}')
+            if old_item.get("group", "") != new_item.get("group", ""):
+                details.append(f'Grupa: {old_item.get("group") or "—"} → {new_item.get("group") or "—"}')
             old_mode, new_mode = event_mode(old_item, old_day), event_mode(new_item, new_day)
             if old_mode != new_mode:
                 details.append(f'Tryb: {old_mode} → {new_mode}')
@@ -353,7 +359,7 @@ def build_change_notifications(old_days, new_days, update_id, created_at=None):
                 "type": "cancelled",
                 "title": "Odwołano zajęcia",
                 "message": item.get("title", "Zajęcia") + " · " + item.get("time", ""),
-                "details": [item.get("lecturer", "Prowadzący niepodany")],
+                "details": [item.get("lecturer", "Prowadzący niepodany")] + (["Grupa: " + item["group"]] if item.get("group") else []),
                 "created_at": created_at,
             })
 
@@ -366,6 +372,8 @@ def build_change_notifications(old_days, new_days, update_id, created_at=None):
             details.append("Tryb: " + mode)
             if item.get("room"):
                 details.append("Sala: " + item["room"])
+            if item.get("group"):
+                details.append("Grupa: " + item["group"])
             changes.append({
                 "id": f"{update_id}-{date}-added-{len(changes)+1}",
                 "date": date,
