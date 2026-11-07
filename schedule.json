@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-07 11:40",
+  "last_updated": "2026-11-07 11:44",
   "source_label": "plan bn 1 stacjonarne 2026 11 06 plik",
   "days": {
     "2026-10-01": {
@@ -272,8 +272,7 @@
           "title": "Bezpieczeństwo i higiena pracy",
           "lecturer": "mgr Halina Grobelna",
           "type": "ćwiczenia",
-          "mode": "ZDALNE",
-          "group": "grupa obelna"
+          "mode": "ZDALNE"
         }
       ]
     },
