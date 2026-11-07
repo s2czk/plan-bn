@@ -44,6 +44,10 @@ jobs:
         working-directory: cloudflare
         run: npm install --no-audit --no-fund
 
+      - name: Testy API Cloudflare Worker
+        working-directory: cloudflare
+        run: npm test
+
       - name: Sprawdź składnię i zbuduj Worker (dry run)
         working-directory: cloudflare
         run: |
