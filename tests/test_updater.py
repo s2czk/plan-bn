@@ -1,6 +1,6 @@
 import unittest
 
-from updater import build_change_notifications, clean_subject_title, group_change_notifications, merge_adjacent_blocks, parse_single_page
+from updater import build_change_notifications, clean_subject_title, extract_group_labels, group_change_notifications, merge_adjacent_blocks, parse_single_page
 
 
 def block(start, end, title="Ekonomia", lecturer="dr A. Kowalski", class_type="wykład", remote=True, room=""):
@@ -36,6 +36,10 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
             block("11:00", "11:45", title="Administracja publiczna"),
         ])
         self.assertEqual(len(result), 3)
+
+    def test_only_group_codes_are_preserved(self):
+        self.assertEqual(extract_group_labels("Administracja publiczna grupa 1"), ["grupa 1"])
+        self.assertEqual(extract_group_labels("Bezpieczeństwo i higiena pracy grupa ogólna"), [])
 
     def test_subject_suffix_time_is_removed(self):
         self.assertEqual(clean_subject_title("Podstawy filozofii 10:00"), "Podstawy filozofii")
