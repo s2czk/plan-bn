@@ -387,6 +387,18 @@ def build_change_notifications(old_days, new_days, update_id, created_at=None):
     return changes[:150]
 
 
+def next_update_sequence(previous_sequence, old_hash, current_hash):
+    """Licz kolejny stan planu, ale zachowaj numer przy retry tej samej zmiany."""
+    sequence = max(0, int(previous_sequence))
+    if old_hash and old_hash != current_hash:
+        sequence += 1
+    return sequence
+
+
+def make_update_id(sequence, current_hash):
+    return f"{sequence}-{current_hash[:12]}"
+
+
 def group_change_notifications(changes, update_id, created_at):
     """Grupuje wszystkie wykryte zmiany z jednego dnia w jeden komunikat."""
     grouped = {}
@@ -494,9 +506,8 @@ def main():
     except (OSError, ValueError):
         update_sequence = 0
 
-    if old_hash and old_hash != current_hash:
-        update_sequence += 1
-    transition_id = f"{update_sequence}-{current_hash[:12]}"
+    update_sequence = next_update_sequence(update_sequence, old_hash, current_hash)
+    transition_id = make_update_id(update_sequence, current_hash)
 
     if old_hash == current_hash and not parser_changed and os.path.exists(OUTPUT_JSON):
         print("PDF i wersja parsera nie zmieniły się — pomijam przetwarzanie.")
