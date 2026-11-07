@@ -48,8 +48,8 @@ jobs:
 
       - name: Wyślij powiadomienia Push (gdy Cloudflare jest skonfigurowany)
         env:
-          PUSH_WORKER_URL: \${{ secrets.PUSH_WORKER_URL }}
-          PUSH_DISPATCH_TOKEN: \${{ secrets.PUSH_DISPATCH_TOKEN }}
+          PUSH_WORKER_URL: ${{ secrets.PUSH_WORKER_URL }}
+          PUSH_DISPATCH_TOKEN: ${{ secrets.PUSH_DISPATCH_TOKEN }}
         run: |
           python - <<'PY'
           import json
