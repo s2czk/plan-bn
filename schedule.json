@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-07 11:44",
+  "last_updated": "2026-11-07 15:44",
   "source_label": "plan bn 1 stacjonarne 2026 11 06 plik",
   "days": {
     "2026-10-01": {
@@ -352,7 +352,7 @@
         },
         {
           "time": "16:45-20:00",
-          "title": "Kwalifikowana pierwsza pomoc medyczna 11 Ćwiczenia I (2026/2027)",
+          "title": "Kwalifikowana pierwsza pomoc medyczna",
           "lecturer": "PANS",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
