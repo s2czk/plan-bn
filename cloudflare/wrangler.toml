@@ -6,7 +6,7 @@ workers_dev = true
 [[kv_namespaces]]
 binding = "PUSH_KV"
 # ZASTĄP placeholder prawdziwym ID zwróconym przez: npx wrangler kv namespace create PUSH_KV
-id = "00000000000000000000000000000000"
+id = "1631c03547ce4eddb4720d1a169f87a2"
 
 [vars]
 ALLOWED_ORIGIN = "https://plan.mandaro.eu"
