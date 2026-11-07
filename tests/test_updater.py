@@ -1,6 +1,6 @@
 import unittest
 
-from updater import build_change_notifications, clean_subject_title, extract_group_labels, group_change_notifications, merge_adjacent_blocks, parse_single_page
+from updater import build_change_notifications, clean_subject_title, extract_group_labels, group_change_notifications, make_update_id, merge_adjacent_blocks, next_update_sequence, parse_single_page
 
 
 def block(start, end, title="Ekonomia", lecturer="dr A. Kowalski", class_type="wykład", remote=True, room=""):
@@ -62,6 +62,16 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
 
 
 class NotificationDiffTests(unittest.TestCase):
+    def test_push_retry_keeps_id_but_later_repeated_transition_gets_new_id(self):
+        old_a, new_b = "hash-a", "hash-b"
+        first_attempt = next_update_sequence(0, old_a, new_b)
+        retry_attempt = next_update_sequence(0, old_a, new_b)
+        reverted = next_update_sequence(first_attempt, new_b, old_a)
+        repeated = next_update_sequence(reverted, old_a, new_b)
+
+        self.assertEqual(first_attempt, retry_attempt)
+        self.assertNotEqual(make_update_id(first_attempt, new_b), make_update_id(reverted, old_a))
+        self.assertNotEqual(make_update_id(first_attempt, new_b), make_update_id(repeated, new_b))
     def test_unchanged_plan_has_no_notifications(self):
         day = {"mode": "ZDALNE", "items": [{"time": "15:00-16:30", "title": "Ekonomia", "lecturer": "dr A. Kowalski", "type": "wykład"}]}
         self.assertEqual(build_change_notifications({"2026-11-12": day}, {"2026-11-12": day}, "abc"), [])
