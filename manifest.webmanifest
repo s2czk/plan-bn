@@ -1,0 +1,21 @@
+{
+  "id": "./",
+  "name": "Plan zajęć — PANS Koszalin",
+  "short_name": "Plan PANS",
+  "description": "Plan zajęć — Bezpieczeństwo Narodowe, I rok.",
+  "lang": "pl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0D1630",
+  "theme_color": "#0D1630",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

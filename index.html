@@ -1,1414 +1,458 @@
-<!DOCTYPE html>
-<html lang="pl" class="dark">
+<!doctype html>
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Plan Zajęć BN 1 | PANS Koszalin</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0D1630">
+  <meta name="description" content="Aktualny plan zajęć — Bezpieczeństwo Narodowe, I rok, PANS Koszalin.">
+  <title>Plan zajęć — PANS Koszalin · Bezpieczeństwo Narodowe</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            oled: '#0b0f19',
-            panel: '#111827',
-            card: '#1a2234',
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700;750;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background-color: #0b0f19;
-      color: #f1f5f9;
-      -webkit-tap-highlight-color: transparent;
-      overscroll-behavior-y: contain;
-    }
-    /* Niestandardowy pasek przewijania dla ciemnego motywu */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0b0f19;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 9999px;
-    }
-    .pinch-zone {
-      touch-action: pan-y;
-    }
+    :root{color-scheme:dark;--bg-top:#0D1630;--bg-bottom:#17386D;--panel:#111a31;--panel-soft:#15213c;--card:#182443;--card2:#111b33;--line:rgba(154,177,224,.18);--text:#f4f6ff;--muted:#a6b5d3;--dim:#7587aa;--purple:#7659e8;--purple-soft:#a995ff;--lime:#c7f43b;--remote:#a995ff;--onsite:#70b4ff;--shadow:0 14px 34px rgba(2,8,24,.2)}
+    *{box-sizing:border-box}
+    html{min-height:100%;background:var(--bg-top)}
+    body{margin:0;min-height:100vh;background:linear-gradient(180deg,#0D1630 0%,#17386D 100%);background-attachment:fixed;color:var(--text);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+    button,input{font:inherit}
+    button{color:inherit;cursor:pointer}
+    button:focus-visible,input:focus-visible{outline:2px solid #a995ff;outline-offset:2px}
+    .app-shell{width:97%;max-width:1700px;margin:0 auto;padding:clamp(12px,2vw,26px) 0 calc(18px + env(safe-area-inset-bottom));min-height:100vh;display:flex;flex-direction:column;gap:12px}
+    .surface{background:linear-gradient(145deg,rgba(24,36,67,.96),rgba(12,21,43,.96));border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 17px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#5f49c8,#294b8b);border:1px solid rgba(190,178,255,.25);color:white;flex:0 0 auto}
+    .brand-title{font-size:clamp(17px,2vw,22px);font-weight:750;letter-spacing:-.55px;line-height:1.15}
+    .brand-sub{margin-top:4px;color:var(--muted);font-size:12px;letter-spacing:.1px}
+    .header-actions{display:flex;align-items:center;gap:7px}
+    .icon-button{position:relative;width:38px;height:38px;display:grid;place-items:center;border-radius:12px;border:1px solid var(--line);background:rgba(25,39,70,.8);color:#e3eaff;transition:background .16s,border-color .16s}
+    .icon-button:hover{background:rgba(72,69,139,.48);border-color:rgba(169,149,255,.5)}
+    .unread-dot{display:none;position:absolute;right:6px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 2px #172544}
+    .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:5px;background:rgba(9,17,37,.72);border:1px solid var(--line);border-radius:15px}
+    .tab{height:42px;border:0;border-radius:11px;background:transparent;color:#a9b9d9;font-size:13px;font-weight:650;transition:background .16s,color .16s}
+    .tab.active{background:linear-gradient(110deg,#654bd0,#354b9d);color:white;box-shadow:0 5px 15px rgba(8,13,47,.35)}
+    .datebar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px}
+    .date-info{display:flex;align-items:center;gap:11px;min-width:0;flex:1}
+    .date-icon{color:#b6c8ed;flex:0 0 auto}
+    .date-label{font-size:clamp(16px,2.2vw,21px);font-weight:750;letter-spacing:-.45px;white-space:nowrap}
+    .weekday-label{font-size:12px;color:var(--muted);margin-top:3px}
+    .date-right{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+    .mode-badge,.count-badge{border-radius:999px;padding:6px 10px;font-size:10px;font-weight:750;letter-spacing:.35px;white-space:nowrap;border:1px solid}
+    .mode-remote{color:var(--remote);background:rgba(133,105,231,.13);border-color:rgba(169,149,255,.28)}
+    .mode-onsite{color:var(--onsite);background:rgba(76,151,225,.12);border-color:rgba(112,180,255,.26)}
+    .mode-mixed{color:var(--lime);background:rgba(199,244,59,.09);border-color:rgba(199,244,59,.25)}
+    .mode-free{color:#a5b0c5;background:rgba(116,132,162,.1);border-color:rgba(116,132,162,.2)}
+    .date-arrow{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--line);background:rgba(25,39,70,.9);font-size:20px;color:#e3ebff}
+    .date-arrow:hover{border-color:rgba(169,149,255,.55);background:#293967}
+    .week-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+    .date-chip{position:relative;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 6px;border-radius:12px;border:1px solid var(--line);background:rgba(14,25,49,.58);color:#c8d5ef;transition:.15s}
+    .date-chip:hover{background:rgba(54,69,115,.65)}
+    .date-chip.active{background:linear-gradient(145deg,#5d48c7,#304a8e);border-color:rgba(181,164,255,.7);color:white;box-shadow:0 4px 14px rgba(11,13,49,.22)}
+    .date-chip .day-name{font-size:10px;color:#aebddd;font-weight:700;text-transform:uppercase}
+    .date-chip .day-number{font-size:15px;font-weight:750;font-variant-numeric:tabular-nums}
+    .date-chip.active .day-name{color:#e2dcff}
+    .date-markers{display:flex;gap:3px;position:absolute;bottom:4px;left:50%;transform:translateX(-50%)}
+    .date-markers i{display:block;width:4px;height:4px;border-radius:50%;background:var(--onsite)}
+    .date-markers i.remote{background:var(--remote)}
+    .toolbar{display:flex;align-items:center;gap:8px}
+    .search-box{height:42px;display:flex;align-items:center;gap:9px;flex:1;min-width:140px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:rgba(12,22,44,.82);color:#afc0e2}
+    .search-box input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:white;font-size:13px}
+    .search-box input::placeholder{color:#7f91b5}
+    .action-button{height:42px;padding:0 13px;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,#202e50,#121e39);color:#e6edff;font-size:12px;font-weight:650;white-space:nowrap;transition:.15s}
+    .action-button:hover{border-color:rgba(169,149,255,.45);background:#293967}
+    .action-button.primary{background:linear-gradient(110deg,#6248d0,#3b4e9d);border-color:rgba(170,153,255,.5);color:white}
+    .action-button .btn-icon{font-size:16px;line-height:1}
+    .view{display:none;min-width:0}
+    .view.active{display:block}
+    .section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:3px 2px 9px}
+    .section-heading strong{font-size:14px;font-weight:750}
+    .subtle{font-size:11px;color:var(--muted)}
+    .class-list{display:flex;flex-direction:column;gap:9px}
+    .class-card{position:relative;display:flex;align-items:center;gap:14px;padding:14px 16px 14px 18px;border-radius:16px;background:linear-gradient(112deg,rgba(24,37,69,.97),rgba(13,24,48,.97));border:1px solid rgba(150,173,220,.18);box-shadow:0 8px 22px rgba(2,8,24,.15);overflow:hidden}
+    .class-card:before{content:"";position:absolute;left:0;top:13px;bottom:13px;width:4px;border-radius:0 6px 6px 0;background:var(--onsite)}
+    .class-card.remote:before{background:var(--remote)}
+    .class-card.mixed:before{background:var(--lime)}
+    .class-info{flex:1;min-width:0;padding-left:2px}
+    .class-line{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+    .class-time{font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;color:var(--lime);white-space:nowrap;font-variant-numeric:tabular-nums;letter-spacing:-.25px}
+    .class-subject{font-size:15px;font-weight:720;letter-spacing:-.25px;line-height:1.35;color:#f4f6ff;overflow-wrap:anywhere}
+    .class-teacher{margin-top:5px;font-size:12px;color:#b2c0dc;line-height:1.4}
+    .class-type{color:#c3b7ff}
+    .class-meta{display:flex;align-items:center;gap:6px;flex-shrink:0}
+    .meta-tag{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:6px 9px;border:1px solid rgba(112,180,255,.25);background:rgba(76,151,225,.1);color:#a7d1ff;font-size:10px;font-weight:750;white-space:nowrap}
+    .meta-tag.remote{border-color:rgba(169,149,255,.28);background:rgba(133,105,231,.12);color:#c7baff}
+    .meta-tag.missing{border-color:rgba(199,244,59,.24);background:rgba(199,244,59,.08);color:#d8ef91}
+    .empty-state{padding:30px 15px;text-align:center;border:1px dashed rgba(150,173,220,.2);border-radius:15px;background:rgba(10,20,40,.3);color:#bac8e1;font-size:13px}
+    .week-toolbar,.month-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;padding:10px 12px}
+    .week-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+    .week-day{min-width:0;min-height:170px;border-radius:13px;overflow:hidden;border:1px solid rgba(150,173,220,.17);background:rgba(10,20,40,.58)}
+    .week-day.selected{border-color:rgba(169,149,255,.7);box-shadow:inset 0 0 0 1px rgba(169,149,255,.15)}
+    .week-day-header{width:100%;border:0;border-bottom:1px solid rgba(150,173,220,.14);background:rgba(30,45,78,.75);padding:9px 4px;text-align:center}
+    .week-day-header .day-name{font-size:10px;font-weight:750;color:#afbfdf}
+    .week-day-header .day-date{font-size:15px;font-weight:750;margin-top:3px}
+    .week-event{display:block;width:calc(100% - 8px);margin:5px 4px;padding:7px 6px;text-align:left;border:0;border-left:3px solid var(--onsite);border-radius:7px;background:rgba(58,111,174,.21);overflow:hidden}
+    .week-event.remote{border-left-color:var(--remote);background:rgba(117,88,207,.22)}
+    .week-event .event-time{display:block;color:var(--lime);font:700 10px "JetBrains Mono",monospace;white-space:nowrap}
+    .week-event .event-title{display:block;margin-top:4px;color:#f2f5ff;font-size:10px;font-weight:650;line-height:1.35;overflow-wrap:anywhere}
+    .week-event .event-room{display:block;margin-top:4px;color:#aab9d8;font-size:9px}
+    .week-empty{padding:10px 4px;text-align:center;color:#7587aa;font-size:10px}
+    .legend{display:flex;align-items:center;gap:14px;flex-wrap:wrap;color:#aab9d8;font-size:11px;margin:11px 3px}
+    .legend span{display:inline-flex;align-items:center;gap:6px}
+    .legend i{width:7px;height:7px;border-radius:50%;display:inline-block}
+    .calendar-panel{padding:13px}
+    .calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+    .calendar-weekday{text-align:center;padding:8px 0;color:#aabbdc;font-size:10px;font-weight:750}
+    .calendar-day{position:relative;min-width:0;min-height:59px;border-radius:11px;border:1px solid rgba(150,173,220,.13);background:rgba(11,22,45,.58);color:#dbe5fa;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:5px}
+    .calendar-day:hover{background:rgba(48,66,111,.65)}
+    .calendar-day.selected{background:linear-gradient(145deg,#5e49c7,#304b94);border-color:rgba(185,169,255,.8);color:white}
+    .calendar-day.outside{opacity:.3}
+    .calendar-day .daynum{font-size:13px;font-weight:700}
+    .calendar-day .dots{display:flex;gap:3px;height:5px}
+    .calendar-day .dots i{width:5px;height:5px;border-radius:50%;background:var(--onsite)}
+    .calendar-day .dots i.remote{background:var(--remote)}
+    .syncbar{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;color:#aebddd;font-size:11px}
+    .sync-status{display:flex;align-items:center;gap:7px;color:var(--lime);font-weight:750;white-space:nowrap}
+    .sync-status i{display:block;width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px rgba(199,244,59,.55)}
+    .footer{display:flex;justify-content:space-between;gap:10px;align-items:center;color:#7f91b5;font-size:10px;padding:0 3px}
+    .footer a{color:#aab9d8;text-decoration:none}
+    .footer a:hover{color:#d5caff;text-decoration:underline}
+    .overlay{position:fixed;inset:0;z-index:40;background:rgba(2,6,18,.5);backdrop-filter:blur(4px);display:flex;justify-content:flex-end;padding:12px}
+    .overlay[hidden]{display:none}
+    .side-panel{width:min(440px,100%);height:100%;max-height:100%;overflow:auto;border:1px solid rgba(150,173,220,.25);border-radius:18px;background:linear-gradient(160deg,#172444,#0b142b);box-shadow:0 20px 70px #020817aa;padding:17px}
+    .panel-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}
+    .panel-heading h2{font-size:17px;margin:0}
+    .notification-list{display:flex;flex-direction:column;gap:9px}
+    .notification-item{padding:12px;border-radius:13px;border:1px solid rgba(150,173,220,.17);background:rgba(10,19,39,.65)}
+    .notification-item.unread{border-color:rgba(169,149,255,.45);background:rgba(63,53,119,.2)}
+    .notification-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .notification-type{font-size:10px;color:#c9bcff;font-weight:750;text-transform:uppercase;letter-spacing:.3px}
+    .notification-date{font-size:10px;color:#8093b8}
+    .notification-title{font-size:13px;font-weight:750;margin-top:5px}
+    .notification-message{font-size:12px;color:#b2c0dc;line-height:1.5;margin-top:4px}
+    .notification-details{font-size:11px;color:#91a4c8;line-height:1.5;margin-top:6px}
+    .panel-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .panel-note{font-size:11px;color:#8fa2c6;line-height:1.5;margin-top:14px}
+    .setting-row{padding:12px;border-radius:13px;border:1px solid var(--line);background:rgba(10,19,39,.5);display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}
+    .setting-row strong{font-size:13px}
+    .setting-row p{font-size:11px;color:#9aacca;line-height:1.45;margin:4px 0 0}
+    .toast{position:fixed;left:50%;bottom:22px;z-index:60;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;transition:.2s;padding:10px 15px;border-radius:12px;border:1px solid rgba(180,166,255,.3);background:#202c4d;color:white;font-size:12px;box-shadow:0 12px 35px #020817aa;max-width:calc(100vw - 24px);text-align:center}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    @media(min-width:1100px){.class-card{padding:15px 19px}.class-time{font-size:14px}.class-subject{font-size:16px}}
+    @media(max-width:760px){.app-shell{width:97%;gap:9px}.topbar{padding:11px 12px}.brand-mark{width:36px;height:36px}.header-actions{gap:5px}.icon-button{width:34px;height:34px}.brand-sub{font-size:10px}.week-grid{grid-template-columns:repeat(7,minmax(128px,1fr))}.week-view-scroll{overflow-x:auto;padding-bottom:5px}.week-day{min-height:150px}.date-chip{flex-direction:column;gap:2px;padding:6px 2px 9px}.date-chip .day-number{font-size:14px}.toolbar{flex-wrap:wrap}.search-box{flex-basis:100%}.action-button{flex:1}.date-label{font-size:17px}}
+    @media(max-width:420px){.brand-title{font-size:16px}.datebar{padding:9px}.date-arrow{width:33px;height:33px}.date-right{gap:5px}.mode-badge{font-size:9px;padding:5px 7px}.class-card{gap:8px;padding:12px 10px 12px 14px}.class-line{display:block}.class-time{display:block;font-size:12px;margin-bottom:4px}.class-subject{font-size:14px}.class-teacher{font-size:11px}.meta-tag{padding:5px 7px;font-size:9px}.footer{font-size:9px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-cyan-500 selection:text-slate-950">
-
-  <!-- POWIADOMIENIE TOAST -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500/95 text-slate-950 font-semibold shadow-2xl border border-emerald-300">
-    <span id="toastIcon" class="text-lg">✓</span>
-    <span id="toastMsg" class="text-sm">Skopiowano do schowka!</span>
-  </div>
-
-          <!--div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-mono font-bold text-lg shrink-0"-->
-          <div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-mono font-bold text-lg shrink-0 shadow-inner">
-            BN1
-          </div>
-          <div>
-            <div class="flex items-center gap-2 flex-wrap">
-              <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white">PANS Koszalin • Plan Zajęć</h1>
-              <span class="px-2 py-0.5 text-[11px] font-mono uppercase tracking-wider bg-cyan-500/15 text-cyan-300 rounded-md border border-cyan-500/30">Rok I • Stacjonarne</span>
-            </div>
-            <div class="text-xs text-slate-400 mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
-              <span class="flex items-center gap-1.5">
-                <span id="syncDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span id="sourceFileLabel" class="font-mono text-slate-300">plan bn 1 stacjonarne 2026 11 06</span>
-              </span>
-              <span id="lastCheckLabel" class="text-slate-500 font-mono text-[11px]">Ostatnia synchr.: wbudowana baza PDF</span>
-              <button onclick="reloadLiveSchedule(true)" class="text-cyan-400 hover:text-cyan-300 underline font-mono text-[11px] flex items-center gap-1" title="Sprawdź czy na serwerze jest nowszy plik schedule.json">
-                ↻ Odśwież dane
-              </button>
-            </div>
-          </div>
+<body>
+  <div class="app-shell">
+    <header class="topbar surface">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2.4"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
         </div>
-
-        <!-- PRZEŁĄCZNIK WIDOKÓW: DZIEŃ / TYDZIEŃ / MIESIĄC -->
-        <nav class="grid grid-cols-3 bg-oled p-1 rounded-xl border border-slate-800 shrink-0">
-          <button id="navDay" onclick="switchView('day')" class="px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-cyan-500 text-slate-950 shadow-md">
-            Dzień
-          </button>
-          <button id="navWeek" onclick="switchView('week')" class="px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-400 hover:text-white">
-            Tydzień
-          </button>
-          <button id="navMonth" onclick="switchView('month')" class="px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-400 hover:text-white">
-            Miesiąc
-          </button>
-        </nav>
+        <div>
+          <div class="brand-title">PANS Koszalin</div>
+          <div class="brand-sub">Bezpieczeństwo Narodowe <span style="color:#a995ff">·</span> I rok</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-button" id="focusSearch" aria-label="Wyszukaj przedmiot" title="Wyszukaj"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg></button>
+        <button class="icon-button" id="openNotifications" aria-label="Powiadomienia" title="Powiadomienia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 9a6 6 0 0 0-12 0c0 6.5-2.5 7-2.5 9h17C20.5 16 18 15.5 18 9ZM10 21h4"/></svg><i class="unread-dot" id="unreadDot"></i></button>
+        <button class="icon-button" id="openSettings" aria-label="Ustawienia" title="Ustawienia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></svg></button>
       </div>
     </header>
 
-    <!-- ========================================== -->
-    <!-- WIDOK 1: POJEDYNCZY DZIEŃ (DOMYŚLNY)       -->
-    <!-- ========================================== -->
-    <section id="viewDay" class="space-y-4 flex-1">
-      
-      <!-- Pasek szybkiej nawigacji daty -->
-      <div class="bg-panel border border-slate-800/90 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2 shadow-md">
-        <div class="flex items-center gap-1.5">
-          <button onclick="changeDay(-1)" class="px-3 py-2 bg-slate-800/80 hover:bg-slate-700 active:scale-95 text-slate-200 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-1 border border-slate-700/60">
-            <span>←</span> <span class="hidden sm:inline">Poprzedni</span>
-          </button>
-          <button onclick="goToDate('2026-11-06')" class="px-3 py-2 bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 rounded-xl text-xs sm:text-sm font-semibold transition">
-            Dziś (06.11)
-          </button>
-          <button onclick="goToDate('2026-11-07')" class="px-3 py-2 bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 rounded-xl text-xs sm:text-sm font-semibold transition">
-            Sobota (07.11)
-          </button>
-          <button onclick="changeDay(1)" class="px-3 py-2 bg-slate-800/80 hover:bg-slate-700 active:scale-95 text-slate-200 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-1 border border-slate-700/60">
-            <span class="hidden sm:inline">Następny</span> <span>→</span>
-          </button>
-        </div>
+    <nav class="tabs" aria-label="Widok planu">
+      <button class="tab active" data-view="day">Dzień</button>
+      <button class="tab" data-view="week">Tydzień</button>
+      <button class="tab" data-view="month">Miesiąc</button>
+    </nav>
 
-        <!-- Przyciski eksportu TXT -->
-        <div class="flex items-center gap-2 ml-auto">
-          <button onclick="copyCurrentDayTxt()" class="px-3 py-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-1.5">
-            <span>📋</span> <span>Kopiuj TXT</span>
-          </button>
-          <button onclick="downloadCurrentDayTxt()" class="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-semibold rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 shadow-lg shadow-emerald-500/10">
-            <span>📥</span> <span>Pobierz .txt</span>
-          </button>
+    <section class="datebar surface" aria-label="Wybrany dzień">
+      <button class="date-arrow" id="previousDay" aria-label="Poprzedni dzień">‹</button>
+      <div class="date-info">
+        <svg class="date-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+        <div>
+          <div class="date-label" id="selectedDateLabel">—</div>
+          <div class="weekday-label" id="selectedWeekdayLabel">—</div>
         </div>
       </div>
-
-      <!-- Główna Karta Dnia (Wizualna prezentacja zgodna z układem) -->
-      <div id="dayCardContainer" class="bg-panel border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl">
-        <!-- Renderowane dynamicznie przez JS -->
-      </div>
-
-      <!-- Podgląd czystego formatu TXT na dole ekranu -->
-      <div class="bg-oled border border-slate-800/90 rounded-2xl overflow-hidden shadow-lg">
-        <div class="bg-slate-900/90 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
-            <span class="text-xs font-mono uppercase tracking-wider text-slate-300 font-semibold">Podgląd wydruku / eksportu TXT</span>
-          </div>
-          <span id="txtFilenamePreview" class="text-xs font-mono text-slate-400">plan_2026-11-06.txt</span>
-        </div>
-        <pre id="rawTxtPreview" class="p-4 sm:p-5 text-xs sm:text-sm font-mono text-slate-200 overflow-x-auto leading-relaxed select-all whitespace-pre"></pre>
-      </div>
-
+      <div class="date-right"><span class="mode-badge mode-free" id="selectedModeBadge">ŁADOWANIE</span><button class="date-arrow" id="nextDay" aria-label="Następny dzień">›</button></div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- WIDOK 2: TYDZIEŃ (Z GESTEM PINCH-TO-ZOOM)  -->
-    <!-- ========================================== -->
-    <section id="viewWeek" class="hidden space-y-4 flex-1 pinch-zone">
-      
-      <!-- Pasek kontroli tygodnia i powiększenia (Zoom) -->
-      <div class="bg-panel border border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-md">
-        <div class="flex items-center justify-between md:justify-start gap-2">
-          <button onclick="changeWeek(-1)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs sm:text-sm font-medium border border-slate-700">← Poprzedni tydz.</button>
-          <h2 id="weekRangeTitle" class="text-sm sm:text-base font-bold text-white font-mono px-2">02.11 – 08.11.2026</h2>
-          <button onclick="changeWeek(1)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs sm:text-sm font-medium border border-slate-700">Następny tydz. →</button>
-        </div>
+    <div class="week-strip" id="weekStrip" aria-label="Wybierz dzień tygodnia"></div>
 
-        <!-- Kontrolka Pinch-to-Zoom / Suwak -->
-        <div class="flex flex-wrap items-center justify-between md:justify-end gap-3 bg-oled px-3 py-2 rounded-xl border border-slate-800">
-          <span class="text-xs text-slate-400 flex items-center gap-1">
-            <span>🤏</span> <span class="hidden sm:inline">Pinch-to-Zoom lub suwak:</span>
-          </span>
-          <input id="zoomRangeSlider" type="range" min="0" max="1" step="1" value="0" onchange="setWeekZoom(this.value === '1')" class="w-14 accent-cyan-400 cursor-pointer" title="Przełącz poziom szczegółowości tygodnia">
-          <div class="inline-flex rounded-lg bg-slate-900 p-0.5 border border-slate-800">
-            <button id="btnZoomCompact" onclick="setWeekZoom(false)" class="px-2.5 py-1 rounded-md text-xs font-medium transition bg-slate-800 text-slate-200">
-              − Zwiń
-            </button>
-            <button id="btnZoomExpanded" onclick="setWeekZoom(true)" class="px-2.5 py-1 rounded-md text-xs font-medium transition text-slate-400 hover:text-white">
-              + Rozwiń pełny spis
-            </button>
-          </div>
-          <button onclick="downloadWeekTxt()" class="px-2.5 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-semibold transition" title="Pobierz cały tydzień w TXT">
-            📥 Tydzień .txt
-          </button>
-        </div>
-      </div>
+    <div class="toolbar">
+      <label class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg>
+        <input id="subjectSearch" type="search" placeholder="Szukaj przedmiotu..." autocomplete="off" aria-label="Szukaj przedmiotu">
+      </label>
+      <button class="action-button" id="copyDay"><span class="btn-icon">▤</span>Kopiuj TXT</button>
+      <button class="action-button primary" id="downloadDay"><span class="btn-icon">↓</span>Pobierz .txt</button>
+      <button class="icon-button" id="openFilters" aria-label="Filtry" title="Filtry"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button>
+    </div>
 
-      <!-- Kontener na 7 dni tygodnia -->
-      <div id="weekDaysContainer" class="space-y-3">
-        <!-- Renderowane dynamicznie przez JS -->
-      </div>
+    <main>
+      <section id="dayView" class="view active">
+        <div class="section-heading"><strong>Plan dnia</strong><span class="count-badge" id="dayCount">—</span></div>
+        <div class="class-list" id="dayClasses"></div>
+      </section>
 
-    </section>
+      <section id="weekView" class="view">
+        <div class="week-toolbar surface">
+          <button class="action-button" id="previousWeek">‹ Poprzedni tydzień</button>
+          <strong id="weekRange">—</strong>
+          <button class="action-button" id="nextWeek">Następny tydzień ›</button>
+          <button class="action-button primary" id="downloadWeek">Pobierz tydzień .txt</button>
+        </div>
+        <div class="week-view-scroll"><div class="week-grid" id="weekGrid"></div></div>
+        <div class="legend"><span><i style="background:var(--onsite)"></i>Stacjonarne</span><span><i style="background:var(--remote)"></i>Zdalne</span></div>
+      </section>
 
-    <!-- ========================================== -->
-    <!-- WIDOK 3: MIESIĄC (SIATKA KALENDARZA)       -->
-    <!-- ========================================== -->
-    <section id="viewMonth" class="hidden space-y-4 flex-1">
-      
-      <div class="bg-panel border border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3">
-        <div class="flex items-center gap-2">
-          <button onclick="changeMonth(-1)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs sm:text-sm font-medium border border-slate-700">←</button>
-          <h2 id="monthTitle" class="text-base sm:text-lg font-bold text-white capitalize min-w-[160px] text-center">Listopad 2026</h2>
-          <button onclick="changeMonth(1)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl text-xs sm:text-sm font-medium border border-slate-700">→</button>
+      <section id="monthView" class="view">
+        <div class="month-toolbar surface">
+          <button class="date-arrow" id="previousMonth" aria-label="Poprzedni miesiąc">‹</button>
+          <strong id="monthTitle">—</strong>
+          <button class="date-arrow" id="nextMonth" aria-label="Następny miesiąc">›</button>
         </div>
+        <div class="calendar-panel surface">
+          <div class="calendar-grid" id="monthGrid"></div>
+          <div class="legend"><span><i style="background:var(--onsite)"></i>Stacjonarne</span><span><i style="background:var(--remote)"></i>Zdalne</span></div>
+        </div>
+      </section>
+    </main>
 
-        <!-- Szybkie skoki do miesięcy z planu PDF -->
-        <div class="flex flex-wrap items-center gap-1.5 text-xs">
-          <button onclick="jumpToMonth(2026, 9)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Paź 26</button>
-          <button onclick="jumpToMonth(2026, 10)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Lis 26</button>
-          <button onclick="jumpToMonth(2026, 11)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Gru 26</button>
-          <button onclick="jumpToMonth(2027, 0)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Sty 27</button>
-          <button onclick="jumpToMonth(2027, 1)" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Lut 27</button>
-        </div>
-      </div>
-
-      <!-- Legenda Kalendarza -->
-      <div class="flex flex-wrap items-center gap-4 px-2 text-xs text-slate-400">
-        <div class="flex items-center gap-1.5">
-          <span class="w-3 h-3 rounded bg-emerald-500/30 border border-emerald-400"></span>
-          <span>Zajęcia STACJONARNE</span>
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="w-3 h-3 rounded bg-indigo-500/30 border border-indigo-400"></span>
-          <span>Zajęcia ZDALNE</span>
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="w-3 h-3 rounded bg-slate-900 border border-slate-800"></span>
-          <span>Dzień wolny</span>
-        </div>
-      </div>
-
-      <!-- Siatka Dni Tygodnia -->
-      <div class="bg-panel border border-slate-800 rounded-2xl p-3 sm:p-5 shadow-xl">
-        <div class="grid grid-cols-7 gap-1.5 sm:gap-2 text-center text-xs font-mono uppercase text-slate-400 font-semibold mb-2">
-          <div>Pn</div><div>Wt</div><div>Śr</div><div>Cz</div><div>Pt</div>
-          <div class="text-cyan-400">Sb</div><div class="text-cyan-400">Nd</div>
-        </div>
-        <div id="monthGrid" class="grid grid-cols-7 gap-1.5 sm:gap-2">
-          <!-- Renderowane dynamicznie przez JS -->
-        </div>
-      </div>
-
-    </section>
-
+    <div class="syncbar surface">
+      <span id="syncInfo">Ostatnia synchronizacja: oczekiwanie na dane…</span>
+      <span class="sync-status" id="connectionStatus"><i></i> ONLINE</span>
+    </div>
+    <footer class="footer"><span>PLAN ZAJĘĆ · PANS KOSZALIN</span><a href="mailto:szymon@mandaro.eu">szymon@mandaro.eu</a></footer>
   </div>
 
+  <div class="overlay" id="notificationsOverlay" hidden>
+    <aside class="side-panel" role="dialog" aria-modal="true" aria-labelledby="notificationsTitle">
+      <div class="panel-heading"><h2 id="notificationsTitle">Powiadomienia</h2><button class="icon-button" data-close="notificationsOverlay" aria-label="Zamknij">×</button></div>
+      <div id="notificationList" class="notification-list"><div class="empty-state">Ładowanie powiadomień…</div></div>
+      <div class="panel-actions"><button class="action-button" id="markNotificationsRead">Oznacz jako przeczytane</button><button class="action-button primary" id="enableNotifications">Włącz powiadomienia</button></div>
+      <p class="panel-note">Powiadomienia informują o dodaniu lub odwołaniu zajęć oraz zmianach godzin, sal, prowadzących i trybu. Komunikaty systemowe są wyświetlane, gdy aplikacja jest otwarta lub działa w tle. Pełne powiadomienia push przy zamkniętej aplikacji wymagają dodatkowego serwera push.</p>
+    </aside>
+  </div>
+
+  <div class="overlay" id="settingsOverlay" hidden>
+    <aside class="side-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="panel-heading"><h2 id="settingsTitle">Ustawienia</h2><button class="icon-button" data-close="settingsOverlay" aria-label="Zamknij">×</button></div>
+      <div class="setting-row"><div><strong>Powiadomienia systemowe</strong><p>Komunikaty o zmianach planu na tym urządzeniu.</p></div><button class="action-button primary" id="settingsNotifications">Włącz</button></div>
+      <div class="setting-row"><div><strong>Instalacja aplikacji</strong><p>Dodaj plan do ekranu głównego lub menu aplikacji.</p></div><button class="action-button" id="installApp">Zainstaluj</button></div>
+      <div class="setting-row"><div><strong>Odśwież plan</strong><p>Pobierz najnowszy plik z repozytorium.</p></div><button class="action-button" id="refreshData">Odśwież</button></div>
+      <p class="panel-note">Wersja internetowa korzysta z aktualnego pliku schedule.json. Instalacja PWA i pamięć offline działają po udostępnieniu strony przez HTTPS.</p>
+    </aside>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
-    // ============================================================================
-    // BAZA DANYCH PLANU ZAJĘĆ (Wyciągnięta i zgrupowana z przesłanego pliku PDF)
-    // ============================================================================
-    const SCHEDULE_DB = {
-      // PAŹDZIERNIK 2026
-      "2026-10-01": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "14:15-15:00", title: "Spotkanie z kierownikiem ZBN", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "3" },
-          { time: "15:00-16:30", title: "Szkolenie biblioteczne", lecturer: "mgr Beata Zuber", type: "Ćw.", room: "Aula 6" },
-          { time: "16:45-18:15", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł.", room: "104" },
-          { time: "18:30-20:00", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "104" }
-        ]
-      },
-      "2026-10-02": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł./Ćw.", room: "11" },
-          { time: "16:45-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw.", room: "11" }
-        ]
-      },
-      "2026-10-03": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "09:45-11:15", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Wykł.", room: "106" },
-          { time: "11:30-13:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw.", room: "106" },
-          { time: "13:15-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "HALA SPORTOWA" }
-        ]
-      },
-      "2026-10-05": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-16:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "16:45-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw." }
-        ]
-      },
-      "2026-10-07": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł.", room: "106" },
-          { time: "16:45-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "106" },
-          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł.", room: "106" }
-        ]
-      },
-      "2026-10-08": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł.", room: "106" },
-          { time: "18:30-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw.", room: "106" }
-        ]
-      },
-      "2026-10-09": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł.", room: "105" },
-          { time: "16:45-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "105" }
-        ]
-      },
-      "2026-10-10": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "08:00-10:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" },
-          { time: "10:30-14:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw./Wykł.", room: "105" },
-          { time: "14:00-14:45", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "105" },
-          { time: "15:00-18:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "105" },
-          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "10-BIBLIOTEKA" }
-        ]
-      },
-      "2026-10-14": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł." },
-          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł." }
-        ]
-      },
-      "2026-10-15": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
-          { time: "18:30-19:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw." },
-          { time: "19:15-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." }
-        ]
-      },
-      "2026-10-16": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "16:45-18:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw." },
-          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
-        ]
-      },
-      "2026-10-17": {
-        mode: "ZDALNE",
-        items: [
-          { time: "16:45-20:00", title: "Bezpieczeństwo i higiena pracy", lecturer: "mgr Halina Grobelna", type: "Ćw." }
-        ]
-      },
-      "2026-10-20": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "16:45-19:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" }
-        ]
-      },
-      "2026-10-21": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł.", room: "107" },
-          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "107" }
-        ]
-      },
-      "2026-10-23": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "16:45-18:15", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw.", room: "020" },
-          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "10-BIBLIOTEKA" }
-        ]
-      },
-      "2026-10-24": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "09:45-13:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw.", room: "11" },
-          { time: "13:15-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "HALA SPORTOWA" },
-          { time: "16:45-20:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "11" }
-        ]
-      },
-      "2026-10-25": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "08:00-11:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "106" }
-        ]
-      },
-      "2026-10-27": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "16:45-19:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" }
-        ]
-      },
-      "2026-10-28": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "106" },
-          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "106" }
-        ]
-      },
-      "2026-10-29": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "106" },
-          { time: "16:45-18:15", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "106" }
-        ]
-      },
-      "2026-10-30": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "106" },
-          { time: "16:45-18:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "106" },
-          { time: "18:30-20:00", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "HALA SPORTOWA" }
-        ]
-      },
-      "2026-10-31": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-09:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "09:45-11:15", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "11:30-14:45", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Wykł." },
-          { time: "15:00-18:15", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
-          { time: "18:30-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw." }
-        ]
-      },
-
-      // LISTOPAD 2026
-      "2026-11-04": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł." },
-          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł." }
-        ]
-      },
-      "2026-11-05": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
-          { time: "18:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." }
-        ]
-      },
-      "2026-11-06": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-18:15", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
-          { time: "18:30-20:00", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." }
-        ]
-      },
-      "2026-11-07": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-09:30", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł./Ćw." },
-          { time: "09:45-13:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Wykł." },
-          { time: "13:15-14:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
-          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "16:45-20:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Wykł." }
-        ]
-      },
-      "2026-11-08": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-08:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
-          { time: "08:45-09:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." },
-          { time: "09:45-10:30", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
-          { time: "10:30-11:15", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." },
-          { time: "11:30-13:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
-          { time: "13:15-14:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
-        ]
-      },
-      "2026-11-12": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-16:30", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
-          { time: "16:45-18:15", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł." },
-          { time: "18:30-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." }
-        ]
-      },
-      "2026-11-13": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." },
-          { time: "16:45-18:15", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
-          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
-        ]
-      },
-      "2026-11-14": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-11:15", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "11:30-13:00", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." },
-          { time: "13:15-16:30", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." }
-        ]
-      },
-      "2026-11-15": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-13:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł./Ćw." },
-          { time: "13:15-15:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
-        ]
-      },
-      "2026-11-17": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "16:45-19:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" }
-        ]
-      },
-      "2026-11-18": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-11-19": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-11-20": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" },
-          { time: "16:45-17:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
-          { time: "17:30-18:15", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-11-21": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "09:45-13:00", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw.", room: "BRAK SALI" },
-          { time: "13:15-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" },
-          { time: "16:45-20:00", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-11-22": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "08:00-12:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-11-24": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "16:45-19:15", title: "Elementy samoobrony", lecturer: "mgr Sebastian Tałaj", type: "Ćw.", room: "H24" }
-        ]
-      },
-      "2026-11-25": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
-          { time: "16:45-18:15", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-11-26": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-11-27": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
-          { time: "16:45-18:15", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-11-28": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-10:30", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Wykł." },
-          { time: "10:30-13:00", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "13:00-13:45", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "16:45-20:00", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł." }
-        ]
-      },
-      "2026-11-29": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-11:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "12:15-13:45", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł." }
-        ]
-      },
-
-      // GRUDZIEŃ 2026
-      "2026-12-02": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł./Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-12-03": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-12-04": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "17:45-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-12-05": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "09:45-12:15", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Ćw.", room: "BRAK SALI" },
-          { time: "13:15-16:30", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-12-09": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "16:45-17:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "17:45-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł." }
-        ]
-      },
-      "2026-12-10": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
-          { time: "18:30-20:00", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." }
-        ]
-      },
-      "2026-12-11": {
-        mode: "ZDALNE",
-        items: [
-          { time: "16:45-18:15", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
-          { time: "18:30-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw." }
-        ]
-      },
-      "2026-12-12": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "08:00-12:15", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-12-13": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "08:00-10:30", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
-          { time: "10:30-11:15", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-12-16": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2026-12-17": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-16:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw." },
-          { time: "16:45-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw." }
-        ]
-      },
-      "2026-12-18": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-17:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw./Wykł." },
-          { time: "17:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw." }
-        ]
-      },
-      "2026-12-19": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-08:45", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "08:45-10:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "10:30-11:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "11:30-14:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
-        ]
-      },
-      "2026-12-20": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-11:15", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Wykł." },
-          { time: "13:15-17:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł./Ćw." }
-        ]
-      },
-
-      // STYCZEŃ 2027
-      "2027-01-07": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-18:15", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Wykł." },
-          { time: "18:30-19:15", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł." },
-          { time: "19:15-20:00", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł." }
-        ]
-      },
-      "2027-01-08": {
-        mode: "ZDALNE",
-        items: [
-          { time: "15:00-16:30", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł." },
-          { time: "16:45-17:30", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
-          { time: "17:30-18:15", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw." },
-          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." }
-        ]
-      },
-      "2027-01-09": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-09:30", title: "Język obcy od podstaw - j. niemiecki", lecturer: "mgr Alicja Skoczypiec", type: "Ćw." },
-          { time: "09:45-12:15", title: "Podstawy filozofii", lecturer: "mgr Danuta Aleksa", type: "Wykł." },
-          { time: "12:15-13:00", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Wykł." },
-          { time: "13:15-16:30", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." }
-        ]
-      },
-      "2027-01-10": {
-        mode: "ZDALNE",
-        items: [
-          { time: "08:00-11:15", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Wykł." },
-          { time: "11:30-14:45", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Wykł." }
-        ]
-      },
-      "2027-01-13": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Podstawy ekonomii", lecturer: "dr Małgorzata Guzińska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "16:45-20:00", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-14": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "16:45-18:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Wykł.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-15": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-15:45", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "15:45-18:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-16": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "08:00-09:30", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
-          { time: "09:45-13:00", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" },
-          { time: "13:15-14:45", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-17": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "08:00-09:30", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" },
-          { time: "09:45-13:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-20": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "BRAK SALI" },
-          { time: "16:45-18:15", title: "Podstawy socjologii", lecturer: "dr Danuta Apanel", type: "Wykł.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Komunikacja interpersonalna", lecturer: "mgr Sylwia Hille-Jarząbek", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-21": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-22": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-23": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "08:00-09:30", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" },
-          { time: "09:45-13:00", title: "Wychowanie fizyczne", lecturer: "mgr Adam Nowak", type: "Ćw.", room: "BRAK SALI" },
-          { time: "15:00-20:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-24": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "08:00-11:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" },
-          { time: "11:30-14:45", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" },
-          { time: "15:00-20:00", title: "Kwalifikowana pierwsza pomoc medyczna", lecturer: "mgr Andrzej Kubiś", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-27": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Technologia informacyjna", lecturer: "mgr Jacek Moszyński", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-28": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Wspólna polityka zagraniczna i bezpieczeństwa UE", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-29": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-18:15", title: "Integracja europejska", lecturer: "dr Jolanta Martuszewska", type: "Ćw.", room: "BRAK SALI" },
-          { time: "18:30-20:00", title: "Język obcy specjalistyczny - j. angielski", lecturer: "dr Beata Gostomczyk", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      },
-      "2027-01-30": {
-        mode: "ZDALNE",
-        items: [
-          { time: "09:45-11:15", title: "Geografia polityczna i gospodarcza", lecturer: "dr Adam Czarnecki", type: "Wykł." },
-          { time: "11:30-13:00", title: "Historia Polski na tle historii Europy", lecturer: "dr Adam Czarnecki", type: "Wykł." }
-        ]
-      },
-      // LUTY 2027
-      "2027-02-02": {
-        mode: "STACJONARNE",
-        items: [
-          { time: "15:00-16:30", title: "Administracja publiczna", lecturer: "dr Artur Dąbek", type: "Ćw.", room: "BRAK SALI" }
-        ]
-      }
-    };
-
-    // ============================================================================
-    // SYNCHRONIZACJA NA ŻYWO Z PLIKIEM SCHEDULE.JSON (GitHub / Cloudflare Pages)
-    // ============================================================================
-    async function reloadLiveSchedule(manual = false) {
-      try {
-        const response = await fetch('./schedule.json?t=' + Date.now(), { cache: 'no-store' });
-        if (!response.ok) throw new Error('Brak zewnętrznego pliku schedule.json');
-        const liveData = await response.json();
-
-        if (liveData && liveData.days && typeof liveData.days === 'object') {
-          Object.assign(SCHEDULE_DB, liveData.days);
-          if (liveData.source_label) {
-            document.getElementById('sourceFileLabel').textContent = liveData.source_label;
-          }
-          if (liveData.last_updated) {
-            document.getElementById('lastCheckLabel').textContent = `Synchr.: ${liveData.last_updated}`;
-          }
-          renderCurrentActiveView();
-          if (manual) showToast('Pobrano najnowszy plan z serwera!');
-        }
-      } catch (err) {
-        // W trybie lokalnym lub przed pierwszym uruchomieniem robota używamy kompletnej wbudowanej bazy
-        if (manual) {
-          showToast('Używasz aktualnej wbudowanej bazy planu (2026/2027)');
-        }
+    'use strict';
+    const state={days:{},lastUpdated:null,sourceLabel:'',view:'day',selectedDate:localISODate(),month:null,notifications:[],pendingInstall:null};
+    const $=id=>document.getElementById(id);
+    const weekdays=['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];
+    const weekdaysShort=['Nd','Pn','Wt','Śr','Cz','Pt','Sb'];
+    const weekdaysMon=['Pn','Wt','Śr','Cz','Pt','Sb','Nd'];
+    const months=['Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień'];
+    let lastToastTimer=null;
+    function localISODate(d=new Date()){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+    function parseISO(iso){const p=iso.split('-').map(Number);return new Date(p[0],p[1]-1,p[2])}
+    function isoDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+    function addDays(iso,n){const d=parseISO(iso);d.setDate(d.getDate()+n);return isoDate(d)}
+    function polishDate(iso){const p=iso.split('-');return p[2]+'.'+p[1]+'.'+p[0]}
+    function mondayOf(iso){const d=parseISO(iso);const shift=(d.getDay()+6)%7;d.setDate(d.getDate()-shift);return isoDate(d)}
+    function esc(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+    function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(lastToastTimer);lastToastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
+    function dayData(iso){return state.days[iso]||null}
+    function itemMode(item,day){return item.mode||day?.mode||'STACJONARNE'}
+    function modeOf(day){if(!day||!day.items?.length)return 'WOLNE';const modes=new Set(day.items.map(i=>itemMode(i,day)));return modes.size>1?'MIESZANE':(modes.has('ZDALNE')?'ZDALNE':'STACJONARNE')}
+    function modeClass(mode){return mode==='ZDALNE'?'mode-remote':mode==='STACJONARNE'?'mode-onsite':mode==='MIESZANE'?'mode-mixed':'mode-free'}
+    function filteredItems(day){const q=$('subjectSearch').value.trim().toLocaleLowerCase('pl');return (day?.items||[]).filter(item=>!q||[item.title,item.lecturer,item.type,item.room].filter(Boolean).join(' ').toLocaleLowerCase('pl').includes(q))}
+    function selectedDateChange(iso){state.selectedDate=iso;state.month=parseISO(iso).getMonth();renderAll();window.scrollTo({top:0,behavior:'smooth'})}
+    function renderDateHeader(){
+      const d=parseISO(state.selectedDate),data=dayData(state.selectedDate),mode=modeOf(data);
+      $('selectedDateLabel').textContent=polishDate(state.selectedDate);
+      $('selectedWeekdayLabel').textContent=weekdays[d.getDay()];
+      $('selectedModeBadge').textContent=mode==='WOLNE'?'BRAK ZAJĘĆ':mode;
+      $('selectedModeBadge').className='mode-badge '+modeClass(mode);
+    }
+    function renderWeekStrip(){
+      const monday=mondayOf(state.selectedDate),container=$('weekStrip');container.innerHTML='';
+      for(let i=0;i<7;i++){
+        const iso=addDays(monday,i),d=parseISO(iso),data=dayData(iso),modes=new Set((data?.items||[]).map(x=>itemMode(x,data)));
+        const btn=document.createElement('button');btn.type='button';btn.className='date-chip'+(iso===state.selectedDate?' active':'');
+        btn.innerHTML='<span class="day-name">'+weekdaysShort[d.getDay()]+'</span><span class="day-number">'+String(d.getDate()).padStart(2,'0')+'</span>';
+        if(modes.size){const dots=document.createElement('span');dots.className='date-markers';if(modes.has('STACJONARNE')){const dot=document.createElement('i');dots.append(dot)}if(modes.has('ZDALNE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}btn.append(dots)}
+        btn.addEventListener('click',()=>selectedDateChange(iso));container.append(btn);
       }
     }
-
-    function renderCurrentActiveView() {
-      if (currentView === 'day') renderDayView();
-      else if (currentView === 'week') renderWeekView();
-      else if (currentView === 'month') renderMonthView();
+    function classCard(item,day){
+      const mode=itemMode(item,day),remote=mode==='ZDALNE',mixed=mode==='MIESZANE';
+      const tag=remote?'<span class="meta-tag remote">ZDALNE</span>':(item.room?'<span class="meta-tag">SALA '+esc(item.room)+'</span>':'<span class="meta-tag missing">STACJONARNIE</span>');
+      return '<article class="class-card '+(remote?'remote':mixed?'mixed':'')+'"><div class="class-info"><div class="class-line"><span class="class-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="class-subject">'+esc(item.title)+'</span></div><div class="class-teacher">'+esc(item.lecturer||'Prowadzący niepodany')+' <span class="class-type">('+esc(item.type||'Zajęcia')+')</span></div></div><div class="class-meta">'+tag+'</div></article>';
     }
-
-    // ============================================================================
-    // STAN APLIKACJI
-    // ============================================================================
-    let currentView = 'day'; // 'day' | 'week' | 'month'
-    let selectedDate = '2026-11-06'; // Domyślnie bieżący dzień (piątek 6.11.2026)
-    let weekExpanded = false; // Stan zoomu semantycznego w widoku tygodnia
-    let calendarYear = 2026;
-    let calendarMonth = 10; // 0-indexed (10 = Listopad)
-
-    const WEEKDAYS_PL = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
-    const MONTHS_PL = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
-
-    // ============================================================================
-    // FUNKCJE POMOCNICZE FORMATOWANIA DAT I TEKSTU (ŚCISŁY WZÓR UŻYTKOWNIKA)
-    // ============================================================================
-    function toPolishDateDots(isoDate) {
-      const [y, m, d] = isoDate.split('-');
-      return `${d}.${m}.${y}`;
+    function renderDay(){
+      const day=dayData(state.selectedDate),items=filteredItems(day),host=$('dayClasses');
+      $('dayCount').textContent=items.length+' '+(items.length===1?'zajęcia':items.length>=2&&items.length<=4?'zajęcia':'zajęć');
+      if(!items.length){host.innerHTML='<div class="empty-state">'+(day?.items?.length?'Nie znaleziono przedmiotów pasujących do wyszukiwania.':'Brak zaplanowanych zajęć w tym dniu.')+'</div>';return}
+      host.innerHTML=items.map(item=>classCard(item,day)).join('');
     }
-
-    function getWeekdayName(isoDate) {
-      const [y, m, d] = isoDate.split('-').map(Number);
-      const dateObj = new Date(y, m - 1, d);
-      return WEEKDAYS_PL[dateObj.getDay()];
-    }
-
-    function addDays(isoDate, delta) {
-      const [y, m, d] = isoDate.split('-').map(Number);
-      const dateObj = new Date(y, m - 1, d);
-      dateObj.setDate(dateObj.getDate() + delta);
-      const ny = dateObj.getFullYear();
-      const nm = String(dateObj.getMonth() + 1).padStart(2, '0');
-      const nd = String(dateObj.getDate()).padStart(2, '0');
-      return `${ny}-${nm}-${nd}`;
-    }
-
-    /**
-     * Generuje dokładny ciąg znaków TXT zgodny z wymaganiami użytkownika:
-     * =================
-     * 07.11.2026 ZDALNE
-     * =================
-     * 08:00-09:30 | Administracja publiczna
-     *               dr Artur Dąbek (Wykł.)
-     */
-    function generateDayTxtString(isoDate) {
-      const dateDots = toPolishDateDots(isoDate);
-      const dayData = SCHEDULE_DB[isoDate];
-      const indent = "              "; // 14 spacji dokładnie pod pionową kreskę "HH:MM-HH:MM | "
-
-      if (!dayData || !dayData.items || dayData.items.length === 0) {
-        return [
-          "=================",
-          `${dateDots} WOLNE`,
-          "=================",
-          "Brak zaplanowanych zajęć."
-        ].join("\n");
+    function renderWeek(){
+      const mon=mondayOf(state.selectedDate),sun=addDays(mon,6);$('weekRange').textContent=polishDate(mon)+' – '+polishDate(sun);
+      const host=$('weekGrid');host.innerHTML='';
+      for(let i=0;i<7;i++){
+        const iso=addDays(mon,i),d=parseISO(iso),day=dayData(iso),items=filteredItems(day);
+        const col=document.createElement('div');col.className='week-day'+(iso===state.selectedDate?' selected':'');
+        const head=document.createElement('button');head.className='week-day-header';head.innerHTML='<div class="day-name">'+weekdaysMon[i]+'</div><div class="day-date">'+String(d.getDate()).padStart(2,'0')+'</div>';head.addEventListener('click',()=>selectedDateChange(iso));col.append(head);
+        if(items.length){items.forEach(item=>{const remote=itemMode(item,day)==='ZDALNE';const event=document.createElement('button');event.className='week-event'+(remote?' remote':'');event.innerHTML='<span class="event-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="event-title">'+esc(item.title)+'</span><span class="event-room">'+(remote?'ZDALNE':(item.room?'SALA '+esc(item.room):'STACJONARNE'))+'</span>';event.addEventListener('click',()=>selectedDateChange(iso));col.append(event)})}
+        else{const empty=document.createElement('div');empty.className='week-empty';empty.textContent='—';col.append(empty)}
+        host.append(col);
       }
-
-      const headerLine = `${dateDots} ${dayData.mode}`;
-      const blocks = dayData.items.map(item => {
-        const line1 = `${item.time} | ${item.title}`;
-        const line2 = `${indent}${item.lecturer} (${item.type})`;
-        if (dayData.mode === "STACJONARNE" && item.room) {
-          const line3 = `${indent}SALA:${item.room}`;
-          return `${line1}\n${line2}\n${line3}`;
-        }
-        return `${line1}\n${line2}`;
+    }
+    function renderMonth(){
+      const d=parseISO(state.selectedDate),year=d.getFullYear(),month=d.getMonth();$('monthTitle').textContent=months[month]+' '+year;
+      const host=$('monthGrid');host.innerHTML='';
+      weekdaysMon.forEach(name=>{const el=document.createElement('div');el.className='calendar-weekday';el.textContent=name;host.append(el)});
+      const first=new Date(year,month,1),offset=(first.getDay()+6)%7,daysInMonth=new Date(year,month+1,0).getDate();
+      for(let i=0;i<offset;i++){const empty=document.createElement('div');empty.className='calendar-day outside';host.append(empty)}
+      for(let dayNum=1;dayNum<=daysInMonth;dayNum++){
+        const iso=year+'-'+String(month+1).padStart(2,'0')+'-'+String(dayNum).padStart(2,'0'),data=dayData(iso),items=filteredItems(data);
+        const cell=document.createElement('button');cell.type='button';cell.className='calendar-day'+(iso===state.selectedDate?' selected':'');
+        const num=document.createElement('span');num.className='daynum';num.textContent=dayNum;cell.append(num);
+        const dots=document.createElement('span');dots.className='dots';
+        const modes=new Set(items.map(item=>itemMode(item,data)));
+        if(modes.has('STACJONARNE')){const dot=document.createElement('i');dots.append(dot)}
+        if(modes.has('ZDALNE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}
+        cell.append(dots);cell.addEventListener('click',()=>selectedDateChange(iso));host.append(cell);
+      }
+    }
+    function renderAll(){renderDateHeader();renderWeekStrip();if(state.view==='day')renderDay();if(state.view==='week')renderWeek();if(state.view==='month')renderMonth()}
+    function setView(view){state.view=view;document.querySelectorAll('.tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.view===view));document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id===view+'View'));renderAll()}
+    function changeSelectedDay(n){selectedDateChange(addDays(state.selectedDate,n))}
+    function weekTxt(){
+      const mon=mondayOf(state.selectedDate),blocks=[];
+      for(let i=0;i<7;i++){const iso=addDays(mon,i),day=dayData(iso);if(day?.items?.length)blocks.push(dayTxt(iso))}
+      return blocks.join('\n\n');
+    }
+    function dayTxt(iso){
+      const day=dayData(iso),head=polishDate(iso)+' '+modeOf(day);
+      if(!day?.items?.length)return '====================\n'+polishDate(iso)+' WOLNE\n====================\nBrak zaplanowanych zajęć.';
+      return '====================\n'+head+'\n====================\n'+day.items.map(item=>String(item.time||'').replace('-', '–')+' | '+item.title+'\n              '+(item.lecturer||'Prowadzący niepodany')+' ('+(item.type||'Zajęcia')+')'+(item.room?' \n              SALA: '+item.room:'')).join('\n\n');
+    }
+    async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Skopiowano do schowka')}catch(e){const box=document.createElement('textarea');box.value=text;document.body.append(box);box.select();document.execCommand('copy');box.remove();toast('Skopiowano do schowka')}}
+    function downloadText(name,text){const blob=new Blob([text],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Przygotowano plik '+name)}
+    function dateFile(iso){return iso.replaceAll('-','_')}
+    function changeMonth(n){const d=parseISO(state.selectedDate);d.setDate(1);d.setMonth(d.getMonth()+n);selectedDateChange(isoDate(d))}
+    function updateSyncInfo(){
+      $('syncInfo').textContent='Ostatnia synchronizacja: '+(state.lastUpdated||'brak danych');
+      $('connectionStatus').innerHTML='<i></i> ONLINE';
+    }
+    async function loadSchedule(silent=false){
+      try{
+        const response=await fetch('./schedule.json?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);
+        const data=await response.json();if(!data.days||typeof data.days!=='object')throw new Error('Nieprawidłowy format schedule.json');
+        const previous=state.lastUpdated;state.days=data.days;state.lastUpdated=data.last_updated||'aktualny';state.sourceLabel=data.source_label||'';
+        updateSyncInfo();renderAll();
+        if(previous&&previous!==state.lastUpdated&&!silent)toast('Plan został zaktualizowany');
+        await loadNotifications(Boolean(previous&&previous!==state.lastUpdated));
+      }catch(error){
+        $('syncInfo').textContent='Nie udało się pobrać aktualnego planu';
+        $('connectionStatus').innerHTML='<i style="background:#f59e0b;box-shadow:none"></i> OFFLINE';
+        if(!silent)toast('Brak połączenia z plikiem planu');
+        await loadNotifications(false);
+      }
+    }
+    const readIdsKey='pansPlanReadNotificationsV1',sentIdsKey='pansPlanSentNotificationsV1';
+    function getStoredSet(key){try{return new Set(JSON.parse(localStorage.getItem(key)||'[]'))}catch(e){return new Set()}}
+    function saveStoredSet(key,set){localStorage.setItem(key,JSON.stringify([...set].slice(-300)))}
+    function updateUnreadDot(){
+      const read=getStoredSet(readIdsKey),unread=state.notifications.filter(n=>!read.has(n.id)).length;
+      $('unreadDot').style.display=unread?'block':'none';
+    }
+    function renderNotifications(){
+      const host=$('notificationList');host.innerHTML='';
+      if(!state.notifications.length){host.innerHTML='<div class="empty-state">Nie ma nowych zmian w planie.</div>';updateUnreadDot();return}
+      const read=getStoredSet(readIdsKey);
+      state.notifications.slice().reverse().forEach(item=>{
+        const el=document.createElement('article');el.className='notification-item'+(read.has(item.id)?'':' unread');
+        const type=item.type==='added'?'Dodano':item.type==='cancelled'?'Odwołano':'Zmieniono';
+        el.innerHTML='<div class="notification-top"><span class="notification-type">'+type+'</span><span class="notification-date">'+esc(item.date||'')+'</span></div><div class="notification-title">'+esc(item.title||'Zmiana w planie')+'</div><div class="notification-message">'+esc(item.message||'Zaktualizowano harmonogram.')+'</div>'+(item.details?.length?'<div class="notification-details">'+item.details.map(esc).join('<br>')+'</div>':'');
+        host.append(el);
       });
-
-      return [
-        "=================",
-        headerLine,
-        "=================",
-        blocks.join("\n\n")
-      ].join("\n");
+      updateUnreadDot();
     }
-
-    // ============================================================================
-    // RENDEROWANIE WIDOKU DNIA
-    // ============================================================================
-    function renderDayView() {
-      const container = document.getElementById('dayCardContainer');
-      const dayData = SCHEDULE_DB[selectedDate];
-      const dateDots = toPolishDateDots(selectedDate);
-      const weekday = getWeekdayName(selectedDate);
-
-      // Aktualizacja podglądu TXT na dole
-      document.getElementById('txtFilenamePreview').textContent = `plan_${selectedDate}.txt`;
-      document.getElementById('rawTxtPreview').textContent = generateDayTxtString(selectedDate);
-
-      if (!dayData || !dayData.items || dayData.items.length === 0) {
-        container.innerHTML = `
-          <div class="font-mono text-sm sm:text-base">
-            <div class="text-slate-500 select-none">=================</div>
-            <div class="flex items-center gap-3 py-1">
-              <span class="text-lg sm:text-xl font-bold text-slate-200">${dateDots} WOLNE</span>
-              <span class="text-xs px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-400 font-sans">${weekday}</span>
-            </div>
-            <div class="text-slate-500 select-none mb-6">=================</div>
-            <div class="py-8 text-center bg-oled/60 rounded-xl border border-slate-800/80 font-sans">
-              <div class="text-3xl mb-2">☕</div>
-              <p class="text-slate-300 font-medium">Brak zaplanowanych zajęć w tym dniu.</p>
-              <p class="text-xs text-slate-500 mt-1">Użyj przycisków powyżej lub przejdź do widoku Tygodnia / Miesiąca.</p>
-            </div>
-          </div>
-        `;
-        return;
+    async function dispatchSystemNotifications(newItems){
+      if(!newItems.length||!('Notification'in window)||Notification.permission!=='granted'||localStorage.getItem('pansPlanSystemNotifications')!=='yes')return;
+      const sent=getStoredSet(sentIdsKey);
+      for(const item of newItems){
+        if(sent.has(item.id))continue;
+        try{
+          const title=item.title||'Zmiana w planie zajęć';
+          const body=item.message||'Zaktualizowano harmonogram.';
+          if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.ready;await reg.showNotification(title,{body,icon:'./icon.svg',tag:item.id,data:{url:'./'}})}
+          else new Notification(title,{body,icon:'./icon.svg',tag:item.id});
+          sent.add(item.id);
+        }catch(e){}
       }
-
-      const isRemote = dayData.mode === 'ZDALNE';
-      const badgeColor = isRemote
-        ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
-        : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
-
-      const itemsHtml = dayData.items.map(item => `
-        <div class="group py-3.5 first:pt-1 last:pb-1 border-b border-slate-800/70 last:border-none">
-          <!-- Wiersz 1: Godzina | Przedmiot -->
-          <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-0 font-mono">
-            <div class="shrink-0 flex items-center">
-              <span class="text-cyan-400 font-bold text-sm sm:text-base tracking-tight">${item.time}</span>
-              <span class="text-slate-500 mx-2.5 font-normal">|</span>
-            </div>
-            <div class="text-white font-bold text-sm sm:text-base leading-snug">
-              ${item.title}
-            </div>
-          </div>
-
-          <!-- Wiersz 2: Wykładowca (Typ) - wcięty dokładnie pod nazwą przedmiotu -->
-          <div class="sm:pl-[14ch] mt-1 font-mono text-xs sm:text-sm text-slate-300">
-            ${item.lecturer} <span class="text-cyan-300/90 font-semibold">(${item.type})</span>
-          </div>
-
-          <!-- Wiersz 3: SALA:NUMER (tylko jeśli STACJONARNE) -->
-          ${!isRemote && item.room ? `
-            <div class="sm:pl-[14ch] mt-1.5 font-mono">
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold tracking-wide ${
-                item.room.includes('BRAK')
-                  ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
-                  : 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
-              }">
-                SALA:${item.room}
-              </span>
-            </div>
-          ` : ''}
-        </div>
-      `).join('');
-
-      container.innerHTML = `
-        <div>
-          <!-- Nagłówek w stylu: ================= / DD.MM.YYYY TRYB / ================= -->
-          <div class="bg-oled p-4 rounded-xl border border-slate-800 mb-4 font-mono">
-            <div class="text-slate-600 text-xs sm:text-sm tracking-widest select-none">=================</div>
-            <div class="flex flex-wrap items-center justify-between gap-2 my-1">
-              <div class="flex items-center gap-2.5">
-                <span class="text-base sm:text-xl font-bold tracking-tight text-white">${dateDots}</span>
-                <span class="px-2.5 py-0.5 text-xs sm:text-sm font-bold rounded-md border ${badgeColor}">
-                  ${dayData.mode}
-                </span>
-              </div>
-              <span class="text-xs sm:text-sm text-slate-400 font-sans font-medium">${weekday} • ${dayData.items.length} blok(i)</span>
-            </div>
-            <div class="text-slate-600 text-xs sm:text-sm tracking-widest select-none">=================</div>
-          </div>
-
-          <!-- Lista bloków zajęć -->
-          <div class="divide-y divide-slate-800/60 px-1">
-            ${itemsHtml}
-          </div>
-        </div>
-      `;
+      saveStoredSet(sentIdsKey,sent);
     }
-
-    // ============================================================================
-    // RENDEROWANIE WIDOKU TYGODNIA (Z OBSŁUGĄ PINCH-TO-ZOOM)
-    // ============================================================================
-    function getMondayOfWeek(isoDate) {
-      const [y, m, d] = isoDate.split('-').map(Number);
-      const dateObj = new Date(y, m - 1, d);
-      const day = dateObj.getDay();
-      const diff = dateObj.getDate() - day + (day === 0 ? -6 : 1); // Poniedziałek jako 1. dzień
-      dateObj.setDate(diff);
-      const ny = dateObj.getFullYear();
-      const nm = String(dateObj.getMonth() + 1).padStart(2, '0');
-      const nd = String(dateObj.getDate()).padStart(2, '0');
-      return `${ny}-${nm}-${nd}`;
+    async function loadNotifications(allowSystem=false){
+      try{
+        const response=await fetch('./notifications.json?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);
+        const data=await response.json(),oldIds=new Set(state.notifications.map(x=>x.id));
+        state.notifications=Array.isArray(data.changes)?data.changes:[];
+        renderNotifications();
+        if(allowSystem){const fresh=state.notifications.filter(x=>!oldIds.has(x.id));await dispatchSystemNotifications(fresh)}
+      }catch(e){state.notifications=[];renderNotifications()}
     }
-
-    function renderWeekView() {
-      const mondayIso = getMondayOfWeek(selectedDate);
-      const sundayIso = addDays(mondayIso, 6);
-      document.getElementById('weekRangeTitle').textContent = `${toPolishDateDots(mondayIso).slice(0,5)} – ${toPolishDateDots(sundayIso)}`;
-
-      // Aktualizacja przycisków stanu Zoomu
-      const btnCompact = document.getElementById('btnZoomCompact');
-      const btnExpanded = document.getElementById('btnZoomExpanded');
-      const zoomSlider = document.getElementById('zoomRangeSlider');
-      if (zoomSlider) zoomSlider.value = weekExpanded ? '1' : '0';
-
-      if (weekExpanded) {
-        btnExpanded.className = "px-2.5 py-1 rounded-md text-xs font-semibold transition bg-cyan-500 text-slate-950 shadow";
-        btnCompact.className = "px-2.5 py-1 rounded-md text-xs font-medium transition text-slate-400 hover:text-white";
-      } else {
-        btnCompact.className = "px-2.5 py-1 rounded-md text-xs font-semibold transition bg-cyan-500 text-slate-950 shadow";
-        btnExpanded.className = "px-2.5 py-1 rounded-md text-xs font-medium transition text-slate-400 hover:text-white";
-      }
-
-      const container = document.getElementById('weekDaysContainer');
-      let html = '';
-
-      for (let i = 0; i < 7; i++) {
-        const dayIso = addDays(mondayIso, i);
-        const dayDots = toPolishDateDots(dayIso);
-        const weekdayName = getWeekdayName(dayIso);
-        const dayData = SCHEDULE_DB[dayIso];
-        const hasClasses = dayData && dayData.items && dayData.items.length > 0;
-        const isSelected = dayIso === selectedDate;
-
-        const modeBadge = !hasClasses
-          ? `<span class="px-2 py-0.5 text-[11px] font-mono rounded bg-slate-800/90 text-slate-500">WOLNE</span>`
-          : dayData.mode === 'ZDALNE'
-            ? `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">ZDALNE</span>`
-            : `<span class="px-2 py-0.5 text-[11px] font-mono font-bold rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">STACJONARNE</span>`;
-
-        const summaryHours = hasClasses
-          ? `${dayData.items[0].time.split('-')[0]}–${dayData.items[dayData.items.length - 1].time.split('-')[1]}`
-          : 'Brak zajęć';
-
-        // Szczegółowa rozpiska (widoczna po rozsunięciu palcami lub rozwinięciu dnia)
-        let detailsHtml = '';
-        if (hasClasses) {
-          const isRemote = dayData.mode === 'ZDALNE';
-          const rows = dayData.items.map(item => `
-            <div class="py-2.5 border-b border-slate-800/70 last:border-none font-mono text-xs sm:text-sm">
-              <div class="flex flex-col sm:flex-row sm:items-baseline">
-                <span class="text-cyan-400 font-bold shrink-0">${item.time} <span class="text-slate-500 font-normal mx-1">|</span></span>
-                <span class="text-white font-bold">${item.title}</span>
-              </div>
-              <div class="sm:pl-[14ch] text-slate-300 mt-0.5">
-                ${item.lecturer} <span class="text-cyan-300">(${item.type})</span>
-              </div>
-              ${!isRemote && item.room ? `
-                <div class="sm:pl-[14ch] mt-1">
-                  <span class="px-1.5 py-0.5 rounded text-[11px] font-bold ${
-                    item.room.includes('BRAK') ? 'bg-amber-500/15 text-amber-300' : 'bg-emerald-500/15 text-emerald-300'
-                  }">SALA:${item.room}</span>
-                </div>
-              ` : ''}
-            </div>
-          `).join('');
-
-          detailsHtml = `
-            <div id="weekDayDetails-${dayIso}" class="${weekExpanded ? 'block' : 'hidden'} px-4 pb-4 pt-2 border-t border-slate-800/80 bg-oled/60">
-              <div class="font-mono text-xs text-slate-500 mb-2">
-                <div>=================</div>
-                <div class="text-slate-200 font-bold">${dayDots} ${dayData.mode}</div>
-                <div>=================</div>
-              </div>
-              ${rows}
-              <div class="mt-3 flex flex-wrap justify-end gap-2">
-                <button onclick="copyDayTxtByIso('${dayIso}')" class="px-2.5 py-1 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-medium border border-slate-700">
-                  📋 Kopiuj TXT
-                </button>
-                <button onclick="downloadDayTxtByIso('${dayIso}')" class="px-2.5 py-1 text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 rounded-lg font-medium border border-emerald-500/30">
-                  📥 Pobierz TXT
-                </button>
-                <button onclick="openDayFromWeek('${dayIso}')" class="px-2.5 py-1 text-xs bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 rounded-lg font-medium border border-cyan-500/30">
-                  Pełny ekran dnia →
-                </button>
-              </div>
-            </div>
-          `;
-        } else {
-          detailsHtml = `
-            <div id="weekDayDetails-${dayIso}" class="${weekExpanded ? 'block' : 'hidden'} px-4 py-3 border-t border-slate-800/60 bg-oled/40 text-xs font-mono text-slate-500">
-              ${dayDots} WOLNE — Brak zaplanowanych zajęć.
-            </div>
-          `;
-        }
-
-        html += `
-          <div class="bg-panel border ${isSelected ? 'border-cyan-500/60' : 'border-slate-800'} rounded-2xl overflow-hidden transition-all shadow">
-            <!-- Belka nagłówkowa dnia w widoku tygodnia -->
-            <div onclick="toggleSingleWeekDay('${dayIso}')" class="p-3.5 sm:px-5 flex items-center justify-between gap-2 cursor-pointer hover:bg-slate-800/40 select-none">
-              <div class="flex items-center gap-3">
-                <div class="w-2 h-8 rounded-full ${hasClasses ? (dayData.mode === 'ZDALNE' ? 'bg-indigo-400' : 'bg-emerald-400') : 'bg-slate-800'}"></div>
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="font-bold text-sm sm:text-base ${hasClasses ? 'text-white' : 'text-slate-400'}">${weekdayName}</span>
-                    <span class="font-mono text-xs sm:text-sm text-slate-400">${dayDots}</span>
-                    ${modeBadge}
-                  </div>
-                  <div class="text-xs text-slate-400 mt-0.5 font-mono">
-                    ${hasClasses ? `${dayData.items.length} blok(i) • ${summaryHours}` : 'Dzień wolny od zajęć'}
-                  </div>
-                </div>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs text-slate-500 font-mono hidden sm:inline">${weekExpanded ? 'Zwiń ▲' : 'Rozwiń ▼'}</span>
-              </div>
-            </div>
-            ${detailsHtml}
-          </div>
-        `;
-      }
-
-      container.innerHTML = html;
+    function openPanel(id){$(id).hidden=false}
+    function closePanel(id){$(id).hidden=true}
+    async function enableSystemNotifications(){
+      if(!('Notification'in window)){toast('Ta przeglądarka nie obsługuje powiadomień');return}
+      const permission=await Notification.requestPermission();
+      if(permission==='granted'){localStorage.setItem('pansPlanSystemNotifications','yes');toast('Powiadomienia systemowe włączone');await dispatchSystemNotifications(state.notifications)}
+      else{localStorage.setItem('pansPlanSystemNotifications','no');toast('Nie udzielono zgody na powiadomienia')}
     }
-
-    function toggleSingleWeekDay(isoDate) {
-      const el = document.getElementById(`weekDayDetails-${isoDate}`);
-      if (el) {
-        el.classList.toggle('hidden');
-      }
-    }
-
-    function openDayFromWeek(isoDate) {
-      selectedDate = isoDate;
-      switchView('day');
-    }
-
-    function setWeekZoom(expanded) {
-      weekExpanded = expanded;
-      renderWeekView();
-      showToast(expanded ? "Widok tygodnia: Rozwinięto wszystkie dni" : "Widok tygodnia: Zwinięto do pigułek");
-    }
-
-    // Obsługa gestu Pinch-to-Zoom dwoma palcami na ekranie dotykowym
-    let initialPinchDistance = null;
-    const viewWeekEl = document.getElementById('viewWeek');
-
-    viewWeekEl.addEventListener('touchstart', (e) => {
-      if (e.touches.length === 2) {
-        const dx = e.touches[0].clientX - e.touches[1].clientX;
-        const dy = e.touches[0].clientY - e.touches[1].clientY;
-        initialPinchDistance = Math.hypot(dx, dy);
-      }
-    }, { passive: true });
-
-    viewWeekEl.addEventListener('touchmove', (e) => {
-      if (e.touches.length === 2 && initialPinchDistance !== null) {
-        const dx = e.touches[0].clientX - e.touches[1].clientX;
-        const dy = e.touches[0].clientY - e.touches[1].clientY;
-        const currentDist = Math.hypot(dx, dy);
-        const diff = currentDist - initialPinchDistance;
-
-        // Rozsunięcie palców (> 35px) -> Rozwiń pełny spis każdego dnia
-        if (diff > 35 && !weekExpanded) {
-          setWeekZoom(true);
-          initialPinchDistance = null;
-        }
-        // Zsunięcie palców (< -35px) -> Zwiń do zwięzłej listy
-        else if (diff < -35 && weekExpanded) {
-          setWeekZoom(false);
-          initialPinchDistance = null;
-        }
-      }
-    }, { passive: true });
-
-    viewWeekEl.addEventListener('touchend', () => {
-      initialPinchDistance = null;
+    function markRead(){const read=getStoredSet(readIdsKey);state.notifications.forEach(n=>read.add(n.id));saveStoredSet(readIdsKey,read);renderNotifications();toast('Oznaczono powiadomienia jako przeczytane')}
+    $('focusSearch').addEventListener('click',()=>$('subjectSearch').focus());
+    $('openNotifications').addEventListener('click',()=>{openPanel('notificationsOverlay');renderNotifications()});
+    $('openSettings').addEventListener('click',()=>openPanel('settingsOverlay'));
+    document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>closePanel(btn.dataset.close)));
+    document.querySelectorAll('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)closePanel(el.id)}));
+    document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>setView(btn.dataset.view)));
+    $('previousDay').addEventListener('click',()=>changeSelectedDay(-1));
+    $('nextDay').addEventListener('click',()=>changeSelectedDay(1));
+    $('previousWeek').addEventListener('click',()=>changeSelectedDay(-7));
+    $('nextWeek').addEventListener('click',()=>changeSelectedDay(7));
+    $('previousMonth').addEventListener('click',()=>changeMonth(-1));
+    $('nextMonth').addEventListener('click',()=>changeMonth(1));
+    $('subjectSearch').addEventListener('input',renderAll);
+    $('copyDay').addEventListener('click',()=>copyText(dayTxt(state.selectedDate)));
+    $('downloadDay').addEventListener('click',()=>downloadText('plan_'+dateFile(state.selectedDate)+'.txt',dayTxt(state.selectedDate)));
+    $('downloadWeek').addEventListener('click',()=>downloadText('plan_tydzien_'+dateFile(mondayOf(state.selectedDate))+'.txt',weekTxt()));
+    $('markNotificationsRead').addEventListener('click',markRead);
+    $('enableNotifications').addEventListener('click',enableSystemNotifications);
+    $('settingsNotifications').addEventListener('click',enableSystemNotifications);
+    $('refreshData').addEventListener('click',()=>loadSchedule(false));
+    $('openFilters').addEventListener('click',()=>{const field=$('subjectSearch');field.focus();field.select();toast('Wpisz nazwę przedmiotu lub prowadzącego')});
+    let installEvent=null;
+    window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installEvent=event;$('installApp').textContent='Zainstaluj'});
+    $('installApp').addEventListener('click',async()=>{
+      if(installEvent){installEvent.prompt();await installEvent.userChoice;installEvent=null}
+      else toast('Użyj menu przeglądarki: Zainstaluj aplikację lub Dodaj do ekranu głównego');
     });
-
-    // ============================================================================
-    // RENDEROWANIE WIDOKU MIESIĄCA
-    // ============================================================================
-    function renderMonthView() {
-      document.getElementById('monthTitle').textContent = `${MONTHS_PL[calendarMonth]} ${calendarYear}`;
-
-      const firstDayOfMonth = new Date(calendarYear, calendarMonth, 1).getDay();
-      const shift = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1; // Poniedziałek = 0
-      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
-
-      const grid = document.getElementById('monthGrid');
-      grid.innerHTML = '';
-
-      // Puste komórki przed 1. dniem miesiąca
-      for (let i = 0; i < shift; i++) {
-        grid.innerHTML += `<div class="p-2 rounded-xl bg-oled/30 border border-transparent"></div>`;
-      }
-
-      for (let d = 1; d <= daysInMonth; d++) {
-        const iso = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-        const dayData = SCHEDULE_DB[iso];
-        const hasClasses = dayData && dayData.items && dayData.items.length > 0;
-        const isSelected = iso === selectedDate;
-
-        let cellStyle = 'bg-oled/70 border-slate-800/80 text-slate-400 hover:bg-slate-800/60';
-        let badgeDot = '';
-
-        if (hasClasses) {
-          if (dayData.mode === 'ZDALNE') {
-            cellStyle = 'bg-indigo-950/50 border-indigo-500/40 text-indigo-200 hover:bg-indigo-900/60 font-semibold';
-            badgeDot = `<span class="mt-1 px-1.5 py-0.5 text-[10px] font-mono rounded bg-indigo-500/20 text-indigo-300">ZDALNE (${dayData.items.length})</span>`;
-          } else {
-            cellStyle = 'bg-emerald-950/50 border-emerald-500/40 text-emerald-200 hover:bg-emerald-900/60 font-semibold';
-            badgeDot = `<span class="mt-1 px-1.5 py-0.5 text-[10px] font-mono rounded bg-emerald-500/20 text-emerald-300">STACJ. (${dayData.items.length})</span>`;
-          }
-        }
-
-        if (isSelected) {
-          cellStyle += ' ring-2 ring-cyan-400';
-        }
-
-        const cell = document.createElement('button');
-        cell.className = `min-h-[64px] sm:min-h-[82px] p-1.5 sm:p-2 rounded-xl border flex flex-col items-center justify-between transition text-center ${cellStyle}`;
-        cell.innerHTML = `
-          <span class="text-xs sm:text-sm font-mono">${d}</span>
-          <div class="hidden sm:block">${badgeDot}</div>
-          <div class="sm:hidden">
-            ${hasClasses ? `<span class="block w-2 h-2 rounded-full ${dayData.mode === 'ZDALNE' ? 'bg-indigo-400' : 'bg-emerald-400'}"></span>` : ''}
-          </div>
-        `;
-        cell.onclick = () => {
-          selectedDate = iso;
-          switchView('day');
-        };
-        grid.appendChild(cell);
-      }
-    }
-
-    // ============================================================================
-    // NAWIGACJA I AKCJE EKSPORTU DO TXT
-    // ============================================================================
-    function switchView(mode) {
-      currentView = mode;
-      document.getElementById('viewDay').classList.toggle('hidden', mode !== 'day');
-      document.getElementById('viewWeek').classList.toggle('hidden', mode !== 'week');
-      document.getElementById('viewMonth').classList.toggle('hidden', mode !== 'month');
-
-      const activeBtnClass = "px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-cyan-500 text-slate-950 shadow-md";
-      const inactiveBtnClass = "px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-400 hover:text-white";
-
-      document.getElementById('navDay').className = mode === 'day' ? activeBtnClass : inactiveBtnClass;
-      document.getElementById('navWeek').className = mode === 'week' ? activeBtnClass : inactiveBtnClass;
-      document.getElementById('navMonth').className = mode === 'month' ? activeBtnClass : inactiveBtnClass;
-
-      if (mode === 'day') renderDayView();
-      if (mode === 'week') renderWeekView();
-      if (mode === 'month') {
-        const [y, m] = selectedDate.split('-').map(Number);
-        calendarYear = y;
-        calendarMonth = m - 1;
-        renderMonthView();
-      }
-    }
-
-    function changeDay(delta) {
-      selectedDate = addDays(selectedDate, delta);
-      renderDayView();
-    }
-
-    function goToDate(isoDate) {
-      selectedDate = isoDate;
-      switchView('day');
-    }
-
-    function changeWeek(delta) {
-      selectedDate = addDays(selectedDate, delta * 7);
-      renderWeekView();
-    }
-
-    function changeMonth(delta) {
-      calendarMonth += delta;
-      if (calendarMonth > 11) {
-        calendarMonth = 0;
-        calendarYear++;
-      } else if (calendarMonth < 0) {
-        calendarMonth = 11;
-        calendarYear--;
-      }
-      renderMonthView();
-    }
-
-    function jumpToMonth(year, monthIndex) {
-      calendarYear = year;
-      calendarMonth = monthIndex;
-      renderMonthView();
-    }
-
-    function copyCurrentDayTxt() {
-      copyDayTxtByIso(selectedDate);
-    }
-
-    function copyDayTxtByIso(isoDate) {
-      const txt = generateDayTxtString(isoDate);
-      const textarea = document.createElement('textarea');
-      textarea.value = txt;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      showToast(`Skopiowano plan z dnia ${toPolishDateDots(isoDate)}!`);
-    }
-
-    function downloadTxtFile(filename, content) {
-      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-
-    function downloadCurrentDayTxt() {
-      downloadDayTxtByIso(selectedDate);
-    }
-
-    function downloadDayTxtByIso(isoDate) {
-      const dateDotsUnderscore = toPolishDateDots(isoDate).replace(/\./g, '_');
-      const txt = generateDayTxtString(isoDate);
-      const filename = `plan_${dateDotsUnderscore}.txt`;
-      downloadTxtFile(filename, txt);
-      showToast(`Pobrano plik ${filename}`);
-    }
-
-    function downloadWeekTxt() {
-      const mondayIso = getMondayOfWeek(selectedDate);
-      const sundayIso = addDays(mondayIso, 6);
-      const parts = [];
-      for (let i = 0; i < 7; i++) {
-        const dIso = addDays(mondayIso, i);
-        if (SCHEDULE_DB[dIso]) {
-          parts.push(generateDayTxtString(dIso));
-        }
-      }
-      const content = parts.length > 0
-        ? parts.join("\n\n\n")
-        : `Brak zaplanowanych zajęć w tygodniu ${toPolishDateDots(mondayIso)} - ${toPolishDateDots(sundayIso)}.`;
-      const filename = `plan_BN1_tydzien_${mondayIso}_${sundayIso}.txt`;
-      downloadTxtFile(filename, content);
-      showToast(`Pobrano plan całego tygodnia (.txt)`);
-    }
-
-    let toastTimeout = null;
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toastMsg').textContent = message;
-      toast.classList.remove('translate-y-24', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-      if (toastTimeout) clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-24', 'opacity-0');
-      }, 2600);
-    }
-
-    // Inicjalizacja na starcie
-    window.onload = () => {
-      renderDayView();
-      reloadLiveSchedule(false);
-    };
+    window.addEventListener('appinstalled',()=>toast('Aplikacja została zainstalowana'));
+    window.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel('notificationsOverlay');closePanel('settingsOverlay')}});
+    if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
+    state.month=parseISO(state.selectedDate).getMonth();
+    renderAll();
+    loadSchedule(false);
+    setInterval(()=>loadSchedule(true),5*60*1000);
   </script>
 </body>
 </html>
