@@ -16,6 +16,7 @@ HASH_FILE = "last_hash.txt"
 OUTPUT_JSON = "schedule.json"
 NOTIFICATIONS_JSON = "notifications.json"
 PUSH_PAYLOAD_FILE = "push_payload.json"
+UPDATE_SEQUENCE_FILE = "update_sequence.txt"
 PARSER_VERSION_FILE = "parser_version.txt"
 PARSER_VERSION = "3"
 
@@ -487,6 +488,16 @@ def main():
         with open(HASH_FILE, "r", encoding="utf-8") as handle:
             old_hash = handle.read().strip()
 
+    try:
+        with open(UPDATE_SEQUENCE_FILE, "r", encoding="utf-8") as handle:
+            update_sequence = max(0, int(handle.read().strip() or "0"))
+    except (OSError, ValueError):
+        update_sequence = 0
+
+    if old_hash and old_hash != current_hash:
+        update_sequence += 1
+    transition_id = f"{update_sequence}-{current_hash[:12]}"
+
     if old_hash == current_hash and not parser_changed and os.path.exists(OUTPUT_JSON):
         print("PDF i wersja parsera nie zmieniły się — pomijam przetwarzanie.")
         write_push_payload([])
@@ -508,13 +519,13 @@ def main():
     payload = {"last_updated": now_text, "source_label": label, "days": days_dict}
 
     # Zmiana logiki parsera nie jest zmianą w planie uczelni — nie wysyłamy wtedy alarmu.
-    if parser_changed or not old_days:
+    if parser_changed or not old_days or not old_hash:
         current_notifications = []
         history = []
         print("Przeliczenie parsera / inicjalizacja danych — bez powiadomienia o zmianach.")
     else:
-        raw_changes = build_change_notifications(old_days, days_dict, current_hash[:12], now_text)
-        current_notifications = group_change_notifications(raw_changes, current_hash[:12], now_text)
+        raw_changes = build_change_notifications(old_days, days_dict, transition_id, now_text)
+        current_notifications = group_change_notifications(raw_changes, transition_id, now_text)
         previous = read_json_if_exists(NOTIFICATIONS_JSON, {"changes": []})
         history = keep_recent_notifications(previous.get("changes", []), now)
 
@@ -524,7 +535,7 @@ def main():
 
     notifications = {
         "schema_version": 1,
-        "update_id": current_hash[:12],
+        "update_id": transition_id,
         "last_updated": now_text,
         "changes": history,
     }
@@ -538,6 +549,9 @@ def main():
     with open(PARSER_VERSION_FILE + ".tmp", "w", encoding="utf-8") as handle:
         handle.write(PARSER_VERSION)
     os.replace(PARSER_VERSION_FILE + ".tmp", PARSER_VERSION_FILE)
+    with open(UPDATE_SEQUENCE_FILE + ".tmp", "w", encoding="utf-8") as handle:
+        handle.write(str(update_sequence))
+    os.replace(UPDATE_SEQUENCE_FILE + ".tmp", UPDATE_SEQUENCE_FILE)
 
     total_items = sum(len(day.get("items", [])) for day in days_dict.values())
     print(f"Zapisano {len(days_dict)} dni i {total_items} bloków. Nowe powiadomienia: {len(current_notifications)}.")
