@@ -5,6 +5,7 @@ workers_dev = true
 
 [[kv_namespaces]]
 binding = "PUSH_KV"
+# ZASTĄP placeholder prawdziwym ID zwróconym przez: npx wrangler kv namespace create PUSH_KV
 id = "00000000000000000000000000000000"
 
 [vars]
