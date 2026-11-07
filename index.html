@@ -140,6 +140,10 @@
     .notification-date{font-size:10px;color:#8093b8}
     .notification-title{font-size:13px;font-weight:750;margin-top:5px}
     .notification-message{font-size:12px;color:#b2c0dc;line-height:1.5;margin-top:4px}
+    .notification-change{padding:7px 0;border-top:1px solid rgba(150,173,220,.10);font-size:11px;color:#d8e3f8;line-height:1.4}
+    .notification-change:first-child{border-top:0}
+    .notification-item[role=button]{cursor:pointer}
+    .notification-item[role=button]:focus-visible{outline:2px solid #a995ff;outline-offset:2px}
     .notification-details{font-size:11px;color:#91a4c8;line-height:1.5;margin-top:6px}
     .panel-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
     .panel-note{font-size:11px;color:#8fa2c6;line-height:1.5;margin-top:14px}
@@ -282,7 +286,7 @@
     function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(lastToastTimer);lastToastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
     function dayData(iso){return state.days[iso]||null}
     function itemMode(item,day){return item.mode||day?.mode||'STACJONARNE'}
-    function modeOf(day){if(!day||!day.items?.length)return 'WOLNE';const modes=new Set(day.items.map(i=>itemMode(i,day)));return modes.size>1?'MIESZANE':(modes.has('ZDALNE')?'ZDALNE':'STACJONARNE')}
+    function modeOf(day){if(!day||!day.items?.length)return 'WOLNE';const modes=new Set(day.items.map(i=>itemMode(i,day)));return modes.size>1||modes.has('MIESZANE')?'MIESZANE':(modes.has('ZDALNE')?'ZDALNE':'STACJONARNE')}
     function modeClass(mode){return mode==='ZDALNE'?'mode-remote':mode==='STACJONARNE'?'mode-onsite':mode==='MIESZANE'?'mode-mixed':'mode-free'}
     function filteredItems(day){const q=$('subjectSearch').value.trim().toLocaleLowerCase('pl');return (day?.items||[]).filter(item=>!q||[item.title,item.lecturer,item.type,item.room].filter(Boolean).join(' ').toLocaleLowerCase('pl').includes(q))}
     function selectedDateChange(iso){state.selectedDate=iso;state.month=parseISO(iso).getMonth();renderAll();window.scrollTo({top:0,behavior:'smooth'})}
@@ -299,7 +303,7 @@
         const iso=addDays(monday,i),d=parseISO(iso),data=dayData(iso),modes=new Set((data?.items||[]).map(x=>itemMode(x,data)));
         const btn=document.createElement('button');btn.type='button';btn.className='date-chip'+(iso===state.selectedDate?' active':'');
         btn.innerHTML='<span class="day-name">'+weekdaysShort[d.getDay()]+'</span><span class="day-number">'+String(d.getDate()).padStart(2,'0')+'</span>';
-        if(modes.size){const dots=document.createElement('span');dots.className='date-markers';if(modes.has('STACJONARNE')){const dot=document.createElement('i');dots.append(dot)}if(modes.has('ZDALNE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}btn.append(dots)}
+        if(modes.size){const dots=document.createElement('span');dots.className='date-markers';if(modes.has('STACJONARNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dots.append(dot)}if(modes.has('ZDALNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}btn.append(dots)}
         btn.addEventListener('click',()=>selectedDateChange(iso));container.append(btn);
       }
     }
@@ -349,8 +353,8 @@
         const num=document.createElement('span');num.className='daynum';num.textContent=dayNum;cell.append(num);
         const dots=document.createElement('span');dots.className='dots';
         const modes=new Set(items.map(item=>itemMode(item,data)));
-        if(modes.has('STACJONARNE')){const dot=document.createElement('i');dots.append(dot)}
-        if(modes.has('ZDALNE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}
+        if(modes.has('STACJONARNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dots.append(dot)}
+        if(modes.has('ZDALNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}
         cell.append(dots);cell.addEventListener('click',()=>selectedDateChange(iso));host.append(cell);
       }
     }
@@ -475,13 +479,6 @@
     }
     function openPanel(id){$(id).hidden=false}
     function closePanel(id){$(id).hidden=true}
-    async function enableSystemNotifications(){
-      if(!('Notification'in window)){toast('Ta przeglądarka nie obsługuje powiadomień');return}
-      const permission=await Notification.requestPermission();
-      if(permission==='granted'){localStorage.setItem('pansPlanSystemNotifications','yes');toast('Powiadomienia systemowe włączone');await dispatchSystemNotifications(state.notifications)}
-      else{localStorage.setItem('pansPlanSystemNotifications','no');toast('Nie udzielono zgody na powiadomienia')}
-    }
-    function markRead(){const read=getStoredSet(readIdsKey);state.notifications.forEach(n=>read.add(n.id));saveStoredSet(readIdsKey,read);renderNotifications();toast('Oznaczono powiadomienia jako przeczytane')}
     $('focusSearch').addEventListener('click',()=>$('subjectSearch').focus());
     $('openNotifications').addEventListener('click',()=>{openPanel('notificationsOverlay');markRead(false);renderNotifications()});
     $('openSettings').addEventListener('click',()=>openPanel('settingsOverlay'));
