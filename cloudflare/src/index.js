@@ -48,13 +48,23 @@ async function listSubscriptions(kv) {
 }
 
 function validSubscription(subscription) {
-  return Boolean(
-    subscription &&
-    typeof subscription.endpoint === "string" &&
-    subscription.endpoint.startsWith("https://") &&
-    typeof subscription.keys?.p256dh === "string" &&
-    typeof subscription.keys?.auth === "string"
-  );
+  if (
+    !subscription ||
+    typeof subscription.endpoint !== "string" ||
+    typeof subscription.keys?.p256dh !== "string" ||
+    typeof subscription.keys?.auth !== "string"
+  ) return false;
+  try {
+    const endpoint = new URL(subscription.endpoint);
+    if (endpoint.protocol !== "https:") return false;
+    const host = endpoint.hostname.toLowerCase();
+    return host === "fcm.googleapis.com" ||
+      host.endsWith(".push.services.mozilla.com") ||
+      host === "web.push.apple.com" ||
+      host.endsWith(".notify.windows.com");
+  } catch {
+    return false;
+  }
 }
 
 async function handleSubscribe(request, env) {
