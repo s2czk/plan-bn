@@ -1,6 +1,12 @@
 name: Aktualizacja planu zajęć BN — PANS Koszalin
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'updater.py'
+      - 'tests/**'
+      - '.github/workflows/update_schedule.yml'
   schedule:
     - cron: '0 6-20 * * *'
   workflow_dispatch:
