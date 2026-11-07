@@ -87,6 +87,22 @@ test("an invalid push endpoint is rejected", async () => {
   assert.equal(response.status, 400);
 });
 
+test("authorized dispatch accepts an empty update", async () => {
+  const response = await worker.fetch(new Request("https://worker.test/dispatch", {
+    method: "POST",
+    headers: {
+      Origin: "https://plan.mandaro.eu",
+      Authorization: "Bearer secret-token",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ notifications: [] }),
+  }), createEnv());
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    notifications: 0, devices: 0, sent: 0, skipped: 0, removed: 0, failed: 0,
+  });
+});
+
 test("push dispatch requires the private server token", async () => {
   const response = await worker.fetch(new Request("https://worker.test/dispatch", {
     method: "POST",

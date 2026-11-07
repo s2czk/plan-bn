@@ -4,6 +4,7 @@ import json
 import os
 import re
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from urllib.parse import urljoin
 
 import pdfplumber
@@ -18,7 +19,13 @@ NOTIFICATIONS_JSON = "notifications.json"
 PUSH_PAYLOAD_FILE = "push_payload.json"
 UPDATE_SEQUENCE_FILE = "update_sequence.txt"
 PARSER_VERSION_FILE = "parser_version.txt"
-PARSER_VERSION = "3"
+PARSER_VERSION = "4"
+WARSAW_TZ = ZoneInfo("Europe/Warsaw")
+
+
+def local_now():
+    """Zwraca lokalny czas Warszawy jako naiwny datetime do istniejącego formatu JSON."""
+    return datetime.now(WARSAW_TZ).replace(tzinfo=None)
 
 HEADERS = {
     "User-Agent": (
@@ -57,16 +64,29 @@ def time_to_minutes(value):
 
 
 def clean_subject_title(value):
-    """Usuwa z nazwy przedmiotu techniczne dopiski godzin, typu zajęć i grupy."""
+    """Usuwa z końca tytułu techniczne dopiski PDF: godziny, typ zajęć, grupę i rok."""
     title = str(value or "")
     title = re.sub(r"\b\d{1,2}:\d{2}\b", " ", title)
     title = re.sub(r"\b(?:grupa|gr\.?)\s*[A-Za-z0-9IVX/-]+\b", " ", title, flags=re.IGNORECASE)
-    title = re.sub(
-        r"\s*[\(\[]?\s*(?:[-–—]\s*)?(?:wykład|wykł\.?|wykładowy|ćwiczenia|ćwiczeń|ćw\.?)\s*[\)\]]?\s*$",
-        "",
+    title = re.sub(r"\s*\([^)]*\b20\d{2}\s*/\s*20\d{2}\b[^)]*\)\s*$", "", title, flags=re.IGNORECASE)
+
+    type_suffix = re.search(
+        r"\s*(?:[-–—]\s*)?(?:wykład|wykł\.?|wykładowy|ćwiczenia|ćwiczeń|ćw\.?)"
+        r"(?:\s+[IVXLCDM]+)?\s*$",
         title,
         flags=re.IGNORECASE,
     )
+    if type_suffix:
+        title = title[:type_suffix.start()]
+        # PDF occasionally places a room number directly before the class type.
+        title = re.sub(
+            r"\s+(?:020|104|105|106|107|11|3|H\d{1,3}|aula\s*\d+|10-biblioteka|hala\s+sportowa|brak\s+sal(?:i|ę))\s*$",
+            "",
+            title,
+            flags=re.IGNORECASE,
+        )
+
+    title = re.sub(r"\s+(?:zdalnie|zda\s*dalnie|stacjonarnie)\s*$", "", title, flags=re.IGNORECASE)
     title = re.sub(r"\s+", " ", title).strip(" .-–—,:;")
     return title or "Zajęcia kierunkowe BN"
 
@@ -290,7 +310,7 @@ def change_score(old_item, old_day, new_item, new_day):
 
 def build_change_notifications(old_days, new_days, update_id, created_at=None):
     """Porównuje plany i zwraca wyłącznie rzeczywiste zmiany w zajęciach."""
-    created_at = created_at or datetime.now().strftime("%Y-%m-%d %H:%M")
+    created_at = created_at or local_now().strftime("%Y-%m-%d %H:%M")
     changes = []
     for date in sorted(set(old_days) | set(new_days)):
         old_day = old_days.get(date) or {"mode": "STACJONARNE", "items": []}
@@ -400,12 +420,23 @@ def group_change_notifications(changes, update_id, created_at):
             f"Wykryto {count} zmiany" if 2 <= count % 10 <= 4 and not 12 <= count % 100 <= 14
             else f"Wykryto {count} zmian"
         )
+        push_labels = {"added": "DODANO", "cancelled": "USUNIĘTO", "changed": "ZMIENIONO"}
+        push_parts = []
+        for event in events:
+            label = push_labels.get(event.get("type"), "ZMIANA")
+            part = f"{label}: {event.get('message') or event.get('title') or 'Zajęcia'}"
+            details = "; ".join(event.get("details") or [])
+            if details:
+                part += " — " + details
+            push_parts.append(part)
+
         summaries.append({
             "id": f"{update_id}-{date}",
             "date": date,
             "type": "summary",
             "title": "Zmiany w planie zajęć",
             "message": count_text + " w planie zajęć.",
+            "push_message": (count_text + ": " + " | ".join(push_parts))[:3000],
             "events": events,
             "created_at": created_at,
             "url": f"./?date={date}",
@@ -415,7 +446,7 @@ def group_change_notifications(changes, update_id, created_at):
 
 def keep_recent_notifications(notifications, now=None):
     """Pozostawia tylko siedmiodniową historię powiadomień."""
-    now = now or datetime.now()
+    now = now or local_now()
     cutoff = now - timedelta(days=7)
     kept = []
     seen = set()
@@ -501,6 +532,12 @@ def main():
     if old_hash == current_hash and not parser_changed and os.path.exists(OUTPUT_JSON):
         print("PDF i wersja parsera nie zmieniły się — pomijam przetwarzanie.")
         write_push_payload([])
+        existing = read_json_if_exists(NOTIFICATIONS_JSON, {"changes": []})
+        existing_changes = existing.get("changes", [])
+        recent_changes = keep_recent_notifications(existing_changes, local_now())
+        if len(recent_changes) != len(existing_changes):
+            existing["changes"] = recent_changes
+            write_json_atomic(NOTIFICATIONS_JSON, existing)
         return
 
     old_payload = read_json_if_exists(OUTPUT_JSON, {"days": {}})
@@ -514,20 +551,21 @@ def main():
                 days_dict[iso_date] = day_obj
 
     validate_schedule(days_dict)
-    now = datetime.now()
+    now = local_now()
     now_text = now.strftime("%Y-%m-%d %H:%M")
     payload = {"last_updated": now_text, "source_label": label, "days": days_dict}
 
-    # Zmiana logiki parsera nie jest zmianą w planie uczelni — nie wysyłamy wtedy alarmu.
-    if parser_changed or not old_days or not old_hash:
+    # Zmiana samego parsera nie jest zmianą planu. Jeśli równocześnie zmienił się PDF,
+    # porównujemy jednak stary i nowy plan, aby nie zgubić prawdziwej aktualizacji.
+    previous = read_json_if_exists(NOTIFICATIONS_JSON, {"changes": []})
+    history = keep_recent_notifications(previous.get("changes", []), now)
+    parser_only_refresh = parser_changed and old_hash == current_hash
+    if parser_only_refresh or not old_days or not old_hash:
         current_notifications = []
-        history = []
         print("Przeliczenie parsera / inicjalizacja danych — bez powiadomienia o zmianach.")
     else:
         raw_changes = build_change_notifications(old_days, days_dict, transition_id, now_text)
         current_notifications = group_change_notifications(raw_changes, transition_id, now_text)
-        previous = read_json_if_exists(NOTIFICATIONS_JSON, {"changes": []})
-        history = keep_recent_notifications(previous.get("changes", []), now)
 
     known_ids = {item.get("id") for item in history}
     history.extend(item for item in current_notifications if item.get("id") not in known_ids)
@@ -556,9 +594,6 @@ def main():
     total_items = sum(len(day.get("items", [])) for day in days_dict.values())
     print(f"Zapisano {len(days_dict)} dni i {total_items} bloków. Nowe powiadomienia: {len(current_notifications)}.")
 
-
-if __name__ == "__main__":
-    main()
 
 if __name__ == "__main__":
     main()
