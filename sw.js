@@ -1,5 +1,5 @@
-const CACHE_NAME = "pans-plan-shell-v1";
-const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
+const CACHE_NAME = "pans-plan-shell-v2";
+const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./push-config.js"];
 
 self.addEventListener("install", event => {
   event.waitUntil(
@@ -65,11 +65,18 @@ self.addEventListener("push", event => {
 
 self.addEventListener("notificationclick", event => {
   event.notification.close();
-  const target = new URL((event.notification.data && event.notification.data.url) || "./", self.location.origin).href;
-  event.waitUntil(
-    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(clients => {
-      const existing = clients.find(client => client.url.startsWith(self.location.origin));
-      return existing ? existing.focus() : self.clients.openWindow(target);
-    })
-  );
+  const requested = (event.notification.data && event.notification.data.url) || "./";
+  event.waitUntil((async () => {
+    let target;
+    try { target = new URL(requested, self.location.origin); }
+    catch (_) { target = new URL("./", self.location.origin); }
+    if (target.origin !== self.location.origin) target = new URL("./", self.location.origin);
+    const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    const existing = windows.find(client => client.url.startsWith(self.location.origin));
+    if (existing) {
+      try { const navigated = await existing.navigate(target.href); return (navigated || existing).focus(); }
+      catch (_) { return existing.focus(); }
+    }
+    return self.clients.openWindow(target.href);
+  })());
 });
