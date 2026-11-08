@@ -46,6 +46,17 @@ class FrontendChecks(unittest.TestCase):
             self.assertIn(required, html)
         self.assertNotIn(">BN1<", html)
 
+    def test_search_is_global_and_not_embedded_in_main_toolbar(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="openSearchFromMonth"', html)
+        self.assertIn('id="searchOverlay"', html)
+        self.assertIn('id="globalSearchInput"', html)
+        self.assertIn("function searchPlan(query)", html)
+        self.assertNotIn('id="subjectSearch"', html)
+        self.assertNotIn('id="openFilters"', html)
+        toolbar = html.split('<div class="toolbar action-toolbar">', 1)[1].split("</div>", 1)[0]
+        self.assertNotIn("search-box", toolbar)
+
     def test_inline_javascript_syntax(self):
         node = shutil.which("node")
         if not node:
@@ -67,6 +78,13 @@ class FrontendChecks(unittest.TestCase):
         config = (ROOT / "cloudflare" / "wrangler.toml").read_text(encoding="utf-8")
         self.assertIn('binding = "PUSH_KV"', config)
         self.assertIn('name = "plan-bn-push"', config)
+
+    def test_service_worker_fetches_push_config_from_network_first(self):
+        service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
+        self.assertIn('pans-plan-shell-v3', service_worker)
+        self.assertIn('const isPushConfig = url.pathname.endsWith("/push-config.js")', service_worker)
+        self.assertIn('new Request(request, { cache: "no-store" })', service_worker)
+        self.assertIn('const response = await fetch(liveRequest)', service_worker)
 
     def test_push_backend_setup_is_documented(self):
         setup = (ROOT / "cloudflare" / "README.md").read_text(encoding="utf-8")
