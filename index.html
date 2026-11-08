@@ -21,17 +21,17 @@
     button:focus-visible,input:focus-visible{outline:2px solid #a995ff;outline-offset:2px}
     .app-shell{width:97%;max-width:1700px;margin:0 auto;padding:clamp(12px,2vw,26px) 0 calc(18px + env(safe-area-inset-bottom));min-height:100vh;display:flex;flex-direction:column;gap:12px}
     .surface{background:linear-gradient(145deg,rgba(24,36,67,.96),rgba(12,21,43,.96));border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}
-    .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 17px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 13px}
     .brand{display:flex;align-items:center;gap:12px;min-width:0}
     .brand-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#5f49c8,#294b8b);border:1px solid rgba(190,178,255,.25);color:white;flex:0 0 auto}
     .brand-title{font-size:clamp(17px,2vw,22px);font-weight:750;letter-spacing:-.55px;line-height:1.15}
     .brand-sub{margin-top:4px;color:var(--muted);font-size:12px;letter-spacing:.1px}
     .header-actions{display:flex;align-items:center;gap:7px}
-    .icon-button{position:relative;width:38px;height:38px;display:grid;place-items:center;border-radius:12px;border:1px solid var(--line);background:rgba(25,39,70,.8);color:#e3eaff;transition:background .16s,border-color .16s}
+    .icon-button{position:relative;width:36px;height:36px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--line);background:rgba(25,39,70,.8);color:#e3eaff;transition:background .16s,border-color .16s}
     .icon-button:hover{background:rgba(72,69,139,.48);border-color:rgba(169,149,255,.5)}
     .unread-dot{display:none;position:absolute;right:-5px;top:-5px;min-width:17px;height:17px;padding:0 4px;align-items:center;justify-content:center;border-radius:999px;background:var(--lime);color:#182441;font-size:9px;line-height:1;font-weight:800;border:2px solid #172544;box-shadow:0 2px 7px rgba(0,0,0,.25)}
     .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:5px;background:rgba(9,17,37,.72);border:1px solid var(--line);border-radius:15px}
-    .tab{height:42px;border:0;border-radius:11px;background:transparent;color:#a9b9d9;font-size:13px;font-weight:650;transition:background .16s,color .16s}
+    .tab{height:38px;border:0;border-radius:10px;background:transparent;color:#a9b9d9;font-size:12px;font-weight:650;transition:background .16s,color .16s}
     .tab.active{background:linear-gradient(110deg,#654bd0,#354b9d);color:white;box-shadow:0 5px 15px rgba(8,13,47,.35)}
     .datebar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px}
     .date-info{display:flex;align-items:center;gap:11px;min-width:0;flex:1}
@@ -56,11 +56,14 @@
     .date-markers{display:flex;gap:3px;position:absolute;bottom:4px;left:50%;transform:translateX(-50%)}
     .date-markers i{display:block;width:4px;height:4px;border-radius:50%;background:var(--onsite)}
     .date-markers i.remote{background:var(--remote)}
-    .toolbar{display:flex;align-items:center;gap:8px}
-    .search-box{height:42px;display:flex;align-items:center;gap:9px;flex:1;min-width:140px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:rgba(12,22,44,.82);color:#afc0e2}
+    .toolbar{display:flex;align-items:center;justify-content:flex-end;gap:7px}
+    .action-button{height:36px;padding:0 10px;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(145deg,#202e50,#121e39);color:#e6edff;font-size:11px;font-weight:650;white-space:nowrap;transition:.15s}
+    .toolbar .action-button{flex:0 1 170px}
+    .month-title-actions{display:flex;align-items:center;gap:8px}
+    .month-search-button{width:32px;height:32px;border-radius:10px}
+    .search-box{height:40px;display:flex;align-items:center;gap:9px;width:100%;padding:0 12px;border-radius:11px;border:1px solid var(--line);background:rgba(12,22,44,.82);color:#afc0e2}
     .search-box input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:white;font-size:13px}
     .search-box input::placeholder{color:#7f91b5}
-    .action-button{height:42px;padding:0 13px;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,#202e50,#121e39);color:#e6edff;font-size:12px;font-weight:650;white-space:nowrap;transition:.15s}
     .action-button:hover{border-color:rgba(169,149,255,.45);background:#293967}
     .action-button.primary{background:linear-gradient(110deg,#6248d0,#3b4e9d);border-color:rgba(170,153,255,.5);color:white}
     .action-button .btn-icon{font-size:16px;line-height:1}
@@ -147,14 +150,26 @@
     .notification-details{font-size:11px;color:#91a4c8;line-height:1.5;margin-top:6px}
     .panel-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
     .panel-note{font-size:11px;color:#8fa2c6;line-height:1.5;margin-top:14px}
+    .search-panel{display:flex;flex-direction:column;gap:12px}
+    .search-panel .search-box{flex:0 0 auto}
+    .search-count{font-size:11px;color:#94a7cb;min-height:16px}
+    .search-results{display:flex;flex-direction:column;gap:8px;overflow:auto;min-height:0;padding-bottom:4px}
+    .search-result{width:100%;text-align:left;padding:11px 12px;border:1px solid rgba(150,173,220,.17);border-radius:12px;background:rgba(10,19,39,.68);color:var(--text)}
+    .search-result:hover{border-color:rgba(169,149,255,.5);background:rgba(63,53,119,.25)}
+    .search-result-top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#aebddd;font-size:10px}
+    .search-result-time{color:var(--lime);font:700 11px "JetBrains Mono",monospace;white-space:nowrap}
+    .search-result-title{font-size:13px;font-weight:750;margin-top:5px;line-height:1.35}
+    .search-result-meta{font-size:11px;color:#aab9d8;margin-top:4px;line-height:1.4}
+    .search-result-tags{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:7px}
+    .search-result-tags .meta-tag{padding:3px 6px;font-size:9px}
     .setting-row{padding:12px;border-radius:13px;border:1px solid var(--line);background:rgba(10,19,39,.5);display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}
     .setting-row strong{font-size:13px}
     .setting-row p{font-size:11px;color:#9aacca;line-height:1.45;margin:4px 0 0}
     .toast{position:fixed;left:50%;bottom:22px;z-index:60;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;transition:.2s;padding:10px 15px;border-radius:12px;border:1px solid rgba(180,166,255,.3);background:#202c4d;color:white;font-size:12px;box-shadow:0 12px 35px #020817aa;max-width:calc(100vw - 24px);text-align:center}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     @media(min-width:1100px){.class-card{padding:15px 19px}.class-time{font-size:14px}.class-subject{font-size:16px}}
-    @media(max-width:760px){.app-shell{width:97%;gap:9px}.topbar{padding:11px 12px}.brand-mark{width:36px;height:36px}.header-actions{gap:5px}.icon-button{width:34px;height:34px}.brand-sub{font-size:10px}.week-grid{grid-template-columns:repeat(7,minmax(128px,1fr))}.week-view-scroll{overflow-x:auto;padding-bottom:5px}.week-day{min-height:150px}.date-chip{flex-direction:column;gap:2px;padding:6px 2px 9px}.date-chip .day-number{font-size:14px}.toolbar{flex-wrap:wrap}.search-box{flex-basis:100%}.action-button{flex:1}.date-label{font-size:17px}}
-    @media(max-width:420px){.brand-title{font-size:16px}.datebar{padding:9px}.date-arrow{width:33px;height:33px}.date-right{gap:5px}.mode-badge{font-size:9px;padding:5px 7px}.class-card{gap:8px;padding:12px 10px 12px 14px}.class-line{display:block}.class-time{display:block;font-size:12px;margin-bottom:4px}.class-subject{font-size:14px}.class-teacher{font-size:11px}.meta-tag{padding:5px 7px;font-size:9px}.footer{font-size:9px}}
+    @media(max-width:760px){.app-shell{width:97%;gap:8px}.topbar{padding:8px 10px}.brand-mark{width:35px;height:35px}.header-actions{gap:5px}.icon-button{width:34px;height:34px}.brand-sub{font-size:10px}.week-grid{grid-template-columns:repeat(7,minmax(128px,1fr))}.week-view-scroll{overflow-x:auto;padding-bottom:5px}.week-day{min-height:150px}.date-chip{flex-direction:column;gap:2px;padding:5px 2px 8px;min-height:49px}.date-chip .day-number{font-size:14px}.toolbar{flex-wrap:nowrap}.toolbar .action-button{flex:1 1 0;min-width:0}.date-label{font-size:17px}.datebar{padding:8px 10px}.week-toolbar,.month-toolbar{padding:8px 9px;gap:7px}}
+    @media(max-width:420px){.brand-title{font-size:15px}.datebar{padding:8px}.date-arrow{width:32px;height:32px}.date-right{gap:5px}.mode-badge{font-size:9px;padding:5px 7px}.class-card{gap:8px;padding:12px 10px 12px 14px}.class-line{display:block}.class-time{display:block;font-size:12px;margin-bottom:4px}.class-subject{font-size:14px}.class-teacher{font-size:11px}.meta-tag{padding:5px 7px;font-size:9px}.footer{font-size:9px}.action-button{height:35px;padding:0 8px;font-size:10px}.btn-icon{font-size:14px}.tabs{gap:3px;padding:4px}.tab{height:36px;font-size:11px}.month-search-button{width:30px;height:30px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
@@ -171,7 +186,6 @@
         </div>
       </div>
       <div class="header-actions">
-        <button class="icon-button" id="focusSearch" aria-label="Wyszukaj przedmiot" title="Wyszukaj"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg></button>
         <button class="icon-button" id="openNotifications" aria-label="Powiadomienia" title="Powiadomienia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 9a6 6 0 0 0-12 0c0 6.5-2.5 7-2.5 9h17C20.5 16 18 15.5 18 9ZM10 21h4"/></svg><span class="unread-dot" id="unreadDot" aria-label="Nieprzeczytane powiadomienia"></span></button>
         <button class="icon-button" id="openSettings" aria-label="Ustawienia" title="Ustawienia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></svg></button>
       </div>
@@ -197,14 +211,9 @@
 
     <div class="week-strip" id="weekStrip" aria-label="Wybierz dzień tygodnia"></div>
 
-    <div class="toolbar">
-      <label class="search-box">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg>
-        <input id="subjectSearch" type="search" placeholder="Szukaj przedmiotu..." autocomplete="off" aria-label="Szukaj przedmiotu">
-      </label>
+    <div class="toolbar action-toolbar">
       <button class="action-button" id="copyDay"><span class="btn-icon">▤</span>Kopiuj TXT</button>
       <button class="action-button primary" id="downloadDay"><span class="btn-icon">↓</span>Pobierz .txt</button>
-      <button class="icon-button" id="openFilters" aria-label="Filtry" title="Filtry"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button>
     </div>
 
     <main>
@@ -227,7 +236,12 @@
       <section id="monthView" class="view">
         <div class="month-toolbar surface">
           <button class="date-arrow" id="previousMonth" aria-label="Poprzedni miesiąc">‹</button>
-          <strong id="monthTitle">—</strong>
+          <div class="month-title-actions">
+            <strong id="monthTitle">—</strong>
+            <button class="icon-button month-search-button" id="openSearchFromMonth" aria-label="Szukaj w całym planie" title="Szukaj w całym planie">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg>
+            </button>
+          </div>
           <button class="date-arrow" id="nextMonth" aria-label="Następny miesiąc">›</button>
         </div>
         <div class="calendar-panel surface">
@@ -250,6 +264,23 @@
       <div id="notificationList" class="notification-list"><div class="empty-state">Ładowanie powiadomień…</div></div>
       <div class="panel-actions"><button class="action-button" id="markNotificationsRead">Oznacz wszystkie jako przeczytane</button><button class="action-button primary" id="enableNotifications">Włącz powiadomienia</button></div>
       <p class="panel-note" id="pushStatus">Powiadomienia na tym urządzeniu. Włącz je, aby otrzymywać informacje o zmianach również po zamknięciu strony.</p>
+    </aside>
+  </div>
+
+  <div class="overlay" id="searchOverlay" hidden>
+    <aside class="side-panel search-panel" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
+      <div class="panel-heading">
+        <h2 id="searchTitle">Szukaj w całym planie</h2>
+        <button class="icon-button" data-close="searchOverlay" aria-label="Zamknij">×</button>
+      </div>
+      <label class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg>
+        <input id="globalSearchInput" type="search" placeholder="Przedmiot, prowadzący, sala, godzina..." autocomplete="off" aria-label="Szukaj w całym planie">
+      </label>
+      <div class="search-count" id="searchCount" aria-live="polite">Wpisz przynajmniej 2 znaki.</div>
+      <div class="search-results" id="searchResults">
+        <div class="empty-state">Wyszukiwarka obejmuje wszystkie dostępne terminy.</div>
+      </div>
     </aside>
   </div>
 
@@ -288,7 +319,7 @@
     function itemMode(item,day){return item.mode||day?.mode||'STACJONARNE'}
     function modeOf(day){if(!day||!day.items?.length)return 'WOLNE';const modes=new Set(day.items.map(i=>itemMode(i,day)));return modes.size>1||modes.has('MIESZANE')?'MIESZANE':(modes.has('ZDALNE')?'ZDALNE':'STACJONARNE')}
     function modeClass(mode){return mode==='ZDALNE'?'mode-remote':mode==='STACJONARNE'?'mode-onsite':mode==='MIESZANE'?'mode-mixed':'mode-free'}
-    function filteredItems(day){const q=$('subjectSearch').value.trim().toLocaleLowerCase('pl');return (day?.items||[]).filter(item=>!q||[item.title,item.lecturer,item.type,item.room].filter(Boolean).join(' ').toLocaleLowerCase('pl').includes(q))}
+    function filteredItems(day){return day?.items||[]}
     function selectedDateChange(iso){state.selectedDate=iso;state.month=parseISO(iso).getMonth();renderAll();window.scrollTo({top:0,behavior:'smooth'})}
     function renderDateHeader(){
       const d=parseISO(state.selectedDate),data=dayData(state.selectedDate),mode=modeOf(data);
@@ -439,12 +470,20 @@
       return Uint8Array.from(atob(base64),character=>character.charCodeAt(0));
     }
     async function updateNotificationControls(){
-      let active=false;
+      let active=false,backendReady=false;
       try{if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.ready;active=!!(await reg.pushManager.getSubscription())}}catch(e){}
       const configured=!!pushApiUrl();
-      $('enableNotifications').textContent=active?'Wyłącz powiadomienia':configured?'Włącz powiadomienia':'Konfiguracja Push';
-      $('settingsNotifications').textContent=active?'Wyłącz powiadomienia':configured?'Włącz powiadomienia':'Konfiguracja Push';
-      $('pushStatus').textContent=active?'Powiadomienia Push są aktywne na tym urządzeniu.':configured?'Powiadomienia Push są gotowe do włączenia na tym urządzeniu.':'Powiadomienia Push wymagają jednorazowego wdrożenia Cloudflare i wpisania adresu Workera w push-config.js.';
+      if(configured){
+        try{
+          const health=await pushRequest('/health');
+          const config=await pushRequest('/config');
+          backendReady=health?.ok===true&&!!config.publicVapidKey;
+        }catch(error){console.warn('Cloudflare Push health check failed:',error)}
+      }
+      const label=active?'Wyłącz powiadomienia':backendReady?'Włącz powiadomienia':'Sprawdź połączenie Push';
+      $('enableNotifications').textContent=label;
+      $('settingsNotifications').textContent=label;
+      $('pushStatus').textContent=active?'Powiadomienia Push są aktywne na tym urządzeniu.':backendReady?'Usługa Push odpowiada. Możesz włączyć powiadomienia na tym urządzeniu.':configured?'Adres Workera jest zapisany, ale usługa Push nie odpowiada lub nie udostępnia klucza VAPID.':'Powiadomienia Push wymagają konfiguracji Cloudflare.';
     }
     async function pushRequest(path,body){
       const response=await fetch(pushApiUrl()+path,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});
@@ -479,8 +518,68 @@
     }
     function openPanel(id){$(id).hidden=false}
     function closePanel(id){$(id).hidden=true}
-    $('focusSearch').addEventListener('click',()=>$('subjectSearch').focus());
-    $('openNotifications').addEventListener('click',()=>{openPanel('notificationsOverlay');markRead(false);renderNotifications()});
+    function normalizeSearchText(value){
+      return String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pl');
+    }
+    function searchPlan(query){
+      const tokens=normalizeSearchText(query).trim().split(/\s+/).filter(Boolean);
+      if(tokens.length===0)return [];
+      const results=[];
+      for(const [date,day] of Object.entries(state.days||{})){
+        for(const item of day.items||[]){
+          const searchable=normalizeSearchText([item.title,item.lecturer,item.type,item.room,item.group,item.time,date,weekdays[parseISO(date).getDay()]].filter(Boolean).join(' '));
+          if(tokens.every(token=>searchable.includes(token)))results.push({date,day,item});
+        }
+      }
+      return results.sort((a,b)=>a.date.localeCompare(b.date)||String(a.item.time||'').localeCompare(String(b.item.time||'')));
+    }
+    function renderSearchResults(){
+      const query=$('globalSearchInput').value.trim(),host=$('searchResults');
+      host.innerHTML='';
+      if(query.length<2){
+        $('searchCount').textContent=Object.keys(state.days).length?'Wpisz przynajmniej 2 znaki.':'Plan jest jeszcze wczytywany.';
+        host.innerHTML='<div class="empty-state">Wyszukiwanie obejmuje wszystkie dostępne dni oraz przedmioty, prowadzących, typy zajęć, sale i godziny.</div>';
+        return;
+      }
+      const results=searchPlan(query);
+      $('searchCount').textContent='Znaleziono: '+results.length+' '+(results.length===1?'zajęcie':results.length>=2&&results.length<=4?'zajęcia':'zajęć')+'.';
+      if(!results.length){
+        host.innerHTML='<div class="empty-state">Nie znaleziono pasujących zajęć. Spróbuj innego hasła.</div>';
+        return;
+      }
+      results.slice(0,100).forEach(({date,day,item})=>{
+        const mode=itemMode(item,day);
+        const button=document.createElement('button');
+        button.type='button';
+        button.className='search-result';
+        const room=item.room?'<span class="meta-tag room">'+esc(item.room)+'</span>':'';
+        const modeTag=mode==='ZDALNE'?'<span class="meta-tag remote">ZDALNE</span>':'<span class="meta-tag onsite">STACJONARNE</span>';
+        const type=item.type?'<span class="meta-tag">'+esc(item.type)+'</span>':'';
+        const group=item.group?'<span class="meta-tag">'+esc(item.group)+'</span>':'';
+        button.innerHTML='<div class="search-result-top"><span>'+esc(polishDate(date)+' · '+weekdays[parseISO(date).getDay()])+'</span><span class="search-result-time">'+esc(item.time||'')+'</span></div><div class="search-result-title">'+esc(item.title||'Zajęcia')+'</div><div class="search-result-meta">'+esc(item.lecturer||'Prowadzący niepodany')+'</div><div class="search-result-tags">'+modeTag+room+type+group+'</div>';
+        button.addEventListener('click',()=>{
+          closePanel('searchOverlay');
+          setView('day');
+          selectedDateChange(date);
+        });
+        host.append(button);
+      });
+      if(results.length>100){
+        const more=document.createElement('div');
+        more.className='search-count';
+        more.textContent='Wyświetlono pierwsze 100 wyników. Doprecyzuj wyszukiwanie.';
+        host.append(more);
+      }
+    }
+    function openSearchPanel(){
+      openPanel('searchOverlay');
+      $('globalSearchInput').value='';
+      renderSearchResults();
+      $('globalSearchInput').focus();
+    }
+    $('openSearchFromMonth').addEventListener('click',openSearchPanel);
+    $('globalSearchInput').addEventListener('input',renderSearchResults);
+    $('openNotifications').addEventListener('click',()=>{openPanel('notificationsOverlay');markRead(false);renderNotifications();updateNotificationControls()});
     $('openSettings').addEventListener('click',()=>openPanel('settingsOverlay'));
     document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>closePanel(btn.dataset.close)));
     document.querySelectorAll('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)closePanel(el.id)}));
@@ -499,7 +598,6 @@
     $('enableNotifications').addEventListener('click',togglePushNotifications);
     $('settingsNotifications').addEventListener('click',togglePushNotifications);
     $('refreshData').addEventListener('click',()=>loadSchedule(false));
-    $('openFilters').addEventListener('click',()=>{const field=$('subjectSearch');field.focus();field.select();toast('Wpisz nazwę przedmiotu lub prowadzącego')});
     let installEvent=null;
     window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installEvent=event;$('installApp').textContent='Zainstaluj'});
     $('installApp').addEventListener('click',async()=>{
@@ -507,7 +605,7 @@
       else toast('Użyj menu przeglądarki: Zainstaluj aplikację lub Dodaj do ekranu głównego');
     });
     window.addEventListener('appinstalled',()=>toast('Aplikacja została zainstalowana'));
-    window.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel('notificationsOverlay');closePanel('settingsOverlay')}});
+    window.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel('notificationsOverlay');closePanel('searchOverlay');closePanel('settingsOverlay')}});
     if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').then(()=>updateNotificationControls()).catch(error=>{console.error(error);toast('Nie udało się uruchomić Service Worker')}))}
     state.month=parseISO(state.selectedDate).getMonth();
     renderAll();
