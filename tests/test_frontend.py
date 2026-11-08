@@ -78,6 +78,13 @@ class FrontendChecks(unittest.TestCase):
         config = (ROOT / "cloudflare" / "wrangler.toml").read_text(encoding="utf-8")
         self.assertIn('binding = "PUSH_KV"', config)
         self.assertIn('name = "plan-bn-push"', config)
+        self.assertIn('previews = { }', config)
+
+        package_data = json.loads((ROOT / "cloudflare" / "package.json").read_text(encoding="utf-8"))
+        self.assertEqual(package_data["scripts"]["deploy"], "wrangler deploy")
+        self.assertEqual(package_data["scripts"]["preview"], "wrangler preview")
+        self.assertEqual(package_data["devDependencies"]["wrangler"], "4.158.0")
+        self.assertGreaterEqual(int(package_data["engines"]["node"].replace(">=", "")), 22)
 
     def test_service_worker_fetches_push_config_from_network_first(self):
         service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
@@ -88,7 +95,9 @@ class FrontendChecks(unittest.TestCase):
 
     def test_push_backend_setup_is_documented(self):
         setup = (ROOT / "cloudflare" / "README.md").read_text(encoding="utf-8")
-        for value in ("PUSH_WORKER_URL", "PUSH_DISPATCH_TOKEN", "VAPID_PRIVATE_KEY", "PUSH_KV"):
+        for value in ("PUSH_WORKER_URL", "PUSH_DISPATCH_TOKEN", "VAPID_PRIVATE_KEY", "PUSH_KV",
+                      "Root directory", "npm install --no-audit --no-fund",
+                      "npm run deploy", "Enable Preview Builds"):
             self.assertIn(value, setup)
 
 
