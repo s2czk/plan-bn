@@ -2,16 +2,20 @@
   "name": "plan-bn-push",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
+    "preview": "wrangler preview",
     "test": "node --test"
   },
   "dependencies": {
     "@block65/webcrypto-web-push": "2.0.0"
   },
   "devDependencies": {
-    "wrangler": "^4.0.0",
-    "web-push": "^3.6.7"
+    "wrangler": "4.158.0",
+    "web-push": "3.6.7"
   }
 }

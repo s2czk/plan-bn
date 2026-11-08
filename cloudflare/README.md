@@ -1,92 +1,85 @@
-# Powiadomienia Push — plan BN
+# Cloudflare Worker — powiadomienia Push planu BN
 
-Prosty backend powiadomień dla `plan.mandaro.eu`. Wykorzystuje **jeden Cloudflare Worker + jedną przestrzeń KV**. Nie wymaga D1, Cloudflare Cron ani VPS.
+Worker `plan-bn-push` jest częścią repozytorium `s2czk/plan-bn` i obsługuje subskrypcje Web Push, rejestr urządzeń i wysyłanie powiadomień. Parser PDF pozostaje w GitHub Actions; Worker nie instaluje ani nie uruchamia zależności Pythona.
 
-## Jednorazowa konfiguracja
+## 1. Jednorazowe ustawienie Workers Builds
 
-Wymagania: Node.js LTS, konto Cloudflare oraz dostęp do repozytorium GitHub.
+Log z 8 listopada 2026 r. wykazał, że Cloudflare wykonywał `pip install -r requirements.txt` z katalogu głównego repozytorium, a następnie używał `npx wrangler preview` jako **komendy produkcyjnego wdrożenia**. Obie rzeczy są nieprawidłowe dla tego projektu.
 
-1. W terminalu przejdź do katalogu i zaloguj Wrangler:
+W Cloudflare Dashboard otwórz **Workers & Pages → plan-bn-push → Settings → Build**. Ustaw:
 
-   ```bash
-   cd cloudflare
-   npm install
-   npx wrangler login
-   ```
+| Pole | Wartość |
+|---|---|
+| Git repository | `s2czk/plan-bn` |
+| Production branch | `main` |
+| Root directory | `cloudflare` |
+| Build command | `npm install --no-audit --no-fund` |
+| Deploy command | `npm run deploy` |
+| Preview command | `npm run preview` |
 
-2. Utwórz przestrzeń KV:
+Zapisz ustawienia.
 
-   ```bash
-   npx wrangler kv namespace create PUSH_KV
-   ```
+Następnie w **Settings → Build → Branch control**:
+- Production branch: `main`.
+- **Enable Preview Builds: wyłączone** na potrzeby tej prostej konfiguracji produkcyjnej. Nie tworzymy obecnie osobnej bazy KV ani sekretów dla gałęzi testowych.
 
-   Skopiuj zwrócone ID do `cloudflare/wrangler.toml`, w pole `id` pod `[[kv_namespaces]]`. Nie pozostawiaj przykładowego zera.
+Dlaczego te wartości:
+- `cloudflare` jako Root directory izoluje Worker od głównego projektu, w którym znajduje się `requirements.txt` dla parsera PDF.
+- Build command instaluje zależności Node z `cloudflare/package.json`.
+- Deploy command uruchamia prawdziwe wdrożenie produkcyjne (`wrangler deploy`), a nie podgląd (`wrangler preview`).
+- Preview Builds są wyłączone, aby gałęzie testowe nie tworzyły wdrożeń z niekompletnymi, produkcyjnymi zależnościami.
 
-3. Wygeneruj klucze VAPID:
+Po zapisaniu ustawień scalony commit na `main` wywoła automatyczny build. Jeśli build nie uruchomi się sam, użyj **Retry build** dla ostatniego nieudanego wdrożenia — ponowienie użyje nowych ustawień.
 
-   ```bash
-   npx web-push generate-vapid-keys
-   ```
+## 2. Zasoby i zmienne produkcyjne
 
-   Publiczny klucz wpisz w `VAPID_PUBLIC_KEY` w `wrangler.toml`. Klucza prywatnego nie wpisuj do żadnego pliku repozytorium; ustaw go jako sekret:
+`cloudflare/wrangler.toml` zawiera:
+- Worker name: `plan-bn-push`;
+- binding `PUSH_KV` i istniejące ID przestrzeni KV;
+- publiczne `VAPID_PUBLIC_KEY`;
+- `VAPID_SUBJECT`;
+- dozwolony origin `https://plan.mandaro.eu`.
 
-   ```bash
-   npx wrangler secret put VAPID_PRIVATE_KEY
-   ```
+Nie twórz kolejnej przestrzeni KV i nie podmieniaj istniejącego ID — obecna przestrzeń jest już wskazana w konfiguracji.
 
-4. Wygeneruj długi, losowy token wysyłki. Ustaw go jako sekret Workera:
+W **Worker → Settings → Variables and Secrets** sprawdź, czy istnieją dwa sekrety produkcyjne:
+- `VAPID_PRIVATE_KEY` — prywatny klucz odpowiadający publicznemu `VAPID_PUBLIC_KEY`;
+- `DISPATCH_TOKEN` — losowy, długi token wymagany przez endpoint `POST /dispatch`.
 
-   ```bash
-   npx wrangler secret put DISPATCH_TOKEN
-   ```
+Jeśli któregoś brakuje, dodaj go jako **Secret**, nie jako zwykłą zmienną i nigdy nie commituj go do GitHub. Nie zmieniaj istniejących wartości, jeśli już działają.
 
-   Tę samą wartość dodaj w GitHub: **Settings → Secrets and variables → Actions → New repository secret**, pod nazwą `PUSH_DISPATCH_TOKEN`.
+W repozytorium GitHub sprawdź **Settings → Secrets and variables → Actions**. Workflow aktualizacji planu wymaga dwóch sekretów:
+- `PUSH_WORKER_URL` — `https://plan-bn-push.szk-c00.workers.dev` (bez `/dispatch`);
+- `PUSH_DISPATCH_TOKEN` — dokładnie ta sama wartość co Cloudflare `DISPATCH_TOKEN`.
 
-5. Wdróż Workera:
+GitHub Secrets nie ujawniają wartości po zapisaniu, więc trzeba sprawdzić jedynie, czy oba wpisy istnieją i czy token został skopiowany do obu miejsc bez spacji.
 
-   ```bash
-   npx wrangler deploy
-   ```
+## 3. Test po automatycznym wdrożeniu
 
-   Zapisz adres otrzymany po wdrożeniu, np. `https://plan-bn-push.twoj-login.workers.dev`.
+1. Otwórz `https://plan-bn-push.szk-c00.workers.dev/health`. Oczekiwany JSON: `{"ok":true,"service":"plan-bn-push"}`.
+2. Otwórz `https://plan-bn-push.szk-c00.workers.dev/config`. Odpowiedź powinna zawierać niepusty `publicVapidKey`.
+3. Na `https://plan.mandaro.eu` otwórz panel powiadomień. Powinien pojawić się status, że usługa Push odpowiada.
+4. Włącz powiadomienia na telefonie. Sprawdź, czy urządzenie zostało zarejestrowane.
+5. Wykonaj kontrolowaną próbę wysyłki na własne urządzenie; nie wysyłaj testowych komunikatów do innych użytkowników.
 
-6. W GitHub dodaj drugi sekret Actions:
-   - `PUSH_WORKER_URL` — adres Workera, bez końcowego `/dispatch`.
+Sama odpowiedź `/health` potwierdza tylko działanie procesu Workera. Rzeczywista wysyłka wymaga poprawnego prywatnego klucza VAPID, tokenu, KV oraz subskrypcji konkretnego urządzenia.
 
-7. W pliku głównym repozytorium `push-config.js` ustaw adres Workera:
+## 4. Automatyzacja po konfiguracji
 
-   ```js
-   window.PUSH_API_URL = "https://plan-bn-push.twoj-login.workers.dev";
-   ```
+Po jednorazowym zapisaniu ustawień:
+- push do `main` automatycznie wdraża Worker przez Cloudflare Workers Builds;
+- GitHub Actions niezależnie sprawdza PDF i wysyła wykryte zmiany do `POST /dispatch`;
+- nie jest potrzebny VPS, D1 ani osobny serwer;
+- katalog główny repozytorium zachowuje `requirements.txt` dla parsera Pythona.
 
-   Zapisz plik w gałęzi `main`. Adres ten jest publiczny; nie umieszczaj w nim żadnych sekretów.
+W razie problemu sprawdź log Cloudflare. Prawidłowa produkcyjna komenda powinna być widoczna jako `npm run deploy` / `wrangler deploy`, a nie `wrangler preview` ani `pip install -r requirements.txt`.
 
-## Test wdrożenia
+## 5. Pliki i komendy lokalne
 
-1. Otwórz `https://<adres-workera>/health`. Oczekiwany wynik: `{"ok":true,"service":"plan-bn-push"}`.
-2. Otwórz stronę planu na urządzeniu i wybierz **Włącz powiadomienia**. Powtórz na kolejnych urządzeniach.
-3. Sprawdź dostarczenie testowej zmiany, gdy przeglądarka nie ma otwartej karty strony.
-4. Wyłącz powiadomienia na jednym urządzeniu i sprawdź, czy pozostałe nadal działają.
+W katalogu `cloudflare`:
+- `npm install --no-audit --no-fund` — instaluje zależności;
+- `npm test` — testuje API Workera;
+- `npm run deploy` — wdraża produkcyjnego Workera;
+- `npm run preview` — uruchamia Preview (wymaga oddzielnej konfiguracji zasobów, dlatego Preview Builds są obecnie wyłączone).
 
-## Jak działa
-
-- GitHub Actions sprawdza PDF co godzinę między 6:00 a 23:00 czasu `Europe/Warsaw`.
-- Parser porównuje nowy plan z poprzednim i zapisuje zmiany.
-- Gdy pojawią się zmiany, Actions wywołuje zabezpieczony tokenem endpoint Workera `POST /dispatch`.
-- Worker wysyła Web Push do wszystkich zarejestrowanych urządzeń i zapisuje identyfikatory wysłanych powiadomień na 7 dni, aby uniknąć duplikatów.
-- KV przechowuje subskrypcje urządzeń i znaczniki wysyłek. Worker nie przechowuje całego planu ani danych osobowych użytkownika.
-
-## Endpointy
-
-- `GET /health` — stan Workera.
-- `GET /config` — publiczny klucz VAPID.
-- `POST /subscribe` — zapis subskrypcji urządzenia.
-- `POST /unsubscribe` — usunięcie subskrypcji urządzenia.
-- `POST /dispatch` — wysyłka z GitHub Actions; wymaga nagłówka `Authorization: Bearer ...`.
-
-## Bezpieczeństwo i koszty
-
-Worker przyjmuje żądania przeglądarkowe tylko z `ALLOWED_ORIGIN` ustawionego w `wrangler.toml`. Sekret prywatny VAPID i token wysyłki przechowuj wyłącznie w Cloudflare/GitHub Secrets — nigdy w repozytorium.
-
-Przy kilku urządzeniach zużycie KV i żądań powinno być niewielkie. Cloudflare Workers Free ma jednak niski limit CPU na pojedyncze wywołanie, dlatego wysyłkę trzeba sprawdzić na docelowym koncie. Jeśli szyfrowanie wiadomości Push przekroczy limit CPU, konieczna może być zmiana planu Workers. Nie da się uczciwie potwierdzić działania rzeczywistych powiadomień przed wdrożeniem i testem na koncie Cloudflare.
-
+Sekretów `VAPID_PRIVATE_KEY` i `DISPATCH_TOKEN` nie umieszczaj w repozytorium.

@@ -3,9 +3,12 @@ main = "src/index.js"
 compatibility_date = "2026-11-07"
 workers_dev = true
 
+# Cloudflare Workers Builds runs Wrangler Preview commands for non-production
+# branches. Keep Preview isolated: production KV and secrets are not inherited.
+previews = { }
+
 [[kv_namespaces]]
 binding = "PUSH_KV"
-# ZASTĄP placeholder prawdziwym ID zwróconym przez: npx wrangler kv namespace create PUSH_KV
 id = "1631c03547ce4eddb4720d1a169f87a2"
 
 [vars]
