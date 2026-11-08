@@ -1,2 +1,2 @@
-// Uzupełnij po wdrożeniu Cloudflare Worker. Pozostaw puste do tego czasu.
-window.PUSH_API_URL = "";
+// Adres Cloudflare Worker obsługującego powiadomienia Push.
+window.PUSH_API_URL = "https://plan-bn-push.szk-c00.workers.dev";
