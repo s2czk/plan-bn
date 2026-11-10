@@ -61,8 +61,21 @@
     .toolbar{display:flex;align-items:center;justify-content:flex-end;gap:7px}
     .action-button{height:29px;padding:0 8px;display:flex;align-items:center;justify-content:center;gap:5px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(145deg,#202e50,#121e39);color:#e6edff;font-size:9px;font-weight:650;white-space:nowrap;transition:.15s}
     .toolbar .action-button{flex:0 0 auto}
+    .action-toolbar{display:flex;align-items:center;justify-content:flex-end;gap:6px}
+    .toolbar-icon{width:30px;height:30px;border-radius:9px}
+    .toolbar-icon svg{width:15px;height:15px}
+    .search-subject-group{border:1px solid rgba(150,173,220,.18);border-radius:12px;background:rgba(10,19,39,.52);overflow:hidden}
+    .search-subject-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 11px;border-bottom:1px solid rgba(150,173,220,.12)}
+    .search-subject-name{font-size:12px;font-weight:750;color:#f1f4ff;line-height:1.35}
+    .search-subject-count{font-size:9px;color:#9eafd0;white-space:nowrap}
+    .search-occurrence{width:100%;display:flex;align-items:center;justify-content:space-between;gap:9px;padding:9px 11px;border:0;border-top:1px solid rgba(150,173,220,.08);background:transparent;color:var(--text);text-align:left}
+    .search-occurrence:first-of-type{border-top:0}
+    .search-occurrence:hover{background:rgba(75,80,155,.2)}
+    .search-occurrence-day{display:flex;flex-direction:column;gap:2px;min-width:0}
+    .search-occurrence-weekday{font-size:10px;font-weight:700;color:#dbe5fa}
+    .search-occurrence-date{font-size:10px;color:#91a5c8}
+    .search-occurrence-time{font:700 11px "JetBrains Mono",monospace;color:var(--lime);white-space:nowrap}
     .month-title-actions{display:flex;align-items:center;gap:8px}
-    .month-search-button{width:32px;height:32px;border-radius:10px}
     .search-box{height:40px;display:flex;align-items:center;gap:9px;width:100%;padding:0 12px;border-radius:11px;border:1px solid var(--line);background:rgba(12,22,44,.82);color:#afc0e2}
     .search-box input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:white;font-size:13px}
     .search-box input::placeholder{color:#7f91b5}
@@ -196,6 +209,7 @@
         </div>
       </div>
       <div class="header-actions">
+        <button class="icon-button" id="openGlobalSearch" aria-label="Szukaj przedmiotu w całym planie" title="Szukaj przedmiotu w całym planie"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg></button>
         <button class="icon-button" id="openNotifications" aria-label="Powiadomienia" title="Powiadomienia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 9a6 6 0 0 0-12 0c0 6.5-2.5 7-2.5 9h17C20.5 16 18 15.5 18 9ZM10 21h4"/></svg><span class="unread-dot" id="unreadDot" aria-label="Nieprzeczytane powiadomienia"></span></button>
         <button class="icon-button" id="openSettings" aria-label="Ustawienia" title="Ustawienia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1a1.7 1.7 0 0 1-2.4 2.4l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a1.7 1.7 0 0 1-3.4 0v-.2a1.7 1.7 0 0 0-2.9-1.2l-.1.1a1.7 1.7 0 0 1-2.4-2.4l.1-.1a1.7 1.7 0 0 0-1.2-2.9H4a1.7 1.7 0 0 1 0-3.4h.2a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a1.7 1.7 0 0 1 2.4-2.4l.1.1a1.7 1.7 0 0 0 2.9-1.2V2a1.7 1.7 0 0 1 3.4 0v.2a1.7 1.7 0 0 0 2.9 1.2l.1-.1a1.7 1.7 0 0 1 2.4 2.4l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a1.7 1.7 0 0 1 0 3.4h-.2a1.7 1.7 0 0 0-1.2 2.9Z"/></svg></button>
       </div>
@@ -222,9 +236,13 @@
 
     <div class="week-strip" id="weekStrip" aria-label="Wybierz dzień tygodnia"></div>
 
-    <div class="toolbar action-toolbar">
-      <button class="action-button" id="copyDay"><span class="btn-icon">▤</span>Kopiuj TXT</button>
-      <button class="action-button primary" id="downloadDay"><span class="btn-icon">↓</span>Pobierz .txt</button>
+    <div class="toolbar action-toolbar" aria-label="Operacje na planie dnia">
+      <button class="icon-button toolbar-icon" id="copyDay" aria-label="Kopiuj plan dnia" title="Kopiuj plan dnia">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h3"/></svg>
+      </button>
+      <button class="icon-button toolbar-icon" id="downloadDay" aria-label="Pobierz plan dnia jako TXT" title="Pobierz plan dnia jako TXT">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M4 17v3h16v-3"/></svg>
+      </button>
     </div>
     </div>
 
@@ -250,12 +268,7 @@
       <section id="monthView" class="view">
         <div class="month-toolbar surface">
           <button class="date-arrow" id="previousMonth" aria-label="Poprzedni miesiąc">‹</button>
-          <div class="month-title-actions">
-            <strong id="monthTitle">—</strong>
-            <button class="icon-button month-search-button" id="openSearchFromMonth" aria-label="Szukaj w całym planie" title="Szukaj w całym planie">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg>
-            </button>
-          </div>
+          <strong id="monthTitle">—</strong>
           <button class="date-arrow" id="nextMonth" aria-label="Następny miesiąc">›</button>
         </div>
         <div class="calendar-panel surface">
@@ -556,38 +569,62 @@
       host.innerHTML='';
       if(query.length<2){
         $('searchCount').textContent=Object.keys(state.days).length?'Wpisz przynajmniej 2 znaki.':'Plan jest jeszcze wczytywany.';
-        host.innerHTML='<div class="empty-state">Wyszukiwanie obejmuje wszystkie dostępne dni oraz przedmioty, prowadzących, typy zajęć, sale i godziny.</div>';
+        host.innerHTML='<div class="empty-state">Wpisz nazwę przedmiotu, aby zobaczyć wszystkie dni i godziny jego zajęć.</div>';
         return;
       }
       const results=searchPlan(query);
-      $('searchCount').textContent='Znaleziono: '+results.length+' '+(results.length===1?'zajęcie':results.length>=2&&results.length<=4?'zajęcia':'zajęć')+'.';
+      const groups=new Map();
+      results.forEach(result=>{
+        const key=normalizeSearchText(result.item.title||'Zajęcia');
+        if(!groups.has(key))groups.set(key,{title:result.item.title||'Zajęcia',occurrences:[]});
+        groups.get(key).occurrences.push(result);
+      });
+      const groupList=[...groups.values()];
+      $('searchCount').textContent='Znaleziono '+groupList.length+' '+(groupList.length===1?'przedmiot':'przedmioty')+' · '+results.length+' '+(results.length===1?'termin':'terminów')+'.';
       if(!results.length){
         host.innerHTML='<div class="empty-state">Nie znaleziono pasujących zajęć. Spróbuj innego hasła.</div>';
         return;
       }
-      results.slice(0,100).forEach(({date,day,item})=>{
-        const mode=itemMode(item,day);
-        const button=document.createElement('button');
-        button.type='button';
-        button.className='search-result';
-        const room=item.room?'<span class="meta-tag room">'+esc(item.room)+'</span>':'';
-        const modeTag=mode==='ZDALNE'?'<span class="meta-tag remote">ZDALNE</span>':'<span class="meta-tag onsite">STACJONARNE</span>';
-        const type=item.type?'<span class="meta-tag">'+esc(item.type)+'</span>':'';
-        const group=item.group?'<span class="meta-tag">'+esc(item.group)+'</span>':'';
-        button.innerHTML='<div class="search-result-top"><span>'+esc(polishDate(date)+' · '+weekdays[parseISO(date).getDay()])+'</span><span class="search-result-time">'+esc(item.time||'')+'</span></div><div class="search-result-title">'+esc(item.title||'Zajęcia')+'</div><div class="search-result-meta">'+esc(item.lecturer||'Prowadzący niepodany')+'</div><div class="search-result-tags">'+modeTag+room+type+group+'</div>';
-        button.addEventListener('click',()=>{
-          closePanel('searchOverlay');
-          setView('day');
-          selectedDateChange(date);
+      groupList.forEach(group=>{
+        const section=document.createElement('section');
+        section.className='search-subject-group';
+        const heading=document.createElement('div');
+        heading.className='search-subject-heading';
+        const name=document.createElement('div');
+        name.className='search-subject-name';
+        name.textContent=group.title;
+        const count=document.createElement('div');
+        count.className='search-subject-count';
+        count.textContent=group.occurrences.length+' '+(group.occurrences.length===1?'termin':'terminy');
+        heading.append(name,count);
+        section.append(heading);
+        group.occurrences.forEach(({date,day,item})=>{
+          const button=document.createElement('button');
+          button.type='button';
+          button.className='search-occurrence';
+          const dayInfo=document.createElement('span');
+          dayInfo.className='search-occurrence-day';
+          const weekday=document.createElement('span');
+          weekday.className='search-occurrence-weekday';
+          weekday.textContent=weekdays[parseISO(date).getDay()];
+          const dateLabel=document.createElement('span');
+          dateLabel.className='search-occurrence-date';
+          dateLabel.textContent=polishDate(date);
+          dayInfo.append(weekday,dateLabel);
+          const time=document.createElement('span');
+          time.className='search-occurrence-time';
+          time.textContent=item.time||'Godzina niepodana';
+          button.append(dayInfo,time);
+          button.setAttribute('aria-label',group.title+', '+weekday.textContent+', '+dateLabel.textContent+', '+time.textContent);
+          button.addEventListener('click',()=>{
+            closePanel('searchOverlay');
+            setView('day');
+            selectedDateChange(date);
+          });
+          section.append(button);
         });
-        host.append(button);
+        host.append(section);
       });
-      if(results.length>100){
-        const more=document.createElement('div');
-        more.className='search-count';
-        more.textContent='Wyświetlono pierwsze 100 wyników. Doprecyzuj wyszukiwanie.';
-        host.append(more);
-      }
     }
     function openSearchPanel(){
       openPanel('searchOverlay');
@@ -595,7 +632,7 @@
       renderSearchResults();
       $('globalSearchInput').focus();
     }
-    $('openSearchFromMonth').addEventListener('click',openSearchPanel);
+    $('openGlobalSearch').addEventListener('click',openSearchPanel);
     $('globalSearchInput').addEventListener('input',renderSearchResults);
     $('openNotifications').addEventListener('click',()=>{openPanel('notificationsOverlay');markRead(false);renderNotifications();updateNotificationControls()});
     $('openSettings').addEventListener('click',()=>openPanel('settingsOverlay'));

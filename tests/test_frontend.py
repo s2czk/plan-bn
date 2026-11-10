@@ -48,13 +48,15 @@ class FrontendChecks(unittest.TestCase):
 
     def test_search_is_global_and_not_embedded_in_main_toolbar(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn('id="openSearchFromMonth"', html)
+        self.assertIn('id="openGlobalSearch"', html)
         self.assertIn('id="searchOverlay"', html)
         self.assertIn('id="globalSearchInput"', html)
         self.assertIn("function searchPlan(query)", html)
+        self.assertIn("group.occurrences.forEach", html)
+        self.assertNotIn('id="openSearchFromMonth"', html)
         self.assertNotIn('id="subjectSearch"', html)
         self.assertNotIn('id="openFilters"', html)
-        toolbar = html.split('<div class="toolbar action-toolbar">', 1)[1].split("</div>", 1)[0]
+        toolbar = html.split('<div class="toolbar action-toolbar"', 1)[1].split("</div>", 1)[0]
         self.assertNotIn("search-box", toolbar)
 
     def test_week_view_hides_day_navigation_and_uses_compact_week_toolbar(self):
@@ -69,6 +71,25 @@ class FrontendChecks(unittest.TestCase):
     def test_open_notification_restores_day_navigation(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("state.view='day';$('dayNavigation').hidden=false", html)
+
+    def test_global_header_search_and_icon_only_day_actions(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="openGlobalSearch"', html)
+        self.assertIn('id="copyDay"', html)
+        self.assertIn('id="downloadDay"', html)
+        self.assertIn('aria-label="Kopiuj plan dnia"', html)
+        self.assertIn('aria-label="Pobierz plan dnia jako TXT"', html)
+        self.assertNotIn('id="openSearchFromMonth"', html)
+        self.assertNotIn("Kopiuj TXT", html)
+        self.assertNotIn("Pobierz .txt", html)
+
+    def test_global_subject_search_groups_all_matching_dates(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("const groups=new Map()", html)
+        self.assertIn("group.occurrences.forEach", html)
+        self.assertIn("search-occurrence-date", html)
+        self.assertIn("search-occurrence-time", html)
+        self.assertIn("weekdays[parseISO(date).getDay()]", html)
 
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
