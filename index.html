@@ -501,8 +501,12 @@
     }
     async function pushRequest(path,body){
       const response=await fetch(pushApiUrl()+path,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});
-      if(!response.ok)throw new Error('Cloudflare Worker: HTTP '+response.status);
-      return response.json();
+      const raw=await response.text();
+      let data=null;
+      try{data=raw?JSON.parse(raw):null}catch(e){}
+      if(!response.ok)throw new Error(data?.error||('Cloudflare Worker: HTTP '+response.status));
+      if(!data||typeof data!=='object')throw new Error('Cloudflare Worker zwrócił nieprawidłową odpowiedź.');
+      return data;
     }
     async function togglePushNotifications(){
       const api=pushApiUrl();

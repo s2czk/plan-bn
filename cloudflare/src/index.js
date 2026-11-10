@@ -47,30 +47,49 @@ async function listSubscriptions(kv) {
   return subscriptions;
 }
 
-function validSubscription(subscription) {
+function subscriptionValidationError(subscription) {
+  if (!subscription || typeof subscription !== "object") {
+    return "Brak poprawnych danych subskrypcji Push.";
+  }
+  if (typeof subscription.endpoint !== "string" || !subscription.endpoint) {
+    return "Subskrypcja nie zawiera adresu endpoint.";
+  }
   if (
-    !subscription ||
-    typeof subscription.endpoint !== "string" ||
-    typeof subscription.keys?.p256dh !== "string" ||
-    typeof subscription.keys?.auth !== "string"
-  ) return false;
+    typeof subscription.keys?.p256dh !== "string" || !subscription.keys.p256dh ||
+    typeof subscription.keys?.auth !== "string" || !subscription.keys.auth
+  ) {
+    return "Subskrypcja nie zawiera wymaganych kluczy p256dh/auth.";
+  }
+  if (subscription.endpoint.length > 2048) {
+    return "Adres endpoint subskrypcji jest zbyt długi.";
+  }
   try {
     const endpoint = new URL(subscription.endpoint);
-    if (endpoint.protocol !== "https:") return false;
+    if (endpoint.protocol !== "https:" || endpoint.username || endpoint.password || endpoint.port) {
+      return "Endpoint Push musi być bezpiecznym adresem HTTPS na standardowym porcie.";
+    }
     const host = endpoint.hostname.toLowerCase();
-    return host === "fcm.googleapis.com" ||
+    const supportedHost =
+      host === "fcm.googleapis.com" ||
+      host === "android.googleapis.com" ||
+      /^jmt\d+\.google\.com$/.test(host) ||
       host.endsWith(".push.services.mozilla.com") ||
       host === "web.push.apple.com" ||
       host.endsWith(".notify.windows.com");
+    if (!supportedHost) {
+      return "Nieobsługiwany host usługi Push: " + host;
+    }
+    return null;
   } catch {
-    return false;
+    return "Nieprawidłowy adres endpoint subskrypcji Push.";
   }
 }
 
 async function handleSubscribe(request, env) {
   if (!env.PUSH_KV) return json({ error: "Brak konfiguracji KV." }, 503);
   const data = await readJson(request);
-  if (!validSubscription(data)) return json({ error: "Nieprawidłowa subskrypcja Push." }, 400);
+  const validationError = subscriptionValidationError(data);
+  if (validationError) return json({ error: validationError, code: "INVALID_PUSH_SUBSCRIPTION" }, 400);
   const id = await digestHex(data.endpoint);
   await env.PUSH_KV.put("sub:" + id, JSON.stringify({
     subscription: data,

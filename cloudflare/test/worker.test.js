@@ -49,6 +49,39 @@ test("requests from a different website are rejected", async () => {
   assert.equal(response.status, 403);
 });
 
+test("Chrome Android jmt-number Google push hosts are accepted", async () => {
+  for (const host of ["jmt17.google.com", "jmt3.google.com"]) {
+    const env = createEnv();
+    const subscription = {
+      endpoint: `https://${host}/fcm/send/test-endpoint`,
+      expirationTime: null,
+      keys: { p256dh: "p256dh-test", auth: "auth-test" },
+    };
+    const response = await worker.fetch(new Request("https://worker.test/subscribe", {
+      method: "POST",
+      headers: { Origin: "https://plan.mandaro.eu", "Content-Type": "application/json" },
+      body: JSON.stringify(subscription),
+    }), env);
+    assert.equal(response.status, 200, host);
+    assert.deepEqual(await response.json(), { ok: true });
+    assert.equal(env.PUSH_KV.store.size, 1);
+  }
+});
+
+test("android.googleapis.com push host is accepted", async () => {
+  const env = createEnv();
+  const subscription = {
+    endpoint: "https://android.googleapis.com/gcm/send/test-endpoint",
+    keys: { p256dh: "p256dh-test", auth: "auth-test" },
+  };
+  const response = await worker.fetch(new Request("https://worker.test/subscribe", {
+    method: "POST",
+    headers: { Origin: "https://plan.mandaro.eu", "Content-Type": "application/json" },
+    body: JSON.stringify(subscription),
+  }), env);
+  assert.equal(response.status, 200);
+});
+
 test("a valid device can subscribe and unsubscribe", async () => {
   const env = createEnv();
   const subscription = {
@@ -81,6 +114,21 @@ test("an invalid push endpoint is rejected", async () => {
     headers: { Origin: "https://plan.mandaro.eu", "Content-Type": "application/json" },
     body: JSON.stringify({
       endpoint: "https://localhost/private",
+      keys: { p256dh: "test", auth: "test" },
+    }),
+  }), createEnv());
+  assert.equal(response.status, 400);
+  const data = await response.json();
+  assert.equal(data.code, "INVALID_PUSH_SUBSCRIPTION");
+  assert.match(data.error, /host usługi Push/);
+});
+
+test("endpoint allowlist does not accept lookalike Google hosts", async () => {
+  const response = await worker.fetch(new Request("https://worker.test/subscribe", {
+    method: "POST",
+    headers: { Origin: "https://plan.mandaro.eu", "Content-Type": "application/json" },
+    body: JSON.stringify({
+      endpoint: "https://jmt17.google.com.evil.example/fcm/send/test",
       keys: { p256dh: "test", auth: "test" },
     }),
   }), createEnv());
