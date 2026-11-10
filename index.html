@@ -467,7 +467,7 @@
     }
     function openNotification(item){
       if(item.id){const read=getStoredSet(readIdsKey);read.add(item.id);saveStoredSet(readIdsKey,read)}
-      closePanel('notificationsOverlay');state.view='day';document.querySelectorAll('.tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.view==='day'));document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id==='dayView'));
+      closePanel('notificationsOverlay');state.view='day';$('dayNavigation').hidden=false;document.querySelectorAll('.tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.view==='day'));document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id==='dayView'));
       if(item.date&&/^\d{4}-\d{2}-\d{2}$/.test(item.date))selectedDateChange(item.date);else renderAll();
       renderNotifications();
     }

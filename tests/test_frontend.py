@@ -66,6 +66,10 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn("week-download", html)
         self.assertIn('white-space:nowrap;font-size:12px', html)
 
+    def test_open_notification_restores_day_navigation(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("state.view='day';$('dayNavigation').hidden=false", html)
+
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         defined_ids = set(re.findall(r'\bid="([^"]+)"', html))
