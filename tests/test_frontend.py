@@ -57,6 +57,13 @@ class FrontendChecks(unittest.TestCase):
         toolbar = html.split('<div class="toolbar action-toolbar">', 1)[1].split("</div>", 1)[0]
         self.assertNotIn("search-box", toolbar)
 
+    def test_every_javascript_element_reference_exists(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        defined_ids = set(re.findall(r'\\bid="([^"]+)"', html))
+        referenced_ids = set(re.findall(r"\\$\\('([^']+)'\\)", html))
+        missing = sorted(referenced_ids - defined_ids)
+        self.assertFalse(missing, f"JavaScript references missing DOM IDs: {missing}")
+
     def test_inline_javascript_syntax(self):
         node = shutil.which("node")
         if not node:
