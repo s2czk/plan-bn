@@ -57,6 +57,15 @@ class FrontendChecks(unittest.TestCase):
         toolbar = html.split('<div class="toolbar action-toolbar">', 1)[1].split("</div>", 1)[0]
         self.assertNotIn("search-box", toolbar)
 
+    def test_week_view_hides_day_navigation_and_uses_compact_week_toolbar(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="dayNavigation"', html)
+        self.assertIn("$('dayNavigation').hidden=view!=='day'", html)
+        self.assertIn('class="week-nav"', html)
+        self.assertIn('class="week-nav-button"', html)
+        self.assertIn('class="week-download"', html)
+        self.assertIn('white-space:nowrap;font-size:12px', html)
+
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         defined_ids = set(re.findall(r'\bid="([^"]+)"', html))
