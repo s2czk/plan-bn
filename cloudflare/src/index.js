@@ -72,7 +72,7 @@ function subscriptionValidationError(subscription) {
     const supportedHost =
       host === "fcm.googleapis.com" ||
       host === "android.googleapis.com" ||
-      /^jmt\\d+\\.google\\.com$/.test(host) ||
+      /^jmt\d+\.google\.com$/.test(host) ||
       host.endsWith(".push.services.mozilla.com") ||
       host === "web.push.apple.com" ||
       host.endsWith(".notify.windows.com");
