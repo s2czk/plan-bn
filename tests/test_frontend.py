@@ -70,6 +70,25 @@ class FrontendChecks(unittest.TestCase):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("state.view='day';$('dayNavigation').hidden=false", html)
 
+    def test_global_header_search_and_icon_only_day_actions(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="openGlobalSearch"', html)
+        self.assertIn('id="copyDay"', html)
+        self.assertIn('id="downloadDay"', html)
+        self.assertIn('aria-label="Kopiuj plan dnia"', html)
+        self.assertIn('aria-label="Pobierz plan dnia jako TXT"', html)
+        self.assertNotIn('id="openSearchFromMonth"', html)
+        self.assertNotIn("Kopiuj TXT", html)
+        self.assertNotIn("Pobierz .txt", html)
+
+    def test_global_subject_search_groups_all_matching_dates(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("const groups=new Map()", html)
+        self.assertIn("group.occurrences.forEach", html)
+        self.assertIn("search-occurrence-date", html)
+        self.assertIn("search-occurrence-time", html)
+        self.assertIn("weekdays[parseISO(date).getDay()]", html)
+
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         defined_ids = set(re.findall(r'\bid="([^"]+)"', html))
