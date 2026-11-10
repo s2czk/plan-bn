@@ -21,44 +21,46 @@
     button:focus-visible,input:focus-visible{outline:2px solid #a995ff;outline-offset:2px}
     .app-shell{width:97%;max-width:1700px;margin:0 auto;padding:clamp(12px,2vw,26px) 0 calc(18px + env(safe-area-inset-bottom));min-height:100vh;display:flex;flex-direction:column;gap:12px}
     .surface{background:linear-gradient(145deg,rgba(24,36,67,.96),rgba(12,21,43,.96));border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}
-    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 13px}
-    .brand{display:flex;align-items:center;gap:12px;min-width:0}
-    .brand-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#5f49c8,#294b8b);border:1px solid rgba(190,178,255,.25);color:white;flex:0 0 auto}
-    .brand-title{font-size:clamp(17px,2vw,22px);font-weight:750;letter-spacing:-.55px;line-height:1.15}
-    .brand-sub{margin-top:4px;color:var(--muted);font-size:12px;letter-spacing:.1px}
-    .header-actions{display:flex;align-items:center;gap:7px}
-    .icon-button{position:relative;width:36px;height:36px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--line);background:rgba(25,39,70,.8);color:#e3eaff;transition:background .16s,border-color .16s}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 9px}
+    .brand{display:flex;align-items:center;gap:7px;min-width:0}
+    .brand-mark{width:27px;height:27px;display:grid;place-items:center;border-radius:8px;background:linear-gradient(145deg,#5f49c8,#294b8b);border:1px solid rgba(190,178,255,.25);color:white;flex:0 0 auto}
+    .brand-mark svg{width:16px;height:16px}
+    .brand-title{font-size:14px;font-weight:700;letter-spacing:-.3px;line-height:1.1}
+    .brand-sub{margin-top:2px;color:var(--muted);font-size:9px;letter-spacing:0}
+    .header-actions{display:flex;align-items:center;gap:5px}
+    .icon-button{position:relative;width:29px;height:29px;display:grid;place-items:center;border-radius:9px;border:1px solid var(--line);background:rgba(25,39,70,.8);color:#e3eaff;transition:background .16s,border-color .16s}
+    .header-actions .icon-button svg{width:15px;height:15px}
     .icon-button:hover{background:rgba(72,69,139,.48);border-color:rgba(169,149,255,.5)}
     .unread-dot{display:none;position:absolute;right:-5px;top:-5px;min-width:17px;height:17px;padding:0 4px;align-items:center;justify-content:center;border-radius:999px;background:var(--lime);color:#182441;font-size:9px;line-height:1;font-weight:800;border:2px solid #172544;box-shadow:0 2px 7px rgba(0,0,0,.25)}
-    .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:5px;background:rgba(9,17,37,.72);border:1px solid var(--line);border-radius:15px}
-    .tab{height:38px;border:0;border-radius:10px;background:transparent;color:#a9b9d9;font-size:12px;font-weight:650;transition:background .16s,color .16s}
+    .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:3px;background:rgba(9,17,37,.72);border:1px solid var(--line);border-radius:12px}
+    .tab{height:29px;border:0;border-radius:8px;background:transparent;color:#a9b9d9;font-size:10px;font-weight:650;transition:background .16s,color .16s}
     .tab.active{background:linear-gradient(110deg,#654bd0,#354b9d);color:white;box-shadow:0 5px 15px rgba(8,13,47,.35)}
-    .datebar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px}
-    .date-info{display:flex;align-items:center;gap:11px;min-width:0;flex:1}
-    .date-icon{color:#b6c8ed;flex:0 0 auto}
-    .date-label{font-size:clamp(16px,2.2vw,21px);font-weight:750;letter-spacing:-.45px;white-space:nowrap}
-    .weekday-label{font-size:12px;color:var(--muted);margin-top:3px}
+    .datebar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 9px}
+    .date-info{display:flex;align-items:center;gap:7px;min-width:0;flex:1}
+    .date-icon{width:19px;height:19px;color:#b6c8ed;flex:0 0 auto}
+    .date-label{font-size:15px;font-weight:720;letter-spacing:-.3px;white-space:nowrap}
+    .weekday-label{font-size:10px;color:var(--muted);margin-top:1px}
     .date-right{display:flex;align-items:center;gap:8px;flex:0 0 auto}
     .mode-badge,.count-badge{border-radius:999px;padding:6px 10px;font-size:10px;font-weight:750;letter-spacing:.35px;white-space:nowrap;border:1px solid}
     .mode-remote{color:var(--lime);background:rgba(199,244,59,.13);border-color:rgba(199,244,59,.42)}
     .mode-onsite{color:var(--onsite);background:rgba(76,151,225,.12);border-color:rgba(112,180,255,.26)}
     .mode-mixed{color:var(--lime);background:rgba(199,244,59,.09);border-color:rgba(199,244,59,.25)}
     .mode-free{color:#a5b0c5;background:rgba(116,132,162,.1);border-color:rgba(116,132,162,.2)}
-    .date-arrow{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;border:1px solid var(--line);background:rgba(25,39,70,.9);font-size:20px;color:#e3ebff}
+    .date-arrow{width:29px;height:29px;display:grid;place-items:center;border-radius:8px;border:1px solid var(--line);background:rgba(25,39,70,.9);font-size:17px;color:#e3ebff}
     .date-arrow:hover{border-color:rgba(169,149,255,.55);background:#293967}
     .week-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
-    .date-chip{position:relative;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 6px;border-radius:12px;border:1px solid var(--line);background:rgba(14,25,49,.58);color:#c8d5ef;transition:.15s}
+    .date-chip{position:relative;min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;padding:5px 4px;border-radius:9px;border:1px solid var(--line);background:rgba(14,25,49,.58);color:#c8d5ef;transition:.15s}
     .date-chip:hover{background:rgba(54,69,115,.65)}
     .date-chip.active{background:linear-gradient(145deg,#5d48c7,#304a8e);border-color:rgba(181,164,255,.7);color:white;box-shadow:0 4px 14px rgba(11,13,49,.22)}
-    .date-chip .day-name{font-size:10px;color:#aebddd;font-weight:700;text-transform:uppercase}
-    .date-chip .day-number{font-size:15px;font-weight:750;font-variant-numeric:tabular-nums}
+    .date-chip .day-name{font-size:9px;color:#aebddd;font-weight:700;text-transform:uppercase}
+    .date-chip .day-number{font-size:12px;font-weight:750;font-variant-numeric:tabular-nums}
     .date-chip.active .day-name{color:#e2dcff}
     .date-markers{display:flex;gap:3px;position:absolute;bottom:4px;left:50%;transform:translateX(-50%)}
     .date-markers i{display:block;width:4px;height:4px;border-radius:50%;background:var(--onsite)}
     .date-markers i.remote{background:var(--remote)}
     .toolbar{display:flex;align-items:center;justify-content:flex-end;gap:7px}
-    .action-button{height:36px;padding:0 10px;display:flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(145deg,#202e50,#121e39);color:#e6edff;font-size:11px;font-weight:650;white-space:nowrap;transition:.15s}
-    .toolbar .action-button{flex:0 1 170px}
+    .action-button{height:29px;padding:0 8px;display:flex;align-items:center;justify-content:center;gap:5px;border:1px solid var(--line);border-radius:8px;background:linear-gradient(145deg,#202e50,#121e39);color:#e6edff;font-size:9px;font-weight:650;white-space:nowrap;transition:.15s}
+    .toolbar .action-button{flex:0 0 auto}
     .month-title-actions{display:flex;align-items:center;gap:8px}
     .month-search-button{width:32px;height:32px;border-radius:10px}
     .search-box{height:40px;display:flex;align-items:center;gap:9px;width:100%;padding:0 12px;border-radius:11px;border:1px solid var(--line);background:rgba(12,22,44,.82);color:#afc0e2}
@@ -66,7 +68,7 @@
     .search-box input::placeholder{color:#7f91b5}
     .action-button:hover{border-color:rgba(169,149,255,.45);background:#293967}
     .action-button.primary{background:linear-gradient(110deg,#6248d0,#3b4e9d);border-color:rgba(170,153,255,.5);color:white}
-    .action-button .btn-icon{font-size:16px;line-height:1}
+    .action-button .btn-icon{font-size:13px;line-height:1}
     .view{display:none;min-width:0}
     .view.active{display:block}
     .section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:3px 2px 9px}
@@ -168,8 +170,8 @@
     .toast{position:fixed;left:50%;bottom:22px;z-index:60;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;transition:.2s;padding:10px 15px;border-radius:12px;border:1px solid rgba(180,166,255,.3);background:#202c4d;color:white;font-size:12px;box-shadow:0 12px 35px #020817aa;max-width:calc(100vw - 24px);text-align:center}
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     @media(min-width:1100px){.class-card{padding:15px 19px}.class-time{font-size:14px}.class-subject{font-size:16px}}
-    @media(max-width:760px){.app-shell{width:97%;gap:8px}.topbar{padding:8px 10px}.brand-mark{width:35px;height:35px}.header-actions{gap:5px}.icon-button{width:34px;height:34px}.brand-sub{font-size:10px}.week-grid{grid-template-columns:repeat(7,minmax(128px,1fr))}.week-view-scroll{overflow-x:auto;padding-bottom:5px}.week-day{min-height:150px}.date-chip{flex-direction:column;gap:2px;padding:5px 2px 8px;min-height:49px}.date-chip .day-number{font-size:14px}.toolbar{flex-wrap:nowrap}.toolbar .action-button{flex:1 1 0;min-width:0}.date-label{font-size:17px}.datebar{padding:8px 10px}.week-toolbar,.month-toolbar{padding:8px 9px;gap:7px}}
-    @media(max-width:420px){.brand-title{font-size:15px}.datebar{padding:8px}.date-arrow{width:32px;height:32px}.date-right{gap:5px}.mode-badge{font-size:9px;padding:5px 7px}.class-card{gap:8px;padding:12px 10px 12px 14px}.class-line{display:block}.class-time{display:block;font-size:12px;margin-bottom:4px}.class-subject{font-size:14px}.class-teacher{font-size:11px}.meta-tag{padding:5px 7px;font-size:9px}.footer{font-size:9px}.action-button{height:35px;padding:0 8px;font-size:10px}.btn-icon{font-size:14px}.tabs{gap:3px;padding:4px}.tab{height:36px;font-size:11px}.month-search-button{width:30px;height:30px}}
+    @media(max-width:760px){.app-shell{width:97%;gap:7px;padding-top:8px}.topbar{padding:5px 7px}.brand-mark{width:25px;height:25px}.brand-mark svg{width:15px;height:15px}.brand-title{font-size:13px}.brand-sub{font-size:8px}.header-actions{gap:4px}.header-actions .icon-button{width:27px;height:27px}.header-actions .icon-button svg{width:14px;height:14px}.week-grid{grid-template-columns:repeat(7,minmax(128px,1fr))}.week-view-scroll{overflow-x:auto;padding-bottom:5px}.week-day{min-height:150px}.date-chip{flex-direction:column;gap:1px;padding:4px 2px 7px;min-height:39px}.date-chip .day-number{font-size:11px}.date-chip .day-name{font-size:8px}.date-markers{bottom:3px}.toolbar{flex-wrap:nowrap;gap:5px}.toolbar .action-button{flex:0 0 auto}.date-label{font-size:14px}.datebar{padding:6px 7px}.date-arrow{width:27px;height:27px;font-size:15px}.mode-badge{font-size:8px;padding:4px 6px}.week-toolbar,.month-toolbar{padding:7px 8px;gap:6px}.action-button{height:28px;padding:0 7px;font-size:9px}}
+    @media(max-width:420px){.brand-title{font-size:13px}.datebar{padding:6px}.date-arrow{width:26px;height:26px}.date-right{gap:4px}.mode-badge{font-size:8px;padding:4px 6px}.class-card{gap:8px;padding:12px 10px 12px 14px}.class-line{display:block}.class-time{display:block;font-size:12px;margin-bottom:4px}.class-subject{font-size:14px}.class-teacher{font-size:11px}.meta-tag{padding:5px 7px;font-size:9px}.footer{font-size:9px}.action-button{height:27px;padding:0 7px;font-size:9px}.btn-icon{font-size:12px}.tabs{gap:2px;padding:2px}.tab{height:27px;font-size:9px}.month-search-button{width:26px;height:26px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
@@ -590,7 +592,6 @@
     $('nextWeek').addEventListener('click',()=>changeSelectedDay(7));
     $('previousMonth').addEventListener('click',()=>changeMonth(-1));
     $('nextMonth').addEventListener('click',()=>changeMonth(1));
-    $('subjectSearch').addEventListener('input',renderAll);
     $('copyDay').addEventListener('click',()=>copyText(dayTxt(state.selectedDate)));
     $('downloadDay').addEventListener('click',()=>downloadText('plan_'+dateFile(state.selectedDate)+'.txt',dayTxt(state.selectedDate)));
     $('downloadWeek').addEventListener('click',()=>downloadText('plan_tydzien_'+dateFile(mondayOf(state.selectedDate))+'.txt',weekTxt()));
