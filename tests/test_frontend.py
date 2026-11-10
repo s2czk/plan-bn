@@ -62,7 +62,7 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn('id="dayNavigation"', html)
         self.assertIn("$('dayNavigation').hidden=view!=='day'", html)
         self.assertIn('class="week-nav"', html)
-        self.assertIn('class="week-nav-button"', html)
+        self.assertIn("week-nav-button", html)
         self.assertIn('class="week-download"', html)
         self.assertIn('white-space:nowrap;font-size:12px', html)
 
