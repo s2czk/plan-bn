@@ -56,7 +56,7 @@ class FrontendChecks(unittest.TestCase):
         self.assertNotIn('id="openSearchFromMonth"', html)
         self.assertNotIn('id="subjectSearch"', html)
         self.assertNotIn('id="openFilters"', html)
-        toolbar = html.split('<div class="toolbar action-toolbar">', 1)[1].split("</div>", 1)[0]
+        toolbar = html.split('<div class="toolbar action-toolbar"', 1)[1].split("</div>", 1)[0]
         self.assertNotIn("search-box", toolbar)
 
     def test_week_view_hides_day_navigation_and_uses_compact_week_toolbar(self):
