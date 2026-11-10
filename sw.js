@@ -1,4 +1,4 @@
-const CACHE_NAME = "pans-plan-shell-v3";
+const CACHE_NAME = "pans-plan-shell-v4";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./push-config.js"];
 
 self.addEventListener("install", event => {
@@ -23,8 +23,31 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET" || new URL(request.url).origin !== self.location.origin) return;
 
   const url = new URL(request.url);
+  const isNavigation = request.mode === "navigate" || url.pathname.endsWith("/index.html");
   const isPushConfig = url.pathname.endsWith("/push-config.js");
   const isLiveData = url.pathname.endsWith("/schedule.json") || url.pathname.endsWith("/notifications.json");
+
+  if (isNavigation) {
+    event.respondWith((async () => {
+      try {
+        const liveRequest = new Request(request, { cache: "no-store" });
+        const response = await fetch(liveRequest);
+        if (response.ok) {
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, response.clone());
+        }
+        return response;
+      } catch (_) {
+        const cached = await caches.match(request);
+        if (cached) return cached;
+        return new Response("Strona niedostępna bez połączenia z internetem.", {
+          status: 503,
+          headers: { "Content-Type": "text/plain; charset=utf-8" }
+        });
+      }
+    })());
+    return;
+  }
 
   if (isPushConfig) {
     event.respondWith((async () => {

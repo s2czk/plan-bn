@@ -95,7 +95,9 @@ class FrontendChecks(unittest.TestCase):
 
     def test_service_worker_fetches_push_config_from_network_first(self):
         service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-        self.assertIn('pans-plan-shell-v3', service_worker)
+        self.assertIn('pans-plan-shell-v4', service_worker)
+        self.assertIn('const isNavigation = request.mode === "navigate" || url.pathname.endsWith("/index.html")', service_worker)
+        self.assertIn('const liveRequest = new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const isPushConfig = url.pathname.endsWith("/push-config.js")', service_worker)
         self.assertIn('new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const response = await fetch(liveRequest)', service_worker)
