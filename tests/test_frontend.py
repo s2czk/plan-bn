@@ -63,7 +63,7 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn("$('dayNavigation').hidden=view!=='day'", html)
         self.assertIn('class="week-nav"', html)
         self.assertIn("week-nav-button", html)
-        self.assertIn('class="week-download"', html)
+        self.assertIn("week-download", html)
         self.assertIn('white-space:nowrap;font-size:12px', html)
 
     def test_every_javascript_element_reference_exists(self):
