@@ -48,10 +48,12 @@ class FrontendChecks(unittest.TestCase):
 
     def test_search_is_global_and_not_embedded_in_main_toolbar(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn('id="openSearchFromMonth"', html)
+        self.assertIn('id="openGlobalSearch"', html)
         self.assertIn('id="searchOverlay"', html)
         self.assertIn('id="globalSearchInput"', html)
         self.assertIn("function searchPlan(query)", html)
+        self.assertIn("group.occurrences.forEach", html)
+        self.assertNotIn('id="openSearchFromMonth"', html)
         self.assertNotIn('id="subjectSearch"', html)
         self.assertNotIn('id="openFilters"', html)
         toolbar = html.split('<div class="toolbar action-toolbar">', 1)[1].split("</div>", 1)[0]
