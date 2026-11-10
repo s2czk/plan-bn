@@ -91,6 +91,30 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn("search-occurrence-time", html)
         self.assertIn("weekdays[parseISO(date).getDay()]", html)
 
+    def test_day_navigation_shows_weekday_chips_without_selected_datebar(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        navigation = html.split('<div class="day-navigation" id="dayNavigation">', 1)[1].split("</div>", 1)[0]
+        self.assertIn('id="weekStrip"', navigation)
+        self.assertNotIn('id="selectedDateLabel"', html)
+        self.assertNotIn('id="selectedWeekdayLabel"', html)
+        self.assertNotIn('id="selectedModeBadge"', html)
+        self.assertNotIn('id="previousDay"', html)
+        self.assertNotIn('id="nextDay"', html)
+        self.assertNotIn("function renderDateHeader", html)
+
+    def test_copy_download_icons_are_in_header_and_not_below_day_strip(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        header = html.split('<header class="topbar surface">', 1)[1].split("</header>", 1)[0]
+        day_navigation = html.split('<div class="day-navigation" id="dayNavigation">', 1)[1].split('<main>', 1)[0]
+        self.assertIn('id="copyDay"', header)
+        self.assertIn('id="downloadDay"', header)
+        self.assertNotIn('id="copyDay"', day_navigation)
+        self.assertNotIn('id="downloadDay"', day_navigation)
+
+    def test_brand_name_uses_regular_not_bold_weight(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertRegex(html, r'\.brand-title\\{[^}]*font-weight:400')
+
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         defined_ids = set(re.findall(r'\bid="([^"]+)"', html))
