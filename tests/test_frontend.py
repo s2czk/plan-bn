@@ -59,8 +59,8 @@ class FrontendChecks(unittest.TestCase):
 
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        defined_ids = set(re.findall(r'\\bid="([^"]+)"', html))
-        referenced_ids = set(re.findall(r"\\$\\('([^']+)'\\)", html))
+        defined_ids = set(re.findall(r'\bid="([^"]+)"', html))
+        referenced_ids = set(re.findall(r"\$\('([^']+)'\)", html))
         missing = sorted(referenced_ids - defined_ids)
         self.assertFalse(missing, f"JavaScript references missing DOM IDs: {missing}")
 
