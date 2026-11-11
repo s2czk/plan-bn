@@ -136,6 +136,7 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn("Plan ostatnio zmieniono:", html)
         self.assertIn("Dane pobrano:", html)
         self.assertIn("state.lastFetchedAt=new Date()", html)
+        self.assertIn(r"/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/", html)
         self.assertNotIn("Ostatnia synchronizacja:", html)
         sync_css = html.split(".syncbar{", 1)[1].split("}", 1)[0]
         self.assertNotIn("margin-top:auto", sync_css)

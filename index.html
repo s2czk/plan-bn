@@ -177,6 +177,8 @@
     .sync-meta{font-size:10px;color:#879abb;line-height:1.35}
     .sync-status{display:flex;align-items:center;gap:7px;color:var(--lime);font-weight:750;white-space:nowrap}
     .sync-status i{display:block;width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px rgba(199,244,59,.55)}
+    .sync-status.loading{color:#9eafd0}.sync-status.loading i{background:#9eafd0;box-shadow:none}
+    .sync-status.offline{color:#f59e0b}.sync-status.offline i{background:#f59e0b;box-shadow:none}
     .footer{display:flex;justify-content:space-between;gap:10px;align-items:center;color:#7f91b5;font-size:10px;padding:0 3px}
     .footer a{color:#aab9d8;text-decoration:none}
     .footer a:hover{color:#d5caff;text-decoration:underline}
@@ -295,7 +297,7 @@
         <span id="syncInfo">Plan ostatnio zmieniono: oczekiwanie na dane…</span>
         <span class="sync-meta" id="fetchInfo">Dane pobrano: oczekiwanie…</span>
       </div>
-      <span class="sync-status" id="connectionStatus"><i></i> ONLINE</span>
+      <span class="sync-status loading" id="connectionStatus"><i></i> ŁADOWANIE</span>
     </div>
     <footer class="footer"><span>PLAN ZAJĘĆ · PANS KOSZALIN</span><a href="mailto:szymon@mandaro.eu">szymon@mandaro.eu</a></footer>
   </div>
@@ -524,7 +526,7 @@
     function dateFile(iso){return iso.replaceAll('-','_')}
     function changeMonth(n){const d=parseISO(state.selectedDate);d.setDate(1);d.setMonth(d.getMonth()+n);selectedDateChange(isoDate(d))}
     function formatScheduleTimestamp(value){
-      const match=/^(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2})$/.exec(String(value||''));
+      const match=/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/.exec(String(value||''));
       return match?match[3]+'.'+match[2]+'.'+match[1]+' '+match[4]+':'+match[5]:(value||'brak danych');
     }
     function formatBrowserTimestamp(value){
@@ -542,7 +544,7 @@
         const previous=state.lastUpdated;state.days=data.days;state.lastUpdated=data.last_updated||'aktualny';state.sourceLabel=data.source_label||'';
         state.lastFetchedAt=new Date();state.isLoading=false;state.loadError=false;
         updateSyncInfo();
-        $('connectionStatus').innerHTML='<i></i> ONLINE';
+        $('connectionStatus').className='sync-status';$('connectionStatus').innerHTML='<i></i> ONLINE';
         renderAll();
         if(previous&&previous!==state.lastUpdated&&!silent)toast('Plan został zaktualizowany');
         await loadNotifications(true);
@@ -550,7 +552,7 @@
         state.isLoading=false;state.loadError=true;
         updateSyncInfo();
         $('fetchInfo').textContent=state.lastFetchedAt?'Ostatni udany odczyt: '+formatBrowserTimestamp(state.lastFetchedAt):'Nie udało się pobrać danych';
-        $('connectionStatus').innerHTML='<i style="background:#f59e0b;box-shadow:none"></i> OFFLINE';
+        $('connectionStatus').className='sync-status offline';$('connectionStatus').innerHTML='<i></i> OFFLINE';
         renderAll();
         if(!silent)toast('Brak połączenia z plikiem planu');
         await loadNotifications(false);
