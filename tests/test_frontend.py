@@ -141,6 +141,16 @@ class FrontendChecks(unittest.TestCase):
         sync_css = html.split(".syncbar{", 1)[1].split("}", 1)[0]
         self.assertNotIn("margin-top:auto", sync_css)
 
+    def test_premium_neon_orb_button_skin_is_present(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn(".icon-button{", html)
+        self.assertIn("border-radius:50%", html)
+        self.assertIn("radial-gradient(circle at 35% 25%,#4937c7", html)
+        self.assertIn("0 0 19px rgba(58,91,255,.25)", html)
+        self.assertIn("linear-gradient(112deg,#7139ed 0%,#4934bd 53%,#304cc5 100%)", html)
+        self.assertIn("background:linear-gradient(110deg,#d0ff27,#a7f20c)", html)
+        self.assertIn("radial-gradient(ellipse at 100% 100%,rgba(133,42,255,.23)", html)
+
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         defined_ids = set(re.findall(r'\bid="([^"]+)"', html))
