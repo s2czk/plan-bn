@@ -116,6 +116,31 @@ class FrontendChecks(unittest.TestCase):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('.brand-title{font-size:14px;font-weight:400', html)
 
+    def test_day_view_shows_loading_skeleton_before_schedule_arrives(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("isLoading:true", html)
+        self.assertIn("function renderLoadingDay(host)", html)
+        self.assertIn('class="skeleton-card"', html)
+        self.assertIn("state.isLoading=false", html)
+
+    def test_empty_day_shows_the_next_available_lessons(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("function renderUpcomingLessons(host)", html)
+        self.assertIn("Najbliższe zajęcia", html)
+        self.assertIn("items.slice(0,3)", html)
+        self.assertIn("Przejdź do planu tego dnia", html)
+        self.assertIn("date>=anchor", html)
+
+    def test_sync_bar_distinguishes_plan_change_from_browser_fetch(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Plan ostatnio zmieniono:", html)
+        self.assertIn("Dane pobrano:", html)
+        self.assertIn("state.lastFetchedAt=new Date()", html)
+        self.assertIn(r"/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/", html)
+        self.assertNotIn("Ostatnia synchronizacja:", html)
+        sync_css = html.split(".syncbar{", 1)[1].split("}", 1)[0]
+        self.assertNotIn("margin-top:auto", sync_css)
+
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         defined_ids = set(re.findall(r'\bid="([^"]+)"', html))

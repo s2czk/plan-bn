@@ -111,7 +111,32 @@
     .meta-tag.onsite{border-color:rgba(112,180,255,.42);background:rgba(76,151,225,.15);color:#9bd0ff}
     .meta-tag.room{border-color:rgba(180,198,230,.28);background:rgba(180,198,230,.1);color:#e0e9fb}
     .meta-tag.missing{border-color:rgba(199,244,59,.24);background:rgba(199,244,59,.08);color:#d8ef91}
-    .empty-state{padding:30px 15px;text-align:center;border:1px dashed rgba(150,173,220,.2);border-radius:15px;background:rgba(10,20,40,.3);color:#bac8e1;font-size:13px}
+    .empty-state{padding:24px 15px;text-align:center;border:1px dashed rgba(150,173,220,.2);border-radius:15px;background:rgba(10,20,40,.3);color:#bac8e1;font-size:13px}
+    .skeleton-list{display:flex;flex-direction:column;gap:9px}
+    .skeleton-card{position:relative;display:flex;flex-direction:column;gap:10px;overflow:hidden;padding:15px 16px;border:1px solid rgba(150,173,220,.13);border-radius:15px;background:rgba(16,29,55,.72)}
+    .skeleton-card:after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(180,198,230,.07),transparent);animation:skeleton-shimmer 1.5s infinite}
+    .skeleton-line{display:block;height:9px;border-radius:10px;background:rgba(155,175,213,.13)}
+    .skeleton-line.time{width:27%;height:11px;background:rgba(199,244,59,.15)}
+    .skeleton-line.title{width:68%;height:14px}
+    .skeleton-line.meta{width:42%}
+    @keyframes skeleton-shimmer{100%{transform:translateX(100%)}}
+    .upcoming-card{margin-top:10px;padding:15px;border:1px solid rgba(150,173,220,.2);border-radius:16px;background:linear-gradient(145deg,rgba(29,45,82,.96),rgba(13,25,49,.96));box-shadow:0 8px 22px rgba(2,8,24,.12)}
+    .upcoming-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+    .upcoming-kicker{display:block;margin-bottom:4px;color:#aebddd;font-size:9px;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
+    .upcoming-date{display:block;color:#f0f4ff;font-size:13px;font-weight:700}
+    .upcoming-pill{flex:0 0 auto;padding:5px 8px;border-radius:999px;border:1px solid rgba(169,149,255,.35);background:rgba(100,82,190,.17);color:#d9d0ff;font-size:9px;font-weight:750}
+    .upcoming-items{display:flex;flex-direction:column;gap:0}
+    .upcoming-row{display:grid;grid-template-columns:94px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid rgba(150,173,220,.12)}
+    .upcoming-time{color:var(--lime);font:700 11px "JetBrains Mono",monospace;white-space:nowrap}
+    .upcoming-info{min-width:0}
+    .upcoming-title{display:block;color:#f1f4ff;font-size:12px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
+    .upcoming-meta{display:block;margin-top:4px;color:#9eafd0;font-size:10px;line-height:1.35}
+    .upcoming-more{padding-top:5px;color:#96a9cc;font-size:10px}
+    .upcoming-action{display:flex;justify-content:flex-end;margin-top:12px}
+    .upcoming-action button{min-height:30px;padding:0 10px;border:1px solid rgba(169,149,255,.3);border-radius:9px;background:rgba(87,74,164,.18);color:#e0d9ff;font-size:10px;font-weight:700}
+    .upcoming-no-data{margin-top:10px;padding:13px;border:1px solid rgba(150,173,220,.16);border-radius:13px;background:rgba(10,20,40,.28);color:#aebddd;font-size:11px;line-height:1.45}
+    .load-error strong{display:block;margin-bottom:6px;color:#f1f4ff}
+    .load-error button{margin-top:12px;padding:8px 12px;border:1px solid rgba(169,149,255,.35);border-radius:9px;background:rgba(87,74,164,.2);color:#e0d9ff;font-size:11px;font-weight:700}
     .day-navigation{display:flex;flex-direction:column;gap:7px}
     .day-navigation[hidden]{display:none!important}
     .week-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;padding:8px 10px}
@@ -147,9 +172,13 @@
     .calendar-day .dots{display:flex;gap:3px;height:5px}
     .calendar-day .dots i{width:5px;height:5px;border-radius:50%;background:var(--onsite)}
     .calendar-day .dots i.remote{background:var(--remote)}
-    .syncbar{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;color:#aebddd;font-size:11px}
+    .syncbar{margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;color:#aebddd;font-size:11px}
+    .sync-details{display:flex;flex-direction:column;gap:4px;min-width:0}
+    .sync-meta{font-size:10px;color:#879abb;line-height:1.35}
     .sync-status{display:flex;align-items:center;gap:7px;color:var(--lime);font-weight:750;white-space:nowrap}
     .sync-status i{display:block;width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px rgba(199,244,59,.55)}
+    .sync-status.loading{color:#9eafd0}.sync-status.loading i{background:#9eafd0;box-shadow:none}
+    .sync-status.offline{color:#f59e0b}.sync-status.offline i{background:#f59e0b;box-shadow:none}
     .footer{display:flex;justify-content:space-between;gap:10px;align-items:center;color:#7f91b5;font-size:10px;padding:0 3px}
     .footer a{color:#aab9d8;text-decoration:none}
     .footer a:hover{color:#d5caff;text-decoration:underline}
@@ -192,7 +221,7 @@
     .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     @media(min-width:1100px){.class-card{padding:15px 19px}.class-time{font-size:14px}.class-subject{font-size:16px}}
     @media(max-width:760px){.app-shell{width:97%;gap:7px;padding-top:8px}.topbar{padding:5px 7px}.brand{gap:5px}.brand-mark{width:24px;height:24px}.brand-mark svg{width:14px;height:14px}.brand-title{font-size:12px;font-weight:400}.brand-sub{font-size:7px}.header-actions{gap:3px;flex:0 0 auto}.header-actions .icon-button{width:25px;height:25px;border-radius:7px}.header-actions .icon-button svg{width:13px;height:13px}.week-grid{grid-template-columns:repeat(7,minmax(128px,1fr))}.week-view-scroll{overflow-x:auto;padding-bottom:5px}.week-day{min-height:150px}.date-chip{flex-direction:column;gap:1px;padding:4px 2px 7px;min-height:39px}.date-chip .day-number{font-size:11px}.date-chip .day-name{font-size:8px}.date-markers{bottom:3px}.toolbar{flex-wrap:nowrap;gap:5px}.toolbar .action-button{flex:0 0 auto}.date-label{font-size:14px}.datebar{padding:6px 7px}.date-arrow{width:27px;height:27px;font-size:15px}.mode-badge{font-size:8px;padding:4px 6px}.week-toolbar{display:grid;grid-template-columns:minmax(0,1fr);gap:7px;padding:7px 8px}.week-nav{grid-template-columns:30px minmax(0,1fr) 30px;gap:5px;width:100%}.week-nav-button{width:30px;height:29px;padding:0;border-radius:8px;font-size:0}.week-nav-arrow{font-size:16px}.week-nav-label{display:none}.week-nav strong{font-size:11px}.week-download{justify-self:end;height:27px;padding:0 8px;font-size:9px}.month-toolbar{padding:7px 8px;gap:6px}.action-button{height:28px;padding:0 7px;font-size:9px}}
-    @media(max-width:420px){.brand-title{font-size:13px}.datebar{padding:6px}.date-arrow{width:26px;height:26px}.date-right{gap:4px}.mode-badge{font-size:8px;padding:4px 6px}.class-card{gap:8px;padding:12px 10px 12px 14px}.class-line{display:block}.class-time{display:block;font-size:12px;margin-bottom:4px}.class-subject{font-size:14px}.class-teacher{font-size:11px}.meta-tag{padding:5px 7px;font-size:9px}.footer{font-size:9px}.action-button{height:27px;padding:0 7px;font-size:9px}.btn-icon{font-size:12px}.tabs{gap:2px;padding:2px}.tab{height:27px;font-size:9px}.month-search-button{width:26px;height:26px}}
+    @media(max-width:420px){.brand-title{font-size:13px}.datebar{padding:6px}.date-arrow{width:26px;height:26px}.date-right{gap:4px}.mode-badge{font-size:8px;padding:4px 6px}.class-card{gap:8px;padding:12px 10px 12px 14px}.class-line{display:block}.class-time{display:block;font-size:12px;margin-bottom:4px}.class-subject{font-size:14px}.class-teacher{font-size:11px}.meta-tag{padding:5px 7px;font-size:9px}.footer{font-size:9px}.action-button{height:27px;padding:0 7px;font-size:9px}.btn-icon{font-size:12px}.tabs{gap:2px;padding:2px}.tab{height:27px;font-size:9px}.month-search-button{width:26px;height:26px}.upcoming-card{padding:12px}.upcoming-row{grid-template-columns:82px minmax(0,1fr);gap:8px;padding:9px 0}.upcoming-title{font-size:11px}.syncbar{padding:9px 10px}.sync-meta{font-size:9px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
@@ -264,8 +293,11 @@
     </main>
 
     <div class="syncbar surface">
-      <span id="syncInfo">Ostatnia synchronizacja: oczekiwanie na dane…</span>
-      <span class="sync-status" id="connectionStatus"><i></i> ONLINE</span>
+      <div class="sync-details">
+        <span id="syncInfo">Plan ostatnio zmieniono: oczekiwanie na dane…</span>
+        <span class="sync-meta" id="fetchInfo">Dane pobrano: oczekiwanie…</span>
+      </div>
+      <span class="sync-status loading" id="connectionStatus"><i></i> ŁADOWANIE</span>
     </div>
     <footer class="footer"><span>PLAN ZAJĘĆ · PANS KOSZALIN</span><a href="mailto:szymon@mandaro.eu">szymon@mandaro.eu</a></footer>
   </div>
@@ -312,7 +344,7 @@
     'use strict';
     const queryDate=new URLSearchParams(location.search).get('date');
     const validQueryDate=queryDate&&/^\d{4}-\d{2}-\d{2}$/.test(queryDate)?queryDate:localISODate();
-    const state={days:{},lastUpdated:null,sourceLabel:'',view:'day',selectedDate:validQueryDate,month:null,notifications:[],pendingInstall:null};
+    const state={days:{},lastUpdated:null,lastFetchedAt:null,sourceLabel:'',isLoading:true,loadError:false,view:'day',selectedDate:validQueryDate,month:null,notifications:[],pendingInstall:null};
     const $=id=>document.getElementById(id);
     const weekdays=['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];
     const weekdaysShort=['Nd','Pn','Wt','Śr','Cz','Pt','Sb'];
@@ -352,10 +384,92 @@
       const group=item.group?'<span class="class-group">'+esc(item.group)+'</span>':'';
       return '<article class="class-card '+(mode==='ZDALNE'?'remote':mode==='MIESZANE'?'mixed':'')+'"><div class="class-info"><div class="class-line"><span class="class-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="class-subject">'+esc(item.title)+'</span></div><div class="class-teacher">'+esc(item.lecturer||'Prowadzący niepodany')+'</div><div class="class-extra"><span class="class-type">'+esc(item.type||'zajęcia')+'</span>'+group+'</div></div><div class="class-meta">'+tags.join('')+'</div></article>';
     }
+    function renderLoadingDay(host){
+      $('dayCount').textContent='Ładowanie';
+      host.innerHTML='<div class="skeleton-list" role="status" aria-label="Ładowanie planu"><div class="skeleton-card"><span class="skeleton-line time"></span><span class="skeleton-line title"></span><span class="skeleton-line meta"></span></div><div class="skeleton-card"><span class="skeleton-line time"></span><span class="skeleton-line title"></span><span class="skeleton-line meta"></span></div><div class="skeleton-card"><span class="skeleton-line time"></span><span class="skeleton-line title"></span><span class="skeleton-line meta"></span></div></div>';
+    }
+    function renderUpcomingLessons(host){
+      const today=localISODate();
+      const anchor=state.selectedDate>=today?state.selectedDate:today;
+      const nextDate=Object.keys(state.days).filter(date=>date>=anchor&&(state.days[date]?.items||[]).length>0).sort()[0];
+      if(!nextDate){
+        const note=document.createElement('div');
+        note.className='upcoming-no-data';
+        note.textContent='W opublikowanym planie nie ma już kolejnych zajęć.';
+        host.append(note);
+        return;
+      }
+      const day=state.days[nextDate],items=day.items||[];
+      const card=document.createElement('section');
+      card.className='upcoming-card';
+      const head=document.createElement('div');
+      head.className='upcoming-head';
+      const heading=document.createElement('div');
+      const kicker=document.createElement('span');
+      kicker.className='upcoming-kicker';
+      kicker.textContent='Najbliższe zajęcia';
+      const dateLabel=document.createElement('strong');
+      dateLabel.className='upcoming-date';
+      dateLabel.textContent=weekdays[parseISO(nextDate).getDay()]+' · '+polishDate(nextDate);
+      heading.append(kicker,dateLabel);
+      const pill=document.createElement('span');
+      pill.className='upcoming-pill';
+      pill.textContent=nextDate===today?'DZISIAJ':nextDate===addDays(today,1)?'JUTRO':'NAJBLIŻSZY TERMIN';
+      head.append(heading,pill);
+      const list=document.createElement('div');
+      list.className='upcoming-items';
+      const shown=items.slice(0,3);
+      shown.forEach(item=>{
+        const row=document.createElement('div');
+        row.className='upcoming-row';
+        const time=document.createElement('span');
+        time.className='upcoming-time';
+        time.textContent=String(item.time||'').replace('-','–');
+        const info=document.createElement('div');
+        info.className='upcoming-info';
+        const title=document.createElement('strong');
+        title.className='upcoming-title';
+        title.textContent=item.title||'Zajęcia';
+        const meta=document.createElement('span');
+        meta.className='upcoming-meta';
+        meta.textContent=[item.type,item.lecturer,item.room&&item.room!=='BRAK SALI'?'sala '+item.room:''].filter(Boolean).join(' · ');
+        info.append(title);
+        if(meta.textContent)info.append(meta);
+        row.append(time,info);
+        list.append(row);
+      });
+      card.append(head,list);
+      if(items.length>shown.length){
+        const more=document.createElement('div');
+        more.className='upcoming-more';
+        more.textContent='+'+(items.length-shown.length)+' kolejnych zajęć tego dnia';
+        card.append(more);
+      }
+      const action=document.createElement('div');
+      action.className='upcoming-action';
+      const button=document.createElement('button');
+      button.type='button';
+      button.textContent='Przejdź do planu tego dnia →';
+      button.addEventListener('click',()=>selectedDateChange(nextDate));
+      action.append(button);
+      card.append(action);
+      host.append(card);
+    }
     function renderDay(){
       const day=dayData(state.selectedDate),items=filteredItems(day),host=$('dayClasses');
+      if(state.isLoading){renderLoadingDay(host);return}
+      if(state.loadError&&!Object.keys(state.days).length){
+        $('dayCount').textContent='—';
+        host.innerHTML='<div class="empty-state load-error"><strong>Nie udało się pobrać planu.</strong>Sprawdź połączenie i spróbuj ponownie.<br><button type="button" id="retrySchedule">Spróbuj ponownie</button></div>';
+        $('retrySchedule').addEventListener('click',()=>loadSchedule(false));
+        return;
+      }
       $('dayCount').textContent=items.length+' '+(items.length===1?'zajęcia':items.length>=2&&items.length<=4?'zajęcia':'zajęć');
-      if(!items.length){host.innerHTML='<div class="empty-state">'+(day?.items?.length?'Nie znaleziono przedmiotów pasujących do wyszukiwania.':'Brak zaplanowanych zajęć w tym dniu.')+'</div>';return}
+      if(!items.length){
+        host.innerHTML='<div class="empty-state">'+(day?.items?.length?'Nie znaleziono przedmiotów pasujących do wyszukiwania.':'Nie masz zaplanowanych zajęć w wybranym dniu.')+'</div>';
+        if(!day?.items?.length)renderUpcomingLessons(host);
+        return;
+      }
       host.innerHTML=items.map(item=>classCard(item,day)).join('');
     }
     function renderWeek(){
@@ -411,21 +525,35 @@
     function downloadText(name,text){const blob=new Blob([text],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Przygotowano plik '+name)}
     function dateFile(iso){return iso.replaceAll('-','_')}
     function changeMonth(n){const d=parseISO(state.selectedDate);d.setDate(1);d.setMonth(d.getMonth()+n);selectedDateChange(isoDate(d))}
+    function formatScheduleTimestamp(value){
+      const match=/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/.exec(String(value||''));
+      return match?match[3]+'.'+match[2]+'.'+match[1]+' '+match[4]+':'+match[5]:(value||'brak danych');
+    }
+    function formatBrowserTimestamp(value){
+      return value.toLocaleString('pl-PL',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    }
     function updateSyncInfo(){
-      $('syncInfo').textContent='Ostatnia synchronizacja: '+(state.lastUpdated||'brak danych');
-      $('connectionStatus').innerHTML='<i></i> ONLINE';
+      $('syncInfo').textContent='Plan ostatnio zmieniono: '+formatScheduleTimestamp(state.lastUpdated);
+      $('fetchInfo').textContent=state.lastFetchedAt?'Dane pobrano: '+formatBrowserTimestamp(state.lastFetchedAt):'Oczekiwanie na pobranie danych…';
     }
     async function loadSchedule(silent=false){
+      if(!Object.keys(state.days).length){state.isLoading=true;state.loadError=false;renderAll()}
       try{
         const response=await fetch('./schedule.json?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);
         const data=await response.json();if(!data.days||typeof data.days!=='object')throw new Error('Nieprawidłowy format schedule.json');
         const previous=state.lastUpdated;state.days=data.days;state.lastUpdated=data.last_updated||'aktualny';state.sourceLabel=data.source_label||'';
-        updateSyncInfo();renderAll();
+        state.lastFetchedAt=new Date();state.isLoading=false;state.loadError=false;
+        updateSyncInfo();
+        $('connectionStatus').className='sync-status';$('connectionStatus').innerHTML='<i></i> ONLINE';
+        renderAll();
         if(previous&&previous!==state.lastUpdated&&!silent)toast('Plan został zaktualizowany');
         await loadNotifications(true);
       }catch(error){
-        $('syncInfo').textContent='Nie udało się pobrać aktualnego planu';
-        $('connectionStatus').innerHTML='<i style="background:#f59e0b;box-shadow:none"></i> OFFLINE';
+        state.isLoading=false;state.loadError=true;
+        updateSyncInfo();
+        $('fetchInfo').textContent=state.lastFetchedAt?'Ostatni udany odczyt: '+formatBrowserTimestamp(state.lastFetchedAt):'Nie udało się pobrać danych';
+        $('connectionStatus').className='sync-status offline';$('connectionStatus').innerHTML='<i></i> OFFLINE';
+        renderAll();
         if(!silent)toast('Brak połączenia z plikiem planu');
         await loadNotifications(false);
       }
