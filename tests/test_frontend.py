@@ -56,8 +56,9 @@ class FrontendChecks(unittest.TestCase):
         self.assertNotIn('id="openSearchFromMonth"', html)
         self.assertNotIn('id="subjectSearch"', html)
         self.assertNotIn('id="openFilters"', html)
-        toolbar = html.split('<div class="toolbar action-toolbar"', 1)[1].split("</div>", 1)[0]
-        self.assertNotIn("search-box", toolbar)
+        header = html.split('<header class="topbar surface">', 1)[1].split("</header>", 1)[0]
+        self.assertIn('id="openGlobalSearch"', header)
+        self.assertNotIn('id="subjectSearch"', header)
 
     def test_week_view_hides_day_navigation_and_uses_compact_week_toolbar(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -77,8 +78,8 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn('id="openGlobalSearch"', html)
         self.assertIn('id="copyDay"', html)
         self.assertIn('id="downloadDay"', html)
-        self.assertIn('aria-label="Kopiuj plan dnia"', html)
-        self.assertIn('aria-label="Pobierz plan dnia jako TXT"', html)
+        self.assertIn('aria-label="Kopiuj plan wybranego dnia"', html)
+        self.assertIn('aria-label="Pobierz plan wybranego dnia jako TXT"', html)
         self.assertNotIn('id="openSearchFromMonth"', html)
         self.assertNotIn("Kopiuj TXT", html)
         self.assertNotIn("Pobierz .txt", html)
@@ -113,7 +114,7 @@ class FrontendChecks(unittest.TestCase):
 
     def test_brand_name_uses_regular_not_bold_weight(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertRegex(html, r'\.brand-title\\{[^}]*font-weight:400')
+        self.assertIn('.brand-title{font-size:14px;font-weight:400', html)
 
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
