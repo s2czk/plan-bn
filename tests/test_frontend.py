@@ -23,15 +23,15 @@ class FrontendChecks(unittest.TestCase):
 
     def test_manifest_is_valid_and_pwa_ready(self):
         manifest = json.loads((ROOT / "manifest.webmanifest").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["background_color"], "#0D1630")
-        self.assertEqual(manifest["theme_color"], "#0D1630")
+        self.assertEqual(manifest["background_color"], "#070918")
+        self.assertEqual(manifest["theme_color"], "#070918")
         self.assertTrue(manifest["start_url"])
         self.assertTrue(manifest["icons"])
 
     def test_page_contains_requested_layout_and_author(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         for required in (
-            "linear-gradient(180deg,#0D1630 0%,#17386D 100%)",
+            "linear-gradient(180deg,#070918 0%,#0c1230 52%,#111a43 100%)",
             "Bezpieczeństwo Narodowe",
             "weekStrip",
             "weekGrid",
