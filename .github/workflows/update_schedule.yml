@@ -58,6 +58,7 @@ jobs:
           import json
           import os
           import time
+          import urllib.error
           import urllib.request
           from pathlib import Path
 
@@ -86,6 +87,23 @@ jobs:
                   with urllib.request.urlopen(request, timeout=30) as response:
                       print(response.read().decode("utf-8"))
                   break
+              except urllib.error.HTTPError as error:
+                  response_body = error.read().decode("utf-8", errors="replace")
+                  response_headers = {
+                      key: error.headers.get(key)
+                      for key in ("server", "cf-ray", "cf-cache-status", "content-type")
+                      if error.headers.get(key)
+                  }
+                  print(json.dumps({
+                      "push_http_status": error.code,
+                      "push_response_headers": response_headers,
+                      "push_response_body": response_body[:2000],
+                  }, ensure_ascii=False))
+                  if 400 <= error.code < 500:
+                      raise SystemExit(f"Push endpoint rejected the request (HTTP {error.code}); see response details above.")
+                  last_error = error
+                  if attempt < 2:
+                      time.sleep(2 ** attempt)
               except Exception as error:
                   last_error = error
                   if attempt < 2:
