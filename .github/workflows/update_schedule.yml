@@ -168,7 +168,7 @@ jobs:
                   if item.get("id") not in delivered
               ]
               temporary = pending_path.with_suffix(".json.tmp")
-              temporary.write_text(json.dumps(pending_data, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+              temporary.write_text(json.dumps(pending_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
               temporary.replace(pending_path)
           PY
 
