@@ -1,6 +1,6 @@
 import unittest
 
-from updater import build_change_notifications, clean_subject_title, extract_group_labels, group_change_notifications, merge_adjacent_blocks, parse_single_page
+from updater import build_change_notifications, clean_subject_title, extract_group_labels, group_change_notifications, merge_adjacent_blocks, merge_pending_notifications, parse_single_page
 
 
 def block(start, end, title="Ekonomia", lecturer="dr A. Kowalski", class_type="wykład", remote=True, room=""):
@@ -116,6 +116,36 @@ class NotificationDiffTests(unittest.TestCase):
         self.assertEqual(len(grouped), 2)
         self.assertEqual(len(grouped[0]["events"]), 2)
         self.assertEqual(grouped[0]["url"], "./?date=2026-11-12")
+
+
+
+class PendingPushQueueTests(unittest.TestCase):
+    def test_pending_notifications_are_preserved_and_new_ones_are_appended(self):
+        old = [{"id": "old-1", "message": "Niewysłane"}]
+        new = [{"id": "new-1", "message": "Nowe"}]
+        self.assertEqual(
+            merge_pending_notifications(old, new),
+            old + new,
+        )
+
+    def test_duplicate_notification_ids_are_not_queued_twice(self):
+        old = [{"id": "same-id", "message": "Pierwsza wersja"}]
+        new = [{"id": "same-id", "message": "Duplikat"}, {"id": "new-id", "message": "Nowe"}]
+        self.assertEqual(
+            merge_pending_notifications(old, new),
+            [old[0], new[1]],
+        )
+
+    def test_invalid_notification_without_id_is_rejected(self):
+        with self.assertRaises(ValueError):
+            merge_pending_notifications([], [{"message": "Bez identyfikatora"}])
+
+    def test_pending_queue_is_not_mutated(self):
+        old = [{"id": "old-1"}]
+        new = [{"id": "new-1"}]
+        merge_pending_notifications(old, new)
+        self.assertEqual(old, [{"id": "old-1"}])
+        self.assertEqual(new, [{"id": "new-1"}])
 
 
 if __name__ == "__main__":
