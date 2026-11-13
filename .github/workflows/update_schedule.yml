@@ -43,13 +43,23 @@ jobs:
       - name: Zainstaluj zależności
         run: python -m pip install -r requirements.txt
 
-      - name: Testy parsera i detekcji zmian
+      - name: Testy parsera, detekcji zmian i kolejki Push
         run: python -m unittest discover -s tests -v
 
       - name: Pobierz i przetwórz aktualny plan PDF
         run: python updater.py
 
-      - name: Wyślij powiadomienia Push (gdy Cloudflare jest skonfigurowany)
+      # Najpierw publikujemy plan i zapisujemy kolejkę w repozytorium.
+      # Awaria zewnętrznego Push nie może zatrzymać publikacji planu ani zgubić alertów.
+      - name: Zapisz plan, historię i oczekujące powiadomienia
+        run: |
+          git config user.name "PANS-Schedule-Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add schedule.json last_hash.txt parser_version.txt notifications.json pending_push.json
+          if [ -f update_sequence.txt ]; then git add update_sequence.txt; fi
+          git diff --cached --quiet || (git commit -m "Aktualizacja planu zajęć PANS" && git push)
+
+      - name: Wyślij oczekujące powiadomienia Push
         env:
           PUSH_WORKER_URL: ${{ secrets.PUSH_WORKER_URL }}
           PUSH_DISPATCH_TOKEN: ${{ secrets.PUSH_DISPATCH_TOKEN }}
@@ -67,69 +77,104 @@ jobs:
           payload = json.loads(Path("push_payload.json").read_text(encoding="utf-8"))
           notifications = payload.get("notifications", [])
 
-          if not worker or not token:
-              print("Cloudflare Push nie jest jeszcze skonfigurowany — pomijam wysyłkę.")
+          if not worker and not token:
+              if notifications:
+                  raise SystemExit("Push jest niekonfigurowany, ale kolejka zawiera oczekujące powiadomienia. Nie usuwam ich.")
+              print("Cloudflare Push nie jest skonfigurowany; brak oczekujących powiadomień.")
               raise SystemExit(0)
-          # Wykonuj autoryzowany test /dispatch przy każdym uruchomieniu.
-          # Pusta tablica jest bezpieczna: Worker sprawdza token i konfigurację,
-          # ale nie wysyła żadnego powiadomienia na urządzenia.
-          body = json.dumps({"notifications": notifications}, ensure_ascii=False).encode("utf-8")
-          last_error = None
-          for attempt in range(3):
-              request = urllib.request.Request(
-                  worker + "/dispatch",
-                  data=body,
-                  headers={
-                      "Authorization": "Bearer " + token,
-                      "Content-Type": "application/json",
-                      "User-Agent": "PANS-Schedule-Updater/1.0 (+https://plan.mandaro.eu)",
-                  },
-                  method="POST",
-              )
-              try:
-                  with urllib.request.urlopen(request, timeout=30) as response:
-                      response_body = response.read().decode("utf-8")
-                      print(response_body)
+          if not worker or not token:
+              raise SystemExit("Niekompletna konfiguracja Push: wymagane są oba sekrety PUSH_WORKER_URL i PUSH_DISPATCH_TOKEN.")
+          if not worker.startswith("https://"):
+              raise SystemExit("PUSH_WORKER_URL musi używać HTTPS.")
+
+          batches = [notifications[i:i + 50] for i in range(0, len(notifications), 50)] or [[]]
+          dispatched_ids = []
+
+          for batch_index, batch in enumerate(batches, start=1):
+              body = json.dumps({"notifications": batch}, ensure_ascii=False).encode("utf-8")
+              last_error = None
+
+              for attempt in range(3):
+                  request = urllib.request.Request(
+                      worker + "/dispatch",
+                      data=body,
+                      headers={
+                          "Authorization": "Bearer " + token,
+                          "Content-Type": "application/json",
+                          "User-Agent": "PANS-Schedule-Updater/1.0 (+https://plan.mandaro.eu)",
+                      },
+                      method="POST",
+                  )
+                  try:
+                      with urllib.request.urlopen(request, timeout=30) as response:
+                          response_body = response.read().decode("utf-8")
                       result = json.loads(response_body)
+                      print(json.dumps({"push_batch": batch_index, "result": result}, ensure_ascii=False))
                       required_fields = {"notifications", "devices", "sent", "skipped", "removed", "failed"}
                       if not isinstance(result, dict) or not required_fields.issubset(result):
-                          raise SystemExit("Cloudflare Push returned an unexpected response schema.")
+                          raise SystemExit("Cloudflare Push zwrócił odpowiedź w nieoczekiwanym formacie.")
                       if result["failed"]:
-                          raise SystemExit(f"Cloudflare Push reported {result['failed']} delivery failures.")
-                      if not notifications:
-                          print("Brak nowych zmian — autoryzowany test Cloudflare Push zakończony poprawnie.")
-                      elif result["sent"] == 0:
-                          print("UWAGA: żadne powiadomienie nie zostało dostarczone; sprawdź liczbę urządzeń i usuniętych subskrypcji.")
-                  break
-              except urllib.error.HTTPError as error:
-                  response_body = error.read().decode("utf-8", errors="replace")
-                  response_headers = {
-                      key: error.headers.get(key)
-                      for key in ("server", "cf-ray", "cf-cache-status", "content-type")
-                      if error.headers.get(key)
-                  }
-                  print(json.dumps({
-                      "push_http_status": error.code,
-                      "push_response_headers": response_headers,
-                      "push_response_body": response_body[:2000],
-                  }, ensure_ascii=False))
-                  if 400 <= error.code < 500:
-                      raise SystemExit(f"Push endpoint rejected the request (HTTP {error.code}); see response details above.")
-                  last_error = error
-                  if attempt < 2:
-                      time.sleep(2 ** attempt)
-              except Exception as error:
-                  last_error = error
-                  if attempt < 2:
-                      time.sleep(2 ** attempt)
+                          raise RuntimeError(f"Cloudflare zgłosił {result['failed']} błędów dostarczenia.")
+                      if batch and result["sent"] + result["skipped"] == 0:
+                          raise RuntimeError(
+                              "Brak potwierdzonego dostarczenia. "
+                              f"devices={result['devices']}, removed={result['removed']}. "
+                              "Powiadomienia pozostają w kolejce do ponowienia."
+                          )
+                      dispatched_ids.extend(item["id"] for item in batch)
+                      break
+                  except urllib.error.HTTPError as error:
+                      response_body = error.read().decode("utf-8", errors="replace")
+                      response_headers = {
+                          key: error.headers.get(key)
+                          for key in ("server", "cf-ray", "cf-cache-status", "content-type")
+                          if error.headers.get(key)
+                      }
+                      print(json.dumps({
+                          "push_http_status": error.code,
+                          "push_response_headers": response_headers,
+                          "push_response_body": response_body[:2000],
+                      }, ensure_ascii=False))
+                      if 400 <= error.code < 500 and error.code != 429:
+                          raise SystemExit(
+                              f"Push odrzucony przez serwer (HTTP {error.code}); "
+                              "oczekujące powiadomienia pozostają zapisane."
+                          )
+                      last_error = error
+                      if attempt < 2:
+                          time.sleep(2 ** attempt)
+                  except (urllib.error.URLError, TimeoutError, OSError, RuntimeError) as error:
+                      last_error = error
+                      if attempt < 2:
+                          time.sleep(2 ** attempt)
+                  except json.JSONDecodeError as error:
+                      raise SystemExit(f"Cloudflare zwrócił nieprawidłowy JSON: {error}")
+
+              else:
+                  raise SystemExit(
+                      f"Nie udało się wysłać partii Push {batch_index} po 3 próbach: {last_error}. "
+                      "Kolejka pozostaje zapisana w repozytorium."
+                  )
+
+          if not notifications:
+              print("Autoryzowany test Cloudflare Push zakończony poprawnie; nie było nowych zmian.")
           else:
-              raise SystemExit(f"Nie udało się wysłać Push po 3 próbach: {last_error}")
+              print(f"Potwierdzono obsługę {len(dispatched_ids)} powiadomień. Czyszczę je z kolejki.")
+              pending_path = Path("pending_push.json")
+              pending_data = json.loads(pending_path.read_text(encoding="utf-8"))
+              delivered = set(dispatched_ids)
+              pending_data["notifications"] = [
+                  item for item in pending_data.get("notifications", [])
+                  if item.get("id") not in delivered
+              ]
+              temporary = pending_path.with_suffix(".json.tmp")
+              temporary.write_text(json.dumps(pending_data, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+              temporary.replace(pending_path)
           PY
 
-      - name: Zapisz plan, historię i wersję parsera
+      - name: Zapisz potwierdzone dostarczenie Push
         run: |
           git config user.name "PANS-Schedule-Bot"
           git config user.email "bot@users.noreply.github.com"
-          git add schedule.json last_hash.txt parser_version.txt notifications.json
-          if [ -f update_sequence.txt ]; then git add update_sequence.txt; fi
-          git diff --cached --quiet || (git commit -m "Aktualizacja planu zajęć PANS" && git push)
+          git add pending_push.json
+          git diff --cached --quiet || (git commit -m "Potwierdź dostarczenie powiadomień Push" && git push)
