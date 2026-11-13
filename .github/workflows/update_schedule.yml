@@ -70,10 +70,9 @@ jobs:
           if not worker or not token:
               print("Cloudflare Push nie jest jeszcze skonfigurowany — pomijam wysyłkę.")
               raise SystemExit(0)
-          if not notifications:
-              print("Brak nowych zmian — nie wysyłam powiadomień.")
-              raise SystemExit(0)
-
+          # Wykonuj autoryzowany test /dispatch przy każdym uruchomieniu.
+          # Pusta tablica jest bezpieczna: Worker sprawdza token i konfigurację,
+          # ale nie wysyła żadnego powiadomienia na urządzenia.
           body = json.dumps({"notifications": notifications}, ensure_ascii=False).encode("utf-8")
           last_error = None
           for attempt in range(3):
@@ -89,7 +88,18 @@ jobs:
               )
               try:
                   with urllib.request.urlopen(request, timeout=30) as response:
-                      print(response.read().decode("utf-8"))
+                      response_body = response.read().decode("utf-8")
+                      print(response_body)
+                      result = json.loads(response_body)
+                      required_fields = {"notifications", "devices", "sent", "skipped", "removed", "failed"}
+                      if not isinstance(result, dict) or not required_fields.issubset(result):
+                          raise SystemExit("Cloudflare Push returned an unexpected response schema.")
+                      if result["failed"]:
+                          raise SystemExit(f"Cloudflare Push reported {result['failed']} delivery failures.")
+                      if not notifications:
+                          print("Brak nowych zmian — autoryzowany test Cloudflare Push zakończony poprawnie.")
+                      elif result["sent"] == 0:
+                          print("UWAGA: żadne powiadomienie nie zostało dostarczone; sprawdź liczbę urządzeń i usuniętych subskrypcji.")
                   break
               except urllib.error.HTTPError as error:
                   response_body = error.read().decode("utf-8", errors="replace")
