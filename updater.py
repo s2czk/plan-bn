@@ -17,6 +17,7 @@ HASH_FILE = "last_hash.txt"
 OUTPUT_JSON = "schedule.json"
 NOTIFICATIONS_JSON = "notifications.json"
 PUSH_PAYLOAD_FILE = "push_payload.json"
+PENDING_PUSH_FILE = "pending_push.json"
 UPDATE_SEQUENCE_FILE = "update_sequence.txt"
 PARSER_VERSION_FILE = "parser_version.txt"
 PARSER_VERSION = "4"
@@ -498,6 +499,36 @@ def write_push_payload(notifications):
     write_json_atomic(PUSH_PAYLOAD_FILE, {"notifications": notifications})
 
 
+def merge_pending_notifications(pending, new_notifications):
+    """Zachowuje wszystkie niewysłane powiadomienia i scala je bez duplikowania ID."""
+    merged = []
+    seen_ids = set()
+    for notification in list(pending or []) + list(new_notifications or []):
+        if not isinstance(notification, dict):
+            raise ValueError("Nieprawidłowa pozycja w kolejce powiadomień Push.")
+        identifier = notification.get("id")
+        if not isinstance(identifier, str) or not identifier.strip():
+            raise ValueError("Każde powiadomienie Push musi mieć niepuste ID.")
+        if identifier not in seen_ids:
+            seen_ids.add(identifier)
+            merged.append(notification)
+    return merged
+
+
+def read_pending_notifications():
+    payload = read_json_if_exists(PENDING_PUSH_FILE, {"notifications": []})
+    if not isinstance(payload, dict) or not isinstance(payload.get("notifications", []), list):
+        raise ValueError("Plik pending_push.json ma nieprawidłowy format.")
+    return payload.get("notifications", [])
+
+
+def write_pending_notifications(notifications, updated_at=None):
+    payload = {"notifications": notifications}
+    if updated_at:
+        payload["updated_at"] = updated_at
+    write_json_atomic(PENDING_PUSH_FILE, payload)
+
+
 def main():
     parser_version = ""
     if os.path.exists(PARSER_VERSION_FILE):
@@ -531,7 +562,9 @@ def main():
 
     if old_hash == current_hash and not parser_changed and os.path.exists(OUTPUT_JSON):
         print("PDF i wersja parsera nie zmieniły się — pomijam przetwarzanie.")
-        write_push_payload([])
+        pending_notifications = read_pending_notifications()
+        write_pending_notifications(pending_notifications)
+        write_push_payload(pending_notifications)
         existing = read_json_if_exists(NOTIFICATIONS_JSON, {"changes": []})
         existing_changes = existing.get("changes", [])
         recent_changes = keep_recent_notifications(existing_changes, local_now())
@@ -578,9 +611,15 @@ def main():
         "changes": history,
     }
 
+    pending_notifications = merge_pending_notifications(
+        read_pending_notifications(),
+        current_notifications,
+    )
+    write_pending_notifications(pending_notifications, now_text)
+
     write_json_atomic(OUTPUT_JSON, payload)
     write_json_atomic(NOTIFICATIONS_JSON, notifications)
-    write_push_payload(current_notifications)
+    write_push_payload(pending_notifications)
     with open(HASH_FILE + ".tmp", "w", encoding="utf-8") as handle:
         handle.write(current_hash)
     os.replace(HASH_FILE + ".tmp", HASH_FILE)
