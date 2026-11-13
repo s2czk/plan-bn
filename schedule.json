@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-11-07 15:44",
-  "source_label": "plan bn 1 stacjonarne 2026 11 06 plik",
+  "last_updated": "2026-11-13 21:46",
+  "source_label": "plan bn 1 stacjonarne 2026 11 13 plik",
   "days": {
     "2026-10-01": {
       "mode": "STACJONARNE",
@@ -760,7 +760,7 @@
           "lecturer": "mgr Sylwia Hille-Jarząbek",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "104"
         },
         {
           "time": "18:30-20:00",
@@ -768,7 +768,7 @@
           "lecturer": "dr Danuta Apanel",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "104"
         }
       ]
     },
@@ -781,7 +781,7 @@
           "lecturer": "dr Małgorzata Guzińska",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "106"
         },
         {
           "time": "18:30-20:00",
@@ -789,7 +789,7 @@
           "lecturer": "dr Jolanta Martuszewska",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "105"
         }
       ]
     },
@@ -802,7 +802,7 @@
           "lecturer": "mgr Adam Nowak",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "HALA SPORTOWA"
         },
         {
           "time": "16:45-17:30",
@@ -810,7 +810,7 @@
           "lecturer": "dr Adam Czarnecki",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "104"
         },
         {
           "time": "17:30-18:15",
@@ -818,7 +818,7 @@
           "lecturer": "dr Adam Czarnecki",
           "type": "wykład",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "104"
         },
         {
           "time": "18:30-20:00",
@@ -826,7 +826,7 @@
           "lecturer": "dr Jolanta Martuszewska",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "104"
         }
       ]
     },
@@ -847,7 +847,7 @@
           "lecturer": "mgr Adam Nowak",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "H23"
         },
         {
           "time": "16:45-20:00",
@@ -855,7 +855,7 @@
           "lecturer": "dr Adam Czarnecki",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "104"
         }
       ]
     },

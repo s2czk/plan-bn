@@ -1,6 +1,165 @@
 {
   "schema_version": 1,
-  "update_id": "0-c3df297dc87f",
-  "last_updated": "2026-11-07 15:44",
-  "changes": []
+  "update_id": "1-f9141ef710fc",
+  "last_updated": "2026-11-13 21:46",
+  "changes": [
+    {
+      "id": "1-f9141ef710fc-2026-11-18",
+      "date": "2026-11-18",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 2 zmiany w planie zajęć.",
+      "push_message": "Wykryto 2 zmiany: ZMIENIONO: Podstawy socjologii — Sala: BRAK SALI → 104 | ZMIENIONO: Komunikacja interpersonalna — Sala: BRAK SALI → 104",
+      "events": [
+        {
+          "id": "1-f9141ef710fc-2026-11-18-change-1",
+          "date": "2026-11-18",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Podstawy socjologii",
+          "details": [
+            "Sala: BRAK SALI → 104"
+          ],
+          "created_at": "2026-11-13 21:46"
+        },
+        {
+          "id": "1-f9141ef710fc-2026-11-18-change-2",
+          "date": "2026-11-18",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Komunikacja interpersonalna",
+          "details": [
+            "Sala: BRAK SALI → 104"
+          ],
+          "created_at": "2026-11-13 21:46"
+        }
+      ],
+      "created_at": "2026-11-13 21:46",
+      "url": "./?date=2026-11-18"
+    },
+    {
+      "id": "1-f9141ef710fc-2026-11-19",
+      "date": "2026-11-19",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 2 zmiany w planie zajęć.",
+      "push_message": "Wykryto 2 zmiany: ZMIENIONO: Wspólna polityka zagraniczna i bezpieczeństwa UE — Sala: BRAK SALI → 105 | ZMIENIONO: Podstawy ekonomii — Sala: BRAK SALI → 106",
+      "events": [
+        {
+          "id": "1-f9141ef710fc-2026-11-19-change-3",
+          "date": "2026-11-19",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
+          "details": [
+            "Sala: BRAK SALI → 105"
+          ],
+          "created_at": "2026-11-13 21:46"
+        },
+        {
+          "id": "1-f9141ef710fc-2026-11-19-change-4",
+          "date": "2026-11-19",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Podstawy ekonomii",
+          "details": [
+            "Sala: BRAK SALI → 106"
+          ],
+          "created_at": "2026-11-13 21:46"
+        }
+      ],
+      "created_at": "2026-11-13 21:46",
+      "url": "./?date=2026-11-19"
+    },
+    {
+      "id": "1-f9141ef710fc-2026-11-20",
+      "date": "2026-11-20",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 4 zmiany w planie zajęć.",
+      "push_message": "Wykryto 4 zmiany: ZMIENIONO: Wspólna polityka zagraniczna i bezpieczeństwa UE — Sala: BRAK SALI → 104 | ZMIENIONO: Geografia polityczna i gospodarcza — Sala: BRAK SALI → 104 | ZMIENIONO: Historia Polski na tle historii Europy — Sala: BRAK SALI → 104 | ZMIENIONO: Wychowanie fizyczne — Sala: BRAK SALI → HALA SPORTOWA",
+      "events": [
+        {
+          "id": "1-f9141ef710fc-2026-11-20-change-5",
+          "date": "2026-11-20",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Wspólna polityka zagraniczna i bezpieczeństwa UE",
+          "details": [
+            "Sala: BRAK SALI → 104"
+          ],
+          "created_at": "2026-11-13 21:46"
+        },
+        {
+          "id": "1-f9141ef710fc-2026-11-20-change-6",
+          "date": "2026-11-20",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Geografia polityczna i gospodarcza",
+          "details": [
+            "Sala: BRAK SALI → 104"
+          ],
+          "created_at": "2026-11-13 21:46"
+        },
+        {
+          "id": "1-f9141ef710fc-2026-11-20-change-7",
+          "date": "2026-11-20",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Historia Polski na tle historii Europy",
+          "details": [
+            "Sala: BRAK SALI → 104"
+          ],
+          "created_at": "2026-11-13 21:46"
+        },
+        {
+          "id": "1-f9141ef710fc-2026-11-20-change-8",
+          "date": "2026-11-20",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Wychowanie fizyczne",
+          "details": [
+            "Sala: BRAK SALI → HALA SPORTOWA"
+          ],
+          "created_at": "2026-11-13 21:46"
+        }
+      ],
+      "created_at": "2026-11-13 21:46",
+      "url": "./?date=2026-11-20"
+    },
+    {
+      "id": "1-f9141ef710fc-2026-11-21",
+      "date": "2026-11-21",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 2 zmiany w planie zajęć.",
+      "push_message": "Wykryto 2 zmiany: ZMIENIONO: Historia Polski na tle historii Europy — Sala: BRAK SALI → 104 | ZMIENIONO: Wychowanie fizyczne — Sala: BRAK SALI → H23",
+      "events": [
+        {
+          "id": "1-f9141ef710fc-2026-11-21-change-9",
+          "date": "2026-11-21",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Historia Polski na tle historii Europy",
+          "details": [
+            "Sala: BRAK SALI → 104"
+          ],
+          "created_at": "2026-11-13 21:46"
+        },
+        {
+          "id": "1-f9141ef710fc-2026-11-21-change-10",
+          "date": "2026-11-21",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Wychowanie fizyczne",
+          "details": [
+            "Sala: BRAK SALI → H23"
+          ],
+          "created_at": "2026-11-13 21:46"
+        }
+      ],
+      "created_at": "2026-11-13 21:46",
+      "url": "./?date=2026-11-21"
+    }
+  ]
 }
