@@ -80,7 +80,11 @@ jobs:
               request = urllib.request.Request(
                   worker + "/dispatch",
                   data=body,
-                  headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"},
+                  headers={
+                      "Authorization": "Bearer " + token,
+                      "Content-Type": "application/json",
+                      "User-Agent": "PANS-Schedule-Updater/1.0 (+https://plan.mandaro.eu)",
+                  },
                   method="POST",
               )
               try:
