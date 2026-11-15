@@ -63,7 +63,16 @@ jobs:
           git config user.email "bot@users.noreply.github.com"
           git add schedule.json last_hash.txt parser_version.txt notifications.json pending_push.json
           if [ -f update_sequence.txt ]; then git add update_sequence.txt; fi
-          git diff --cached --quiet || (git commit -m "Aktualizacja planu zajęć PANS" && git push)
+          echo "Zmiany oczekujące na publikację:"
+          git status --short
+          if ! git diff --cached --quiet; then
+            git diff --cached --stat
+            git commit -m "Aktualizacja planu zajęć PANS"
+            git pull --rebase origin main
+            git push
+          else
+            echo "Dane planu i kolejki nie wymagają zapisu."
+          fi
 
       - name: Wyślij oczekujące powiadomienia Push
         env:
@@ -76,4 +85,11 @@ jobs:
           git config user.name "PANS-Schedule-Bot"
           git config user.email "bot@users.noreply.github.com"
           git add pending_push.json
-          git diff --cached --quiet || (git commit -m "Potwierdź dostarczenie powiadomień Push" && git push)
+          if ! git diff --cached --quiet; then
+            git diff --cached --stat
+            git commit -m "Potwierdź dostarczenie powiadomień Push"
+            git pull --rebase origin main
+            git push
+          else
+            echo "Kolejka Push nie wymaga zmiany."
+          fi
