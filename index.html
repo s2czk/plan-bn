@@ -527,7 +527,7 @@
       const date=new Date(now.getFullYear(),now.getMonth(),now.getDate());
       if(date.getDay()===0&&days){
         const iso=date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
-        const currentMinutes=date.getHours()*60+date.getMinutes();
+        const currentMinutes=now.getHours()*60+now.getMinutes();
         const items=days[iso]?.items||[];
         const hasOngoingOrUpcoming=items.some(item=>{
           const match=/^\d{1,2}:\d{2}-(\d{1,2}):(\d{2})$/.exec(String(item.time||''));
