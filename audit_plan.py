@@ -2,14 +2,12 @@ import hashlib
 import io
 import json
 import re
-import sys
 from pathlib import Path
 
 import pdfplumber
 import requests
 
 from updater import (
-    COURSE_URL,
     HEADERS,
     find_bn_resource_link,
     parse_single_page,
@@ -32,14 +30,16 @@ def check_overlaps(days):
             start, end = item["time"].split("-", 1)
             events.append((minutes(start), minutes(end), item))
         events.sort(key=lambda event: (event[0], event[1]))
-        for previous, current in zip(events, events[1:]):
-            if current[0] < previous[1]:
+        for index, first in enumerate(events):
+            for second in events[index + 1:]:
+                if second[0] >= first[1]:
+                    break
                 overlaps.append({
                     "date": date,
-                    "first": previous[2].get("title"),
-                    "first_time": previous[2].get("time"),
-                    "second": current[2].get("title"),
-                    "second_time": current[2].get("time"),
+                    "first": first[2].get("title"),
+                    "first_time": first[2].get("time"),
+                    "second": second[2].get("title"),
+                    "second_time": second[2].get("time"),
                 })
     return overlaps
 
@@ -81,6 +81,8 @@ def main():
 
     parsed_days = {}
     duplicate_dates = []
+    seen_dates = set()
+    pages_with_date_but_no_classes = []
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
         page_count = len(pdf.pages)
         for page_number, page in enumerate(pdf.pages, start=1):
@@ -88,11 +90,14 @@ def main():
             date, day = parse_single_page(page_text)
             if not date:
                 continue
-            if date in parsed_days:
+            if date in seen_dates:
                 duplicate_dates.append({"date": date, "page": page_number})
                 continue
+            seen_dates.add(date)
             if day:
                 parsed_days[date] = day
+            else:
+                pages_with_date_but_no_classes.append({"date": date, "page": page_number})
 
     validate_schedule(parsed_days)
     if duplicate_dates:
@@ -112,6 +117,7 @@ def main():
         "pdf_bytes": len(pdf_bytes),
         "pdf_sha256": source_hash,
         "pdf_pages": page_count,
+        "dated_pages_without_classes": pages_with_date_but_no_classes,
         "parsed_days": len(parsed_days),
         "parsed_classes": total_items,
         "published_days": len(stored_days),
