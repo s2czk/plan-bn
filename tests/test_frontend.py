@@ -69,6 +69,12 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn("week-download", html)
         self.assertIn('white-space:nowrap;font-size:12px', html)
 
+    def test_mobile_week_view_stacks_all_seven_days_without_horizontal_scrolling(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn(".week-grid{grid-template-columns:minmax(0,1fr);gap:9px}", html)
+        self.assertIn(".week-view-scroll{overflow-x:visible;overflow-y:visible;padding-bottom:0}", html)
+        self.assertIn(".week-day-header{display:flex;align-items:center;justify-content:space-between", html)
+
     def test_open_notification_restores_day_navigation(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("state.view='day';$('dayNavigation').hidden=false", html)
