@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'updater.py'
+      - 'audit_plan.py'
       - 'push_dispatch.py'
       - 'requirements.txt'
       - 'index.html'
@@ -49,6 +50,10 @@ jobs:
 
       - name: Pobierz i przetwórz aktualny plan PDF
         run: python updater.py
+
+      - name: Pełny audyt ponownego parsowania PDF (tylko kontrolny przebieg)
+        if: contains(github.event.head_commit.message, 'AUDYT PDF')
+        run: python audit_plan.py
 
       # Najpierw publikujemy plan i zapisujemy kolejkę w repozytorium.
       # Awaria zewnętrznego Push nie może zatrzymać publikacji planu ani zgubić alertów.
