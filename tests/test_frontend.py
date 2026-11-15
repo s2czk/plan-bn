@@ -75,28 +75,42 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn(".week-view-scroll{overflow-x:visible;overflow-y:visible;padding-bottom:0}", html)
         self.assertIn(".week-day-header{display:flex;align-items:center;justify-content:space-between", html)
 
-    def test_default_date_moves_to_next_monday_only_on_sunday(self):
+    def test_default_date_keeps_sunday_when_classes_are_still_ongoing(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        match = re.search(r"function defaultSelectedISODate\(now=new Date\(\)\)\{[^}]*\}", html)
+        match = re.search(r"function defaultSelectedISODate\\(now=new Date\\(\\),days=null\\)\\{.*?\\n    \\}", html, re.S)
         self.assertIsNotNone(match, "Brak funkcji wyboru domyślnej daty")
         node = shutil.which("node")
         if not node:
             self.skipTest("Node.js is not installed in this environment")
         script = match.group(0) + """
-console.log(defaultSelectedISODate(new Date(2026, 10, 15)));
-console.log(defaultSelectedISODate(new Date(2026, 10, 16)));
-console.log(defaultSelectedISODate(new Date(2026, 10, 14)));
+const days = {"2026-11-15": {items: [
+  {time:"08:00-13:00"},
+  {time:"13:15-15:45"}
+]}};
+console.log(defaultSelectedISODate(new Date(2026, 10, 15, 14, 47), days));
+console.log(defaultSelectedISODate(new Date(2026, 10, 15, 15, 46), days));
+console.log(defaultSelectedISODate(new Date(2026, 10, 16, 10, 0), days));
 """
         result = subprocess.run([node, "-e", script], check=True, capture_output=True, text=True)
         self.assertEqual(result.stdout.strip().splitlines(), [
+            "2026-11-15",
             "2026-11-16",
             "2026-11-16",
-            "2026-11-14",
         ])
 
-    def test_explicit_date_deep_links_override_sunday_default(self):
+    def test_explicit_date_deep_links_override_automatic_date(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn(r"queryDate&&/^\d{4}-\d{2}-\d{2}$/.test(queryDate)?queryDate:defaultSelectedISODate()", html)
+        self.assertIn("hasExplicitDate?queryDate:localISODate()", html)
+        self.assertIn("!state.hasExplicitDate&&!state.hasUserSelectedDate&&!state.defaultDateResolved", html)
+
+    def test_day_strip_is_horizontally_scrollable_and_covers_schedule_dates(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn(".week-strip{display:flex", html)
+        self.assertIn("overflow-x:auto", html)
+        self.assertIn("touch-action:pan-x", html)
+        self.assertIn("scroll-snap-type:x proximity", html)
+        self.assertIn("const dates=Object.keys(state.days).sort()", html)
+        self.assertIn("container.scrollLeft=Math.max(0,active.offsetLeft-(container.clientWidth-active.offsetWidth)/2)", html)
 
     def test_open_notification_restores_day_navigation(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
