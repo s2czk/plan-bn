@@ -77,7 +77,7 @@ class FrontendChecks(unittest.TestCase):
 
     def test_default_date_keeps_sunday_when_classes_are_still_ongoing(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        match = re.search(r"function defaultSelectedISODate\\(now=new Date\\(\\),days=null\\)\\{.*?\\n    \\}", html, re.S)
+        match = re.search(r"function defaultSelectedISODate\(now=new Date\(\),days=null\)\{.*?\n    \}", html, re.S)
         self.assertIsNotNone(match, "Brak funkcji wyboru domyślnej daty")
         node = shutil.which("node")
         if not node:
@@ -232,7 +232,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 10, 0), days));
 
     def test_service_worker_fetches_push_config_from_network_first(self):
         service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-        self.assertIn('pans-plan-shell-v5', service_worker)
+        self.assertIn('pans-plan-shell-v6', service_worker)
         self.assertIn('const isNavigation = request.mode === "navigate" || url.pathname.endsWith("/index.html")', service_worker)
         self.assertIn('const liveRequest = new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const isPushConfig = url.pathname.endsWith("/push-config.js")', service_worker)
