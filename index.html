@@ -523,19 +523,8 @@
   <script src="./push-config.js"></script>
   <script>
     'use strict';
-    function defaultSelectedISODate(now=new Date(),days=null){
-      const date=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-      if(date.getDay()===0&&days){
-        const iso=date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
-        const currentMinutes=now.getHours()*60+now.getMinutes();
-        const items=days[iso]?.items||[];
-        const hasOngoingOrUpcoming=items.some(item=>{
-          const match=/^\d{1,2}:\d{2}-(\d{1,2}):(\d{2})$/.exec(String(item.time||''));
-          return !!match&&Number(match[1])*60+Number(match[2])>currentMinutes;
-        });
-        if(!hasOngoingOrUpcoming)date.setDate(date.getDate()+1);
-      }
-      return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
+    function defaultSelectedISODate(now=new Date()){
+      return now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
     }
     const queryDate=new URLSearchParams(location.search).get('date');
     const hasExplicitDate=!!(queryDate&&/^\d{4}-\d{2}-\d{2}$/.test(queryDate));
@@ -568,14 +557,16 @@
       const end=dates.length?dates[dates.length-1]:addDays(state.selectedDate,28);
       let iso=start;
       while(iso<=end){
-        const d=parseISO(iso),data=dayData(iso),modes=new Set((data?.items||[]).map(x=>itemMode(x,data)));
-        const btn=document.createElement('button');btn.type='button';btn.className='date-chip'+(iso===state.selectedDate?' active':'');
-        btn.setAttribute('aria-label',weekdays[d.getDay()]+' '+polishDate(iso));
-        btn.setAttribute('aria-pressed',iso===state.selectedDate?'true':'false');
+        const dayISO=iso;
+        const d=parseISO(dayISO),data=dayData(dayISO),modes=new Set((data?.items||[]).map(x=>itemMode(x,data)));
+        const btn=document.createElement('button');btn.type='button';btn.className='date-chip'+(dayISO===state.selectedDate?' active':'');
+        btn.setAttribute('aria-label',weekdays[d.getDay()]+' '+polishDate(dayISO));
+        btn.setAttribute('aria-pressed',dayISO===state.selectedDate?'true':'false');
+        btn.dataset.date=dayISO;
         btn.innerHTML='<span class="day-name">'+weekdaysShort[d.getDay()]+'</span><span class="day-number">'+String(d.getDate()).padStart(2,'0')+'</span>';
         if(modes.size){const dots=document.createElement('span');dots.className='date-markers';if(modes.has('STACJONARNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dots.append(dot)}if(modes.has('ZDALNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}btn.append(dots)}
-        btn.addEventListener('click',()=>selectedDateChange(iso));container.append(btn);
-        iso=addDays(iso,1);
+        btn.addEventListener('click',()=>selectedDateChange(dayISO));container.append(btn);
+        iso=addDays(dayISO,1);
       }
       const active=container.querySelector('.date-chip.active');
       if(active)container.scrollLeft=Math.max(0,active.offsetLeft-(container.clientWidth-active.offsetWidth)/2);
@@ -747,9 +738,12 @@
         const response=await fetch('./schedule.json?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);
         const data=await response.json();if(!data.days||typeof data.days!=='object')throw new Error('Nieprawidłowy format schedule.json');
         const previous=state.lastUpdated;state.days=data.days;state.lastUpdated=data.last_updated||'aktualny';state.sourceLabel=data.source_label||'';
-        if(!state.hasExplicitDate&&!state.hasUserSelectedDate&&!state.defaultDateResolved){
-          state.selectedDate=defaultSelectedISODate(new Date(),state.days);
-          state.month=parseISO(state.selectedDate).getMonth();
+        if(!state.hasExplicitDate&&!state.hasUserSelectedDate){
+          const today=defaultSelectedISODate(new Date());
+          if(state.selectedDate!==today){
+            state.selectedDate=today;
+            state.month=parseISO(today).getMonth();
+          }
           state.defaultDateResolved=true;
         }
         state.lastFetchedAt=new Date();state.isLoading=false;state.loadError=false;
