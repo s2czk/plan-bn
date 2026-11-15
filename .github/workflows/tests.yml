@@ -7,6 +7,11 @@ on:
     branches: [main, final-plan-parser-push]
     paths:
       - 'updater.py'
+      - '.github/workflows/update_schedule.yml'
+      - 'icon.svg'
+      - 'manifest.webmanifest'
+      - 'audit_plan.py'
+      - 'push_dispatch.py'
       - 'requirements.txt'
       - 'index.html'
       - 'sw.js'
