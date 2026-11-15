@@ -523,8 +523,13 @@
   <script src="./push-config.js"></script>
   <script>
     'use strict';
+    function defaultSelectedISODate(now=new Date()){
+      const date=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+      if(date.getDay()===0)date.setDate(date.getDate()+1);
+      return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
+    }
     const queryDate=new URLSearchParams(location.search).get('date');
-    const validQueryDate=queryDate&&/^\d{4}-\d{2}-\d{2}$/.test(queryDate)?queryDate:localISODate();
+    const validQueryDate=queryDate&&/^\d{4}-\d{2}-\d{2}$/.test(queryDate)?queryDate:defaultSelectedISODate();
     const state={days:{},lastUpdated:null,lastFetchedAt:null,sourceLabel:'',isLoading:true,loadError:false,view:'day',selectedDate:validQueryDate,month:null,notifications:[],pendingInstall:null};
     const $=id=>document.getElementById(id);
     const weekdays=['Niedziela','Poniedziałek','Wtorek','Środa','Czwartek','Piątek','Sobota'];

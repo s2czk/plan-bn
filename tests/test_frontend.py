@@ -75,6 +75,29 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn(".week-view-scroll{overflow-x:visible;overflow-y:visible;padding-bottom:0}", html)
         self.assertIn(".week-day-header{display:flex;align-items:center;justify-content:space-between", html)
 
+    def test_default_date_moves_to_next_monday_only_on_sunday(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        match = re.search(r"function defaultSelectedISODate\\(now=new Date\\(\\)\\)\\{[^}]*\\}", html)
+        self.assertIsNotNone(match, "Brak funkcji wyboru domyślnej daty")
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("Node.js is not installed in this environment")
+        script = match.group(0) + """
+console.log(defaultSelectedISODate(new Date(2026, 10, 15)));
+console.log(defaultSelectedISODate(new Date(2026, 10, 16)));
+console.log(defaultSelectedISODate(new Date(2026, 10, 14)));
+"""
+        result = subprocess.run([node, "-e", script], check=True, capture_output=True, text=True)
+        self.assertEqual(result.stdout.strip().splitlines(), [
+            "2026-11-16",
+            "2026-11-16",
+            "2026-11-14",
+        ])
+
+    def test_explicit_date_deep_links_override_sunday_default(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("queryDate&&/^\\\\d{4}-\\\\d{2}-\\\\d{2}$/.test(queryDate)?queryDate:defaultSelectedISODate()", html)
+
     def test_open_notification_restores_day_navigation(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("state.view='day';$('dayNavigation').hidden=false", html)
