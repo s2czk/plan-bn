@@ -1,3 +1,4 @@
+# AUDIT RUN: trigger one controlled end-to-end Push delivery test.
 # AUDIT RUN: fresh source-PDF download and end-to-end update verification.
 import hashlib
 import io
