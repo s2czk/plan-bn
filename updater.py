@@ -1,3 +1,4 @@
+# AUDIT RUN: fresh source-PDF download and end-to-end update verification.
 import hashlib
 import io
 import json
