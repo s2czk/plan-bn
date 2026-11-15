@@ -77,7 +77,7 @@ class FrontendChecks(unittest.TestCase):
 
     def test_default_date_stays_on_today_until_midnight(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        match = re.search(r"function defaultSelectedISODate\\(now=new Date\\(\\)\\)\\{.*?\\n    \\}", html, re.S)
+        match = re.search(r"function defaultSelectedISODate\(now=new Date\(\)\)\{.*?\n    \}", html, re.S)
         self.assertIsNotNone(match, "Brak funkcji wyboru domyślnej daty")
         node = shutil.which("node")
         if not node:
@@ -96,7 +96,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 0, 1)));
 
     def test_day_chip_captures_its_own_date_when_clicked(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        strip = re.search(r"function renderWeekStrip\\(\\)\\{.*?\\n    \\}", html, re.S)
+        strip = re.search(r"function renderWeekStrip\(\)\{.*?\n    \}", html, re.S)
         self.assertIsNotNone(strip)
         code = strip.group(0)
         self.assertIn("const dayISO=iso", code)
