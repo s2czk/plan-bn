@@ -77,7 +77,7 @@ class FrontendChecks(unittest.TestCase):
 
     def test_default_date_moves_to_next_monday_only_on_sunday(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        match = re.search(r"function defaultSelectedISODate\\(now=new Date\\(\\)\\)\\{[^}]*\\}", html)
+        match = re.search(r"function defaultSelectedISODate\(now=new Date\(\)\)\{[^}]*\}", html)
         self.assertIsNotNone(match, "Brak funkcji wyboru domyślnej daty")
         node = shutil.which("node")
         if not node:
@@ -96,7 +96,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 14)));
 
     def test_explicit_date_deep_links_override_sunday_default(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("queryDate&&/^\\\\d{4}-\\\\d{2}-\\\\d{2}$/.test(queryDate)?queryDate:defaultSelectedISODate()", html)
+        self.assertIn(r"queryDate&&/^\d{4}-\d{2}-\d{2}$/.test(queryDate)?queryDate:defaultSelectedISODate()", html)
 
     def test_open_notification_restores_day_navigation(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -218,7 +218,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 14)));
 
     def test_service_worker_fetches_push_config_from_network_first(self):
         service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-        self.assertIn('pans-plan-shell-v4', service_worker)
+        self.assertIn('pans-plan-shell-v5', service_worker)
         self.assertIn('const isNavigation = request.mode === "navigate" || url.pathname.endsWith("/index.html")', service_worker)
         self.assertIn('const liveRequest = new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const isPushConfig = url.pathname.endsWith("/push-config.js")', service_worker)
