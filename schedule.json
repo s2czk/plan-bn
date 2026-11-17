@@ -1,117 +1,44 @@
 {
-  "last_updated": "2026-11-17 14:58",
+  "last_updated": "2026-11-17 15:17",
   "source_label": "plan bn 1 stacjonarne 2026 11 17 plik",
   "days": {
     "2026-09-28": {
       "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-09-29": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-09-30": {
+      "mode": "STACJONARNE",
       "items": [
         {
-          "time": "09:45-13:00",
-          "title": "Podstawy filozofii",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "106"
+          "time": "14:15-15:00",
+          "title": "sotkanie z kierownikiem ZBN",
+          "lecturer": "dr Artur Dąbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
         },
         {
-          "time": "13:15-14:45",
-          "title": "Wychowanie fizyczne",
-          "lecturer": "mgr Adam Nowak / PANS",
-          "type": "ćwiczenia / zajęcia",
-          "mode": "STACJONARNE",
-          "room": "HALA SPORTOWA / BRAK SALI"
-        },
-        {
-          "time": "14:15-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "mgr Adam Nowak / PANS",
-          "type": "ćwiczenia / zajęcia",
-          "mode": "STACJONARNE",
-          "room": "HALA SPORTOWA / BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Szkolenie biblioteczne Historia Polski na tle historii Europy Wychowanie fizyczne",
-          "lecturer": "mgr Beata Żuber",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "HALA SPORTOWA"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Szkolenie biblioteczne Historia Polski na tle historii Europy Wychowanie fizyczne",
+          "time": "15:00-16:30",
+          "title": "Szkolenie biblioteczne",
           "lecturer": "mgr Beata Żuber",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "HALA SPORTOWA"
+          "room": "Aula 6"
         },
         {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Administracja publiczna Język obcy od podstaw - j. niemiecki",
+          "time": "16:45-18:15",
+          "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
-          "type": "wykład / ćwiczenia",
+          "type": "wykład",
           "mode": "STACJONARNE",
           "room": "104"
         },
         {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Administracja publiczna Język obcy od podstaw - j. niemiecki",
-          "lecturer": "dr Artur Dąbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "104"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Administracja publiczna Język obcy od podstaw - j. niemiecki",
-          "lecturer": "dr Artur Dąbek",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "104"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Administracja publiczna Język obcy od podstaw - j. niemiecki",
+          "time": "18:30-20:00",
+          "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
@@ -119,8 +46,177 @@
         }
       ]
     },
+    "2026-10-01": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-15:45",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "15:45-16:30",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        }
+      ]
+    },
+    "2026-10-02": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "09:45-11:15",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "11:30-13:00",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "HALA SPORTOWA"
+        },
+        {
+          "time": "15:00-16:30",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "HALA SPORTOWA"
+        }
+      ]
+    },
+    "2026-10-03": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-10-04": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
     "2026-10-05": {
-      "mode": "MIESZANE",
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-10-06": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "106"
+        }
+      ]
+    },
+    "2026-10-07": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
+        }
+      ]
+    },
+    "2026-10-08": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "105"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "105"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "105"
+        }
+      ]
+    },
+    "2026-10-09": {
+      "mode": "STACJONARNE",
       "items": [
         {
           "time": "08:00-10:15",
@@ -131,10 +227,34 @@
           "room": "H24"
         },
         {
-          "time": "10:30-14:00",
+          "time": "10:30-11:15",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
-          "type": "ćwiczenia / wykład",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "105"
+        },
+        {
+          "time": "11:30-12:15",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "105"
+        },
+        {
+          "time": "12:15-13:00",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "105"
+        },
+        {
+          "time": "13:15-14:00",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "wykład",
           "mode": "STACJONARNE",
           "room": "105"
         },
@@ -147,193 +267,278 @@
           "room": "105"
         },
         {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Integracja europejska Komunikacja interpersonalna Podstawy ekonomii Geografia polityczna i gospodarcza Język obcy specjalistyczny - j. angi…",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Integracja europejska Komunikacja interpersonalna Podstawy ekonomii Geografia polityczna i gospodarcza Język obcy specjalistyczny - j. angi…",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Język obcy specjalistyczny - j. angi… Komunikacja interpersonalna Podstawy ekonomii Język obcy specjalistyczny - j. angi… Język obcy specjalistyczny - j. angi…",
+          "time": "15:00-16:30",
+          "title": "Język obcy specjalistyczny - j. angi…",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
+          "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "105"
         },
         {
-          "time": "17:30-18:15",
-          "title": "Język obcy specjalistyczny - j. angi… Komunikacja interpersonalna Podstawy ekonomii Język obcy specjalistyczny - j. angi… Język obcy specjalistyczny - j. angi…",
+          "time": "16:45-18:15",
+          "title": "Język obcy specjalistyczny - j. angi…",
           "lecturer": "dr Beata Gostomczyk",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
+          "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "105"
         },
         {
-          "time": "18:30-19:15",
-          "title": "Język obcy specjalistyczny - j. angi… Podstawy socjologii Język obcy od podstaw - j. niemiecki Język obcy specjalistyczny - j. angi… Technologia informacyjna",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Język obcy specjalistyczny - j. angi… Podstawy socjologii Język obcy od podstaw - j. niemiecki Język obcy specjalistyczny - j. angi… Technologia informacyjna",
-          "lecturer": "dr Beata Gostomczyk",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
+          "time": "18:30-20:00",
+          "title": "Technologia informacyjna",
+          "lecturer": "mgr Jacek Moszyński",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
         }
       ]
+    },
+    "2026-10-10": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-10-11": {
+      "mode": "STACJONARNE",
+      "items": []
     },
     "2026-10-12": {
-      "mode": "MIESZANE",
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-10-13": {
+      "mode": "ZDALNE",
       "items": [
         {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Wspólna polityka zagraniczna i bez…",
+          "time": "15:00-16:30",
+          "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Wspólna polityka zagraniczna i bez…",
+          "time": "16:45-18:15",
+          "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Język obcy specjalistyczny - j. angi… Bezpieczeństwo i higiena pracy",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Język obcy specjalistyczny - j. angi… Bezpieczeństwo i higiena pracy",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Podstawy socjologii Podstawy ekonomii Geografia polityczna i gospodarcza Bezpieczeństwo i higiena pracy",
+          "time": "18:30-20:00",
+          "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Podstawy socjologii Język obcy od podstaw - j. niemiecki Geografia polityczna i gospodarcza Bezpieczeństwo i higiena pracy",
-          "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
+          "type": "wykład",
           "mode": "ZDALNE"
         }
       ]
     },
+    "2026-10-14": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-19:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "19:15-20:00",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-10-15": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-10-16": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "16:45-18:15",
+          "title": "Bezpieczeństwo i higiena pracy",
+          "lecturer": "mgr Halina Grobelna",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Bezpieczeństwo i higiena pracy",
+          "lecturer": "mgr Halina Grobelna",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-10-17": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-10-18": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
     "2026-10-19": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "16:45-18:15",
+          "title": "Elementy samoobrony",
+          "lecturer": "mgr Sebastian Tałaj",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "H24"
+        },
+        {
+          "time": "18:30-19:15",
+          "title": "Elementy samoobrony",
+          "lecturer": "mgr Sebastian Tałaj",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "H24"
+        }
+      ]
+    },
+    "2026-10-20": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "107"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "107"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "107"
+        }
+      ]
+    },
+    "2026-10-21": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-10-22": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "16:45-18:15",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "020"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Technologia informacyjna",
+          "lecturer": "mgr Jacek Moszyński",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        }
+      ]
+    },
+    "2026-10-23": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "09:45-11:15",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "11:30-13:00",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "HALA SPORTOWA"
+        },
+        {
+          "time": "15:00-16:30",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "HALA SPORTOWA"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "PANS",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "PANS",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        }
+      ]
+    },
+    "2026-10-24": {
       "mode": "STACJONARNE",
       "items": [
         {
@@ -345,153 +550,121 @@
           "room": "106"
         },
         {
-          "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii Język obcy specjalistyczny - j. angi…",
-          "lecturer": "mgr Danuta Aleksa",
+          "time": "09:45-11:15",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "11"
-        },
+          "room": "106"
+        }
+      ]
+    },
+    "2026-10-25": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-10-26": {
+      "mode": "STACJONARNE",
+      "items": [
         {
-          "time": "10:30-11:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Podstawy filozofii Język obcy specjalistyczny - j. angi…",
-          "lecturer": "mgr Danuta Aleksa",
+          "time": "16:45-18:15",
+          "title": "Elementy samoobrony",
+          "lecturer": "mgr Sebastian Tałaj",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "11"
+          "room": "H24"
         },
         {
-          "time": "11:30-13:00",
-          "title": "Podstawy filozofii",
-          "lecturer": "mgr Danuta Aleksa",
+          "time": "18:30-19:15",
+          "title": "Elementy samoobrony",
+          "lecturer": "mgr Sebastian Tałaj",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "11"
+          "room": "H24"
+        }
+      ]
+    },
+    "2026-10-27": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
         },
         {
-          "time": "13:15-14:45",
+          "time": "16:45-18:15",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
+        }
+      ]
+    },
+    "2026-10-28": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
+        }
+      ]
+    },
+    "2026-10-29": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "106"
+        },
+        {
+          "time": "18:30-20:00",
           "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "HALA SPORTOWA"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Podstawy ekonomii Wychowanie fizyczne",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "HALA SPORTOWA"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii Wychowanie fizyczne",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "HALA SPORTOWA"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Elementy samoobrony Podstawy ekonomii Język obcy od podstaw - j. niemiecki Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "H24"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Elementy samoobrony Podstawy ekonomii Język obcy od podstaw - j. niemiecki Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "H24"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Elementy samoobrony Podstawy socjologii Technologia informacyjna Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "H24"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Podstawy socjologii Technologia informacyjna Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "dr Danuta Apanel",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "107"
         }
       ]
     },
-    "2026-10-26": {
-      "mode": "MIESZANE",
+    "2026-10-30": {
+      "mode": "ZDALNE",
       "items": [
         {
           "time": "08:00-09:30",
@@ -508,535 +681,975 @@
           "mode": "ZDALNE"
         },
         {
-          "time": "11:30-14:45",
+          "time": "11:30-13:00",
           "title": "Podstawy filozofii",
           "lecturer": "mgr Danuta Aleksa",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Komunikacja interpersonalna Wspólna polityka zagraniczna i bez… Wspólna polityka zagraniczna i bez… Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
+          "time": "13:15-14:45",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna Wspólna polityka zagraniczna i bez… Wspólna polityka zagraniczna i bez… Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
+          "time": "15:00-16:30",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Elementy samoobrony Komunikacja interpersonalna Historia Polski na tle historii Europy Język obcy specjalistyczny - j. angi… Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "wykład / ćwiczenia",
+          "time": "16:45-18:15",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Elementy samoobrony Komunikacja interpersonalna Historia Polski na tle historii Europy Język obcy specjalistyczny - j. angi… Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Elementy samoobrony Podstawy socjologii Wychowanie fizyczne Język obcy specjalistyczny - j. angi…",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Podstawy socjologii Wychowanie fizyczne Język obcy specjalistyczny - j. angi…",
-          "lecturer": "dr Danuta Apanel",
+          "time": "18:30-20:00",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
           "type": "ćwiczenia",
           "mode": "ZDALNE"
         }
       ]
+    },
+    "2026-10-31": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-11-01": {
+      "mode": "STACJONARNE",
+      "items": []
     },
     "2026-11-02": {
-      "mode": "MIESZANE",
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-11-03": {
+      "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:00-08:45",
-          "title": "Administracja publiczna Geografia polityczna i gospodarcza",
-          "lecturer": "dr Artur Dąbek",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Administracja publiczna Historia Polski na tle historii Europy",
-          "lecturer": "dr Artur Dąbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Podstawy filozofii Historia Polski na tle historii Europy",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Podstawy filozofii Język obcy od podstaw - j. niemiecki",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Podstawy filozofii Język obcy od podstaw - j. niemiecki",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "13:15-14:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "13:15-14:00",
-          "title": "Geografia polityczna i gospodarcza Geografia polityczna i gospodarcza",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "14:00-14:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "14:00-14:45",
-          "title": "Geografia polityczna i gospodarcza Geografia polityczna i gospodarcza",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Język obcy od podstaw - j. niemiecki Wspólna polityka zagraniczna i bez…",
+          "time": "15:00-16:30",
+          "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Język obcy od podstaw - j. niemiecki Wspólna polityka zagraniczna i bez…",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Język obcy od podstaw - j. niemiecki Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Język obcy od podstaw - j. niemiecki Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Podstawy socjologii Wspólna polityka zagraniczna i bez… Historia Polski na tle historii Europy Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "dr Danuta Apanel",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "time": "16:45-18:15",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
         },
         {
-          "time": "19:15-20:00",
-          "title": "Podstawy socjologii Wspólna polityka zagraniczna i bez… Historia Polski na tle historii Europy Kwalifikowana pierwsza pomoc me…",
+          "time": "18:30-20:00",
+          "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
           "type": "wykład",
           "mode": "ZDALNE"
         }
       ]
+    },
+    "2026-11-04": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-11-05": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-11-06": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "08:00-08:45",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "08:45-09:30",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "09:45-11:15",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "11:30-13:00",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "15:00-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-11-07": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "08:00-08:45",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "08:45-09:30",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "09:45-10:30",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "10:30-11:15",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "11:30-13:00",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-11-08": {
+      "mode": "STACJONARNE",
+      "items": []
     },
     "2026-11-09": {
-      "mode": "MIESZANE",
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-11-10": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-11-11": {
+      "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:00-08:45",
-          "title": "Integracja europejska Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Integracja europejska Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Integracja europejska Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Integracja europejska Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Historia Polski na tle historii Europy Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Historia Polski na tle historii Europy Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "13:15-14:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "13:15-14:00",
-          "title": "Język obcy od podstaw - j. niemiecki Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "14:00-14:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "14:00-14:45",
-          "title": "Język obcy od podstaw - j. niemiecki Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Podstawy ekonomii Historia Polski na tle historii Europy Język obcy od podstaw - j. niemiecki Geografia polityczna i gospodarcza",
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
-          "type": "wykład / ćwiczenia",
+          "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii Historia Polski na tle historii Europy Język obcy od podstaw - j. niemiecki",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy socjologii Język obcy od podstaw - j. niemiecki",
+          "time": "16:45-18:15",
+          "title": "Podstawy socjologii",
           "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
+          "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy socjologii Język obcy od podstaw - j. niemiecki",
-          "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Język obcy od podstaw - j. niemiecki Geografia polityczna i gospodarcza",
+          "time": "18:30-20:00",
+          "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Język obcy od podstaw - j. niemiecki Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "wykład / ćwiczenia",
+          "type": "ćwiczenia",
           "mode": "ZDALNE"
         }
       ]
     },
+    "2026-11-12": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-11-13": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "09:45-11:15",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "11:30-13:00",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "15:00-16:30",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-11-14": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "09:45-11:15",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "11:30-12:15",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "12:15-13:00",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "15:00-15:45",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-11-15": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
     "2026-11-16": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "16:45-18:15",
+          "title": "Elementy samoobrony",
+          "lecturer": "mgr Sebastian Tałaj",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "H24"
+        },
+        {
+          "time": "18:30-19:15",
+          "title": "Elementy samoobrony",
+          "lecturer": "mgr Sebastian Tałaj",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "H24"
+        }
+      ]
+    },
+    "2026-11-17": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "104"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "104"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "104"
+        }
+      ]
+    },
+    "2026-11-18": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guziń",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guziń",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "105"
+        }
+      ]
+    },
+    "2026-11-19": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "HALA SPORTOWA"
+        },
+        {
+          "time": "16:45-17:30",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "104"
+        },
+        {
+          "time": "17:30-18:15",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "104"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "104"
+        }
+      ]
+    },
+    "2026-11-20": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "09:45-11:15",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "012"
+        },
+        {
+          "time": "11:30-13:00",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "012"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "H23"
+        },
+        {
+          "time": "15:00-16:30",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "H23"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "104"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "104"
+        }
+      ]
+    },
+    "2026-11-21": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "207"
+        },
+        {
+          "time": "09:45-12:00",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "207"
+        }
+      ]
+    },
+    "2026-11-22": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-11-23": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "16:45-18:15",
+          "title": "Elementy samoobrony",
+          "lecturer": "mgr Sebastian Tałaj",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "H24"
+        },
+        {
+          "time": "18:30-19:15",
+          "title": "Elementy samoobrony",
+          "lecturer": "mgr Sebastian Tałaj",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "H24"
+        }
+      ]
+    },
+    "2026-11-24": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Technologia informacyjna",
+          "lecturer": "mgr Jacek Moszyński",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2026-11-25": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2026-11-26": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2026-11-27": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "09:45-10:30",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "10:30-12:00",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "12:15-13:00",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "13:00-13:45",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-11-28": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "09:45-11:15",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "12:15-13:45",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-11-29": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-11-30": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-01": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-17:30",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "17:30-18:15",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2026-12-02": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2026-12-03": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "17:45-20:00",
+          "title": "Technologia informacyjna",
+          "lecturer": "mgr Jacek Moszyński",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2026-12-04": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "09:45-11:15",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "11:30-12:15",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "15:00-16:30",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2026-12-05": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-06": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-07": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-08": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-17:30",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "17:45-20:00",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-12-09": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-12-10": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "16:45-18:15",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-12-11": {
       "mode": "STACJONARNE",
       "items": [
         {
@@ -1048,713 +1661,175 @@
           "room": "BRAK SALI"
         },
         {
-          "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Podstawy filozofii Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "11:15-12:00",
+          "time": "09:45-11:15",
           "title": "Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "PANS",
-          "type": "zajęcia",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "11:30-12:15",
-          "title": "Zajęcia kierunkowe BN",
+          "title": "Kwalifikowana pierwsza pomoc me…",
           "lecturer": "mgr Andrzej Kubiś",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Podstawy filozofii",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "13:15-14:45",
-          "title": "Wychowanie fizyczne",
-          "lecturer": "mgr Adam Nowak",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "H23"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Wychowanie fizyczne Wychowanie fizyczne",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "HALA SPORTOWA"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Wychowanie fizyczne Wychowanie fizyczne",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "HALA SPORTOWA"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Elementy samoobrony Komunikacja interpersonalna Podstawy ekonomii Historia Polski na tle historii Europy Historia Polski na tle historii Europy",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "H24"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Elementy samoobrony Komunikacja interpersonalna Podstawy ekonomii Geografia polityczna i gospodarcza Historia Polski na tle historii Europy",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "H24"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Elementy samoobrony Podstawy socjologii Wspólna polityka zagraniczna i bez… Wspólna polityka zagraniczna i bez… Historia Polski na tle historii Europy",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "H24"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Podstawy socjologii Wspólna polityka zagraniczna i bez… Wspólna polityka zagraniczna i bez… Historia Polski na tle historii Europy",
-          "lecturer": "dr Danuta Apanel",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "104"
         }
       ]
     },
-    "2026-11-23": {
-      "mode": "MIESZANE",
+    "2026-12-12": {
+      "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:00-08:45",
-          "title": "Kwalifikowana pierwsza pomoc me… Wspólna polityka zagraniczna i bez…",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Kwalifikowana pierwsza pomoc me… Wspólna polityka zagraniczna i bez…",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
+          "time": "08:00-09:30",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "09:45-10:30",
-          "title": "Kwalifikowana pierwsza pomoc me… Wspólna polityka zagraniczna i bez…",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
           "time": "10:30-11:15",
-          "title": "Integracja europejska Wspólna polityka zagraniczna i bez…",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2026-12-13": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-14": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-15": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2026-12-16": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład",
+          "type": "ćwiczenia",
           "mode": "ZDALNE"
         },
         {
-          "time": "11:15-12:00",
+          "time": "16:45-18:15",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-12-17": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-17:30",
           "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "12:15-13:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Integracja europejska Administracja publiczna",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "13:00-13:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "13:00-13:45",
-          "title": "Wspólna polityka zagraniczna i bez… Administracja publiczna",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Historia Polski na tle historii Europy Podstawy ekonomii Historia Polski na tle historii Europy",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Historia Polski na tle historii Europy Podstawy ekonomii Historia Polski na tle historii Europy",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Elementy samoobrony Podstawy socjologii Podstawy ekonomii Język obcy specjalistyczny - j. angi… Administracja publiczna",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
           "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Elementy samoobrony Podstawy socjologii Podstawy ekonomii Język obcy specjalistyczny - j. angi… Administracja publiczna",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "wykład / ćwiczenia",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
           "mode": "ZDALNE"
         },
         {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Elementy samoobrony Technologia informacyjna Geografia polityczna i gospodarcza Wychowanie fizyczne Administracja publiczna",
-          "lecturer": "mgr Sebastian Tałaj",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Technologia informacyjna Geografia polityczna i gospodarcza Wychowanie fizyczne Administracja publiczna",
-          "lecturer": "mgr Jacek Moszyński",
-          "type": "wykład / ćwiczenia",
+          "time": "18:30-20:00",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
           "mode": "ZDALNE"
         }
       ]
     },
-    "2026-11-30": {
-      "mode": "STACJONARNE",
-      "items": [
-        {
-          "time": "09:45-12:15",
-          "title": "Podstawy filozofii",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "13:15-14:45",
-          "title": "Wychowanie fizyczne",
-          "lecturer": "mgr Adam Nowak",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Wychowanie fizyczne",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii Wychowanie fizyczne",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Komunikacja interpersonalna Podstawy ekonomii",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:45-18:30",
-          "title": "Wykład I (2026/2027) Ćwiczenia I (2026/2027) Technologia informacyjna",
-          "lecturer": "mgr Jacek Moszyński",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Podstawy socjologii Technologia informacyjna",
-          "lecturer": "dr Danuta Apanel",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Podstawy socjologii Technologia informacyjna",
-          "lecturer": "dr Danuta Apanel",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        }
-      ]
-    },
-    "2026-12-07": {
-      "mode": "MIESZANE",
+    "2026-12-18": {
+      "mode": "ZDALNE",
       "items": [
         {
           "time": "08:00-08:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:00-08:45",
-          "title": "Kwalifikowana pierwsza pomoc me… Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Kwalifikowana pierwsza pomoc me… Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Kwalifikowana pierwsza pomoc me… Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Kwalifikowana pierwsza pomoc me… Administracja publiczna",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Andrzej Kubiś",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Wspólna polityka zagraniczna i bez… Podstawy ekonomii",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Wspólna polityka zagraniczna i bez… Podstawy ekonomii",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Integracja europejska Podstawy ekonomii Język obcy od podstaw - j. niemiecki",
-          "lecturer": "dr Jolanta Martuszewska",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii Język obcy od podstaw - j. niemiecki",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:45-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "dr Małgorzata Guzińska / PANS",
-          "type": "wykład / ćwiczenia / zajęcia",
-          "mode": "MIESZANE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Podstawy socjologii Język obcy od podstaw - j. niemiecki Język obcy specjalistyczny - j. angi…",
-          "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Podstawy socjologii Język obcy od podstaw - j. niemiecki Język obcy specjalistyczny - j. angi…",
-          "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        }
-      ]
-    },
-    "2026-12-14": {
-      "mode": "MIESZANE",
-      "items": [
-        {
-          "time": "08:00-08:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:00-08:45",
-          "title": "Wspólna polityka zagraniczna i bez… Kwalifikowana pierwsza pomoc me…",
+          "title": "Wspólna polityka zagraniczna i bez…",
           "lecturer": "dr Jolanta Martuszewska",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
           "time": "08:45-09:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Integracja europejska Kwalifikowana pierwsza pomoc me…",
+          "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
           "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Integracja europejska Kwalifikowana pierwsza pomoc me…",
+          "title": "Integracja europejska",
           "lecturer": "dr Jolanta Martuszewska",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
           "time": "10:30-11:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Wspólna polityka zagraniczna i bez… Kwalifikowana pierwsza pomoc me…",
+          "title": "Wspólna polityka zagraniczna i bez…",
           "lecturer": "dr Jolanta Martuszewska",
           "type": "wykład",
           "mode": "ZDALNE"
@@ -1767,436 +1842,393 @@
           "mode": "ZDALNE"
         },
         {
-          "time": "13:15-14:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "13:15-14:00",
-          "title": "Geografia polityczna i gospodarcza Wspólna polityka zagraniczna i bez…",
+          "time": "13:15-14:45",
+          "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2026-12-19": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "14:00-14:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "14:00-14:45",
-          "title": "Geografia polityczna i gospodarcza Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Adam Czarnecki",
+          "time": "09:45-11:15",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Podstawy ekonomii Integracja europejska Integracja europejska Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "wykład / ćwiczenia",
+          "time": "13:15-14:45",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii Integracja europejska Integracja europejska Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "wykład / ćwiczenia",
+          "time": "15:00-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
           "mode": "ZDALNE"
         },
         {
           "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii Wspólna polityka zagraniczna i bez… Integracja europejska Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii Wspólna polityka zagraniczna i bez… Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Podstawy socjologii Wspólna polityka zagraniczna i bez… Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Danuta Apanel",
-          "type": "ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Podstawy socjologii Wspólna polityka zagraniczna i bez… Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Danuta Apanel",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
           "type": "ćwiczenia",
           "mode": "ZDALNE"
         }
       ]
     },
+    "2026-12-20": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-21": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-22": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-23": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-24": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-25": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-26": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-27": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-28": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-29": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-30": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2026-12-31": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-01-01": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-01-02": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-01-03": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
     "2027-01-04": {
-      "mode": "MIESZANE",
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-01-05": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-01-06": {
+      "mode": "ZDALNE",
       "items": [
         {
-          "time": "08:00-08:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:00-08:45",
-          "title": "Język obcy od podstaw - j. niemiecki Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Język obcy od podstaw - j. niemiecki Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Alicja Skoczypiec",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Podstawy filozofii Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Podstawy filozofii Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Podstawy filozofii Administracja publiczna",
-          "lecturer": "mgr Danuta Aleksa",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Komunikacja interpersonalna Administracja publiczna",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "13:15-14:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "13:15-14:00",
-          "title": "Historia Polski na tle historii Europy Administracja publiczna",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "14:00-14:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "14:00-14:45",
-          "title": "Historia Polski na tle historii Europy Administracja publiczna",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Podstawy ekonomii Wspólna polityka zagraniczna i bez… Historia Polski na tle historii Europy",
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii Wspólna polityka zagraniczna i bez… Historia Polski na tle historii Europy",
+          "time": "16:45-18:15",
+          "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guzińska",
           "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy ekonomii Język obcy od podstaw - j. niemiecki",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "wykład / ćwiczenia",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy ekonomii Podstawy socjologii",
-          "lecturer": "dr Małgorzata Guzińska",
-          "type": "wykład / ćwiczenia",
           "mode": "ZDALNE"
         },
         {
           "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Komunikacja interpersonalna Geografia polityczna i gospodarcza",
+          "title": "Komunikacja interpersonalna",
           "lecturer": "mgr Sylwia Hille-Jarząbek",
           "type": "wykład",
           "mode": "ZDALNE"
         },
         {
           "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Administracja publiczna Geografia polityczna i gospodarcza",
+          "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
           "type": "wykład",
           "mode": "ZDALNE"
         }
       ]
     },
+    "2027-01-07": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "16:45-17:30",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "17:30-18:15",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2027-01-08": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Język obcy od podstaw - j. niemiecki",
+          "lecturer": "mgr Alicja Skoczypiec",
+          "type": "ćwiczenia",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "09:45-11:15",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "11:30-12:15",
+          "title": "Podstawy filozofii",
+          "lecturer": "mgr Danuta Aleksa",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "12:15-13:00",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "15:00-16:30",
+          "title": "Historia Polski na tle historii Europy",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2027-01-09": {
+      "mode": "ZDALNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "09:45-11:15",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "11:30-13:00",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "13:15-14:45",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        }
+      ]
+    },
+    "2027-01-10": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
     "2027-01-11": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-01-12": {
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
+          "time": "15:00-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guzińska",
+          "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "08:00-08:45",
-          "title": "Geografia polityczna i gospodarcza Administracja publiczna",
+          "time": "16:45-18:15",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-13": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-14": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-15:45",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "15:45-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-15": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Geografia polityczna i gospodarcza Administracja publiczna",
-          "lecturer": "dr Adam Czarnecki",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Wychowanie fizyczne Geografia polityczna i gospodarcza",
+          "time": "09:45-11:15",
+          "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "10:30-11:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Wychowanie fizyczne Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Adam Nowak",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Wychowanie fizyczne Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Adam Nowak",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "12:15-13:00",
-          "title": "Wychowanie fizyczne Geografia polityczna i gospodarcza",
+          "time": "11:30-13:00",
+          "title": "Wychowanie fizyczne",
           "lecturer": "mgr Adam Nowak",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
@@ -2209,192 +2241,201 @@
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
-        },
+        }
+      ]
+    },
+    "2027-01-16": {
+      "mode": "STACJONARNE",
+      "items": [
         {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Podstawy ekonomii Integracja europejska Integracja europejska",
-          "lecturer": "dr Małgorzata Guzińska",
+          "time": "08:00-09:30",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Podstawy ekonomii Integracja europejska Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Małgorzata Guzińska",
+          "time": "09:45-11:15",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy socjologii Wspólna polityka zagraniczna i bez… Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Danuta Apanel",
+          "time": "11:30-13:00",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
           "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy socjologii Wspólna polityka zagraniczna i bez… Wspólna polityka zagraniczna i bez…",
-          "lecturer": "dr Danuta Apanel",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Podstawy socjologii Wspólna polityka zagraniczna i bez… Język obcy specjalistyczny - j. angi…",
-          "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Podstawy socjologii Wspólna polityka zagraniczna i bez… Język obcy specjalistyczny - j. angi…",
-          "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
     },
+    "2027-01-17": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
     "2027-01-18": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-01-19": {
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "08:00-08:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
+          "time": "15:00-16:30",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "08:00-08:45",
-          "title": "Administracja publiczna Kwalifikowana pierwsza pomoc me…",
+          "time": "16:45-18:15",
+          "title": "Podstawy socjologii",
+          "lecturer": "dr Danuta Apanel",
+          "type": "wykład",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Komunikacja interpersonalna",
+          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-20": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-21": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Technologia informacyjna",
+          "lecturer": "mgr Jacek Moszyński",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-22": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "08:00-09:30",
+          "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "08:45-09:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "08:45-09:30",
-          "title": "Administracja publiczna Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "dr Artur Dąbek",
+          "time": "09:45-11:15",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "09:30-10:15",
+          "time": "11:30-13:00",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "15:00-16:30",
           "title": "Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "09:45-10:30",
-          "title": "Zajęcia kierunkowe BN",
           "lecturer": "mgr Andrzej Kubiś",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "10:15-11:00",
+          "time": "16:45-18:15",
           "title": "Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-12:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "mgr Andrzej Kubiś / PANS",
-          "type": "ćwiczenia / zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "11:30-12:15",
-          "title": "Wychowanie fizyczne Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Adam Nowak",
+          "lecturer": "mgr Andrzej Kubiś",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "12:15-13:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
+          "time": "18:30-20:00",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-23": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "08:00-11:00",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
+          "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "12:15-13:00",
-          "title": "Wychowanie fizyczne Geografia polityczna i gospodarcza",
-          "lecturer": "mgr Adam Nowak",
+          "time": "11:30-13:00",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
@@ -2408,105 +2449,128 @@
           "room": "BRAK SALI"
         },
         {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Komunikacja interpersonalna Integracja europejska Wspólna polityka zagraniczna i bez… Kwalifikowana pierwsza pomoc me… Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "time": "15:00-16:30",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Komunikacja interpersonalna Integracja europejska Wspólna polityka zagraniczna i bez… Kwalifikowana pierwsza pomoc me… Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "time": "16:45-18:15",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         },
         {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Podstawy socjologii Integracja europejska Wspólna polityka zagraniczna i bez… Kwalifikowana pierwsza pomoc me… Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Podstawy socjologii Integracja europejska Wspólna polityka zagraniczna i bez… Kwalifikowana pierwsza pomoc me… Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "dr Danuta Apanel",
-          "type": "wykład / ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Komunikacja interpersonalna Administracja publiczna Technologia informacyjna Kwalifikowana pierwsza pomoc me… Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Komunikacja interpersonalna Administracja publiczna Technologia informacyjna Kwalifikowana pierwsza pomoc me… Kwalifikowana pierwsza pomoc me…",
-          "lecturer": "mgr Sylwia Hille-Jarząbek",
+          "time": "18:30-20:00",
+          "title": "Kwalifikowana pierwsza pomoc me…",
+          "lecturer": "mgr Andrzej Kubiś",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
       ]
     },
+    "2027-01-24": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
     "2027-01-25": {
-      "mode": "MIESZANE",
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-01-26": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Technologia informacyjna",
+          "lecturer": "mgr Jacek Moszyński",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-27": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Wspólna polityka zagraniczna i bez…",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Geografia polityczna i gospodarcza",
+          "lecturer": "dr Adam Czarnecki",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-28": {
+      "mode": "STACJONARNE",
+      "items": [
+        {
+          "time": "15:00-16:30",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-18:15",
+          "title": "Integracja europejska",
+          "lecturer": "dr Jolanta Martuszewska",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "18:30-20:00",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        }
+      ]
+    },
+    "2027-01-29": {
+      "mode": "ZDALNE",
       "items": [
         {
           "time": "09:45-11:15",
@@ -2521,104 +2585,16 @@
           "lecturer": "dr Adam Czarnecki",
           "type": "wykład",
           "mode": "ZDALNE"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-15:45",
-          "title": "Administracja publiczna Wspólna polityka zagraniczna i bez… Integracja europejska",
-          "lecturer": "dr Artur Dąbek",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:45-16:30",
-          "title": "Administracja publiczna Wspólna polityka zagraniczna i bez… Integracja europejska",
-          "lecturer": "dr Artur Dąbek",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "16:45-17:30",
-          "title": "Administracja publiczna Wspólna polityka zagraniczna i bez… Integracja europejska",
-          "lecturer": "dr Artur Dąbek",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "17:30-18:15",
-          "title": "Administracja publiczna Wspólna polityka zagraniczna i bez… Integracja europejska",
-          "lecturer": "dr Artur Dąbek",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "18:30-19:15",
-          "title": "Technologia informacyjna Geografia polityczna i gospodarcza Język obcy specjalistyczny - j. angi…",
-          "lecturer": "mgr Jacek Moszyński",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Zajęcia kierunkowe BN",
-          "lecturer": "PANS",
-          "type": "zajęcia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "19:15-20:00",
-          "title": "Technologia informacyjna Geografia polityczna i gospodarcza Język obcy specjalistyczny - j. angi…",
-          "lecturer": "mgr Jacek Moszyński",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
         }
       ]
+    },
+    "2027-01-30": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-01-31": {
+      "mode": "STACJONARNE",
+      "items": []
     },
     "2027-02-01": {
       "mode": "STACJONARNE",
@@ -2632,6 +2608,30 @@
           "room": "BRAK SALI"
         }
       ]
+    },
+    "2027-02-02": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-02-03": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-02-04": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-02-05": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-02-06": {
+      "mode": "STACJONARNE",
+      "items": []
+    },
+    "2027-02-07": {
+      "mode": "STACJONARNE",
+      "items": []
     }
   }
 }
