@@ -179,8 +179,6 @@ global.document = {
     };
   }
 };
-const weekdays = ["Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota"];
-const weekdaysShort = ["Nd","Pn","Wt","Śr","Cz","Pt","Sb"];
 function classCard(item) {
   return JSON.stringify({time: item.time, title: item.title});
 }
