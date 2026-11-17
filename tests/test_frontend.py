@@ -193,7 +193,7 @@ renderAll();
 const tuesday = container.children.find(button => button.dataset.date === "2026-11-17");
 if (!tuesday) throw new Error("Nie znaleziono przycisku dla 17.11.2026");
 tuesday.click();
-const renderedItems = dayClasses.innerHTML.trim().split("\\n").map(row => { const [time, title] = row.split("|"); return {time, title}; });
+const renderedItems = dayClasses.innerHTML.trim().split("\\n").filter(Boolean).map(row => { const [time, title] = row.split("|"); return {time, title}; });
 console.log(JSON.stringify({
   selectedDate: state.selectedDate,
   buttonDate: tuesday.dataset.date,
