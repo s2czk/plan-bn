@@ -7,7 +7,6 @@ import json
 import os
 import re
 from datetime import datetime, timedelta
-from statistics import median
 from zoneinfo import ZoneInfo
 from urllib.parse import urljoin
 
