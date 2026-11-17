@@ -294,7 +294,7 @@ def parse_week_page_words(week_start_iso, words, page_width):
     for word in words:
         if float(word.get("top", 999)) > 80:
             continue
-        label = re.sub(r"[^\\wąćęłńóśźż]", "", str(word.get("text", "")).casefold())
+        label = re.sub(r"[^\wąćęłńóśźż]", "", str(word.get("text", "")).casefold())
         if label in WEEKDAY_LABELS:
             x0 = float(word["x0"])
             x1 = float(word.get("x1", x0))
