@@ -111,7 +111,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 0, 1)));
         if not node:
             self.skipTest("Node.js is not installed in this environment")
 
-        selected = re.search(r"function selectedDateChange\(iso\)\{.*?\}", html, re.S)
+        selected = re.search(r"function selectedDateChange\(iso\)[^\n]*", html)
         strip = re.search(r"function renderWeekStrip\(\)\{.*?\n    \}", html, re.S)
         day = re.search(r"function renderDay\(\)\{.*?\n    \}", html, re.S)
         day_data = re.search(r"function dayData\(iso\)\{.*?\}", html)
@@ -119,6 +119,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 0, 1)));
         filtered = re.search(r"function filteredItems\(day\)\{.*?\}", html)
         parse_iso = re.search(r"function parseISO\(iso\)\{.*?\}", html)
         add_days = re.search(r"function addDays\(iso,n\)\{.*?\}", html)
+        iso_date = re.search(r"function isoDate\(d\)\{.*?\}", html)
         polish_date = re.search(r"function polishDate\(iso\)\{.*?\}", html)
         weekdays = re.search(r"const weekdays=\[[^;]+;", html)
         weekdays_short = re.search(r"const weekdaysShort=\[[^;]+;", html)
@@ -126,7 +127,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 0, 1)));
         for name, match in (
             ("selectedDateChange", selected), ("renderWeekStrip", strip), ("renderDay", day),
             ("dayData", day_data), ("itemMode", item_mode), ("filteredItems", filtered),
-            ("parseISO", parse_iso), ("addDays", add_days), ("polishDate", polish_date),
+            ("parseISO", parse_iso), ("addDays", add_days), ("isoDate", iso_date), ("polishDate", polish_date),
             ("weekdays", weekdays), ("weekdaysShort", weekdays_short),
         ):
             self.assertIsNotNone(match, f"Brak funkcji/stałej {name}")
@@ -186,7 +187,7 @@ function classCard(item) {
 function renderAll() { renderWeekStrip(); renderDay(); }
 ''' .replace("FIXTURE", fixture) + "\n" + "\n".join(
             match.group(0) for match in (
-                parse_iso, add_days, polish_date, day_data, item_mode, filtered,
+                parse_iso, add_days, iso_date, polish_date, day_data, item_mode, filtered,
                 weekdays, weekdays_short, selected, strip, day
             )
         ) + r'''
