@@ -182,6 +182,7 @@ global.document = {
 function classCard(item) {
   return item.time + "|" + item.title + "\\n";
 }
+function renderUpcomingLessons() {}
 function renderAll() { renderWeekStrip(); renderDay(); }
 ''' .replace("FIXTURE", fixture) + "\n" + "\n".join(
             match.group(0) for match in (
@@ -205,13 +206,12 @@ console.log(JSON.stringify({
         output = json.loads(result.stdout)
         self.assertEqual(output["selectedDate"], "2026-11-17")
         self.assertEqual(output["buttonDate"], "2026-11-17")
-        self.assertEqual(output["dayCount"], "3 zajęcia")
+        self.assertEqual(output["dayCount"], "2 zajęcia")
         self.assertEqual(
             output["renderedItems"],
             [
-                {"time": "15:00-16:30", "title": "Komunikacja interpersonalna"},
-                {"time": "16:45-18:15", "title": "Komunikacja interpersonalna"},
-                {"time": "18:30-20:00", "title": "Podstawy socjologii"},
+                {"time": "16:45-18:15", "title": "Elementy samoobrony"},
+                {"time": "18:30-19:15", "title": "Elementy samoobrony"},
             ],
         )
 
