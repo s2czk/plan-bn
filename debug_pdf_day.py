@@ -2,6 +2,7 @@ import re
 from urllib.parse import urljoin
 
 import pdfplumber
+from updater import parse_single_page
 import requests
 from bs4 import BeautifulSoup
 
@@ -12,7 +13,7 @@ HEADERS = {
         "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     )
 }
-TARGET = "lis 16, 2026"
+TARGET = "2026-11-16"
 
 response = requests.get(COURSE_URL, headers=HEADERS, timeout=25)
 response.raise_for_status()
@@ -35,9 +36,10 @@ with pdfplumber.open(__import__("io").BytesIO(pdf_response.content)) as pdf:
     found = 0
     for page_number, page in enumerate(pdf.pages, start=1):
         text = page.extract_text() or ""
-        if re.search(r"lis\\s+16,\\s*2026", text, re.IGNORECASE):
+        parsed_date, _ = parse_single_page(text)
+        if parsed_date == TARGET:
             found += 1
-            print(f"DEBUG_PAGE {page_number} size={page.width}x{page.height}", flush=True)
+            print(f"DEBUG_PAGE {page_number} date={parsed_date} size={page.width}x{page.height}", flush=True)
             print("DEBUG_TEXT_BEGIN", flush=True)
             print(page.extract_text(layout=True) or text, flush=True)
             print("DEBUG_TEXT_END", flush=True)
