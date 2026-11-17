@@ -5,7 +5,6 @@ on:
     branches: [main]
     paths:
       - 'updater.py'
-      - 'debug_pdf_day.py'
       - 'audit_plan.py'
       - 'push_dispatch.py'
       - 'requirements.txt'
@@ -51,10 +50,6 @@ jobs:
 
       - name: Pobierz i przetwórz aktualny plan PDF
         run: python updater.py
-
-      - name: DEBUG — analiza układu PDF dla 16 listopada
-        if: contains(github.event.head_commit.message, 'DEBUG PANS PDF')
-        run: python debug_pdf_day.py
 
       - name: Pełny audyt ponownego parsowania PDF (tylko kontrolny przebieg)
         if: contains(github.event.head_commit.message, 'AUDYT PDF')

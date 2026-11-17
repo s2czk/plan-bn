@@ -83,12 +83,14 @@ def main():
     parsed_days = {}
     duplicate_dates = []
     seen_dates = set()
+    weekly_page_count = 0
     pages_with_date_but_no_classes = []
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
         page_count = len(pdf.pages)
         for page_number, page in enumerate(pdf.pages, start=1):
             weekly_days = parse_week_page(page)
             if weekly_days is not None:
+                weekly_page_count += 1
                 for date, day in weekly_days.items():
                     if date in seen_dates:
                         duplicate_dates.append({"date": date, "page": page_number})
@@ -130,6 +132,7 @@ def main():
         "pdf_bytes": len(pdf_bytes),
         "pdf_sha256": source_hash,
         "pdf_pages": page_count,
+        "weekly_pages": weekly_page_count,
         "dated_pages_without_classes": pages_with_date_but_no_classes,
         "parsed_days": len(parsed_days),
         "parsed_classes": total_items,
@@ -139,6 +142,9 @@ def main():
         "overlaps": overlaps[:20],
         "overlap_count": len(overlaps),
     }, ensure_ascii=False, indent=2))
+
+    if weekly_page_count and weekly_page_count == page_count and len(parsed_days) != page_count * 7:
+        raise SystemExit("Pełny audyt PDF nie znalazł dokładnie 7 dat na każdej stronie tygodniowej.")
 
     if any(comparison.values()) or overlaps:
         raise SystemExit("Pełny audyt PDF nie przeszedł: wynik parsowania różni się od opublikowanych danych lub zawiera kolizje godzin.")
