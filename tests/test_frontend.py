@@ -104,6 +104,118 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 0, 1)));
         self.assertNotIn("btn.addEventListener('click',()=>selectedDateChange(iso))", code)
         self.assertIn("btn.dataset.date=dayISO", code)
 
+    def test_clicking_tuesday_17_renders_only_its_own_schedule(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        schedule = json.loads((ROOT / "schedule.json").read_text(encoding="utf-8"))
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("Node.js is not installed in this environment")
+
+        selected = re.search(r"function selectedDateChange\(iso\)\{.*?\}", html, re.S)
+        strip = re.search(r"function renderWeekStrip\(\)\{.*?\n    \}", html, re.S)
+        day = re.search(r"function renderDay\(\)\{.*?\n    \}", html, re.S)
+        day_data = re.search(r"function dayData\(iso\)\{.*?\}", html)
+        item_mode = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
+        filtered = re.search(r"function filteredItems\(day\)\{.*?\}", html)
+        parse_iso = re.search(r"function parseISO\(iso\)\{.*?\}", html)
+        add_days = re.search(r"function addDays\(iso,n\)\{.*?\}", html)
+        polish_date = re.search(r"function polishDate\(iso\)\{.*?\}", html)
+        weekdays = re.search(r"const weekdays=\[[^;]+;", html)
+        weekdays_short = re.search(r"const weekdaysShort=\[[^;]+;", html)
+
+        for name, match in (
+            ("selectedDateChange", selected), ("renderWeekStrip", strip), ("renderDay", day),
+            ("dayData", day_data), ("itemMode", item_mode), ("filteredItems", filtered),
+            ("parseISO", parse_iso), ("addDays", add_days), ("polishDate", polish_date),
+            ("weekdays", weekdays), ("weekdaysShort", weekdays_short),
+        ):
+            self.assertIsNotNone(match, f"Brak funkcji/stałej {name}")
+
+        fixture = json.dumps(schedule["days"], ensure_ascii=False)
+        script = r'''
+const state = {
+  selectedDate: "2026-11-16",
+  hasUserSelectedDate: false,
+  month: 10,
+  days: FIXTURE,
+  isLoading: false,
+  loadError: false
+};
+const dayCount = {textContent: ""};
+const dayClasses = {innerHTML: ""};
+const container = {children: [], clientWidth: 1200, scrollLeft: 0};
+Object.defineProperty(container, "innerHTML", {
+  get() { return ""; },
+  set(_) { this.children = []; }
+});
+container.append = function(button) {
+  button.offsetLeft = this.children.length * 68;
+  button.offsetWidth = 60;
+  this.children.push(button);
+};
+container.querySelector = function(selector) {
+  if (selector !== ".date-chip.active") return null;
+  return this.children.find(button => button.className.includes("active")) || null;
+};
+function $(id) {
+  if (id === "weekStrip") return container;
+  if (id === "dayCount") return dayCount;
+  if (id === "dayClasses") return dayClasses;
+  throw new Error("Unexpected DOM id: " + id);
+}
+global.window = {scrollTo() {}};
+global.document = {
+  createElement() {
+    return {
+      dataset: {},
+      className: "",
+      innerHTML: "",
+      offsetLeft: 0,
+      offsetWidth: 0,
+      setAttribute() {},
+      addEventListener(name, callback) { if (name === "click") this.click = callback; },
+      append() {}
+    };
+  }
+};
+const weekdays = ["Niedziela","Poniedziałek","Wtorek","Środa","Czwartek","Piątek","Sobota"];
+const weekdaysShort = ["Nd","Pn","Wt","Śr","Cz","Pt","Sb"];
+function classCard(item) {
+  return JSON.stringify({time: item.time, title: item.title});
+}
+function renderAll() { renderWeekStrip(); renderDay(); }
+''' .replace("FIXTURE", fixture) + "\n" + "\n".join(
+            match.group(0) for match in (
+                parse_iso, add_days, polish_date, day_data, item_mode, filtered,
+                weekdays, weekdays_short, selected, strip, day
+            )
+        ) + r'''
+renderAll();
+const tuesday = container.children.find(button => button.dataset.date === "2026-11-17");
+if (!tuesday) throw new Error("Nie znaleziono przycisku dla 17.11.2026");
+tuesday.click();
+const renderedItems = JSON.parse("[" + dayClasses.innerHTML + "]");
+console.log(JSON.stringify({
+  selectedDate: state.selectedDate,
+  buttonDate: tuesday.dataset.date,
+  dayCount: dayCount.textContent,
+  renderedItems
+}));
+'''
+        result = subprocess.run([node, "-e", script], check=True, capture_output=True, text=True)
+        output = json.loads(result.stdout)
+        self.assertEqual(output["selectedDate"], "2026-11-17")
+        self.assertEqual(output["buttonDate"], "2026-11-17")
+        self.assertEqual(output["dayCount"], "3 zajęcia")
+        self.assertEqual(
+            output["renderedItems"],
+            [
+                {"time": "15:00-16:30", "title": "Komunikacja interpersonalna"},
+                {"time": "16:45-18:15", "title": "Komunikacja interpersonalna"},
+                {"time": "18:30-20:00", "title": "Podstawy socjologii"},
+            ],
+        )
+
     def test_explicit_date_deep_links_override_automatic_date(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("hasExplicitDate?queryDate:localISODate()", html)
