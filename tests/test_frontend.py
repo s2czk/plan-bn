@@ -132,7 +132,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 0, 1)));
         ):
             self.assertIsNotNone(match, f"Brak funkcji/stałej {name}")
 
-        fixture = json.dumps(schedule["days"], ensure_ascii=False)
+        fixture = json.dumps({date: schedule["days"][date] for date in ("2026-11-16", "2026-11-17")}, ensure_ascii=False)
         script = r'''
 const state = {
   selectedDate: "2026-11-16",
@@ -180,7 +180,7 @@ global.document = {
   }
 };
 function classCard(item) {
-  return JSON.stringify({time: item.time, title: item.title});
+  return item.time + "|" + item.title + "\\n";
 }
 function renderAll() { renderWeekStrip(); renderDay(); }
 ''' .replace("FIXTURE", fixture) + "\n" + "\n".join(
@@ -193,7 +193,7 @@ renderAll();
 const tuesday = container.children.find(button => button.dataset.date === "2026-11-17");
 if (!tuesday) throw new Error("Nie znaleziono przycisku dla 17.11.2026");
 tuesday.click();
-const renderedItems = JSON.parse("[" + dayClasses.innerHTML + "]");
+const renderedItems = dayClasses.innerHTML.trim().split("\\n").map(row => { const [time, title] = row.split("|"); return {time, title}; });
 console.log(JSON.stringify({
   selectedDate: state.selectedDate,
   buttonDate: tuesday.dataset.date,
