@@ -24,7 +24,7 @@ PUSH_PAYLOAD_FILE = "push_payload.json"
 PENDING_PUSH_FILE = "pending_push.json"
 UPDATE_SEQUENCE_FILE = "update_sequence.txt"
 PARSER_VERSION_FILE = "parser_version.txt"
-PARSER_VERSION = "5"
+PARSER_VERSION = "6"
 WARSAW_TZ = ZoneInfo("Europe/Warsaw")
 
 
@@ -287,48 +287,40 @@ def parse_week_page_words(week_start_iso, words, page_width):
     if week_start.weekday() != 0:
         return None
 
+    # Nagłówki dni są wyśrodkowane w kolumnach. Granice liczymy z ich
+    # środków, a nie z położenia godzin zajęć: pusty poniedziałek nie może
+    # przesunąć wtorkowych zajęć do poniedziałkowej daty.
     headers = {}
     for word in words:
         if float(word.get("top", 999)) > 80:
             continue
-        label = re.sub(r"[^\wąćęłńóśźż]", "", str(word.get("text", "")).casefold())
+        label = re.sub(r"[^\\wąćęłńóśźż]", "", str(word.get("text", "")).casefold())
         if label in WEEKDAY_LABELS:
-            headers[label] = float(word["x0"])
+            x0 = float(word["x0"])
+            x1 = float(word.get("x1", x0))
+            headers[label] = (x0 + x1) / 2
 
     if len(headers) != 7:
         return None
 
-    header_x = [headers[label] for label in WEEKDAY_LABELS]
-    if any(right <= left for left, right in zip(header_x, header_x[1:])):
+    header_centers = [headers[label] for label in WEEKDAY_LABELS]
+    if any(right <= left for left, right in zip(header_centers, header_centers[1:])):
         return None
 
-    time_pattern = re.compile(r"\d{1,2}:\d{2}[–—-]\d{1,2}:\d{2}")
-    time_x = sorted({
-        round(float(word["x0"]), 1)
-        for word in words
-        if time_pattern.fullmatch(str(word.get("text", "")).strip())
-    })
-
-    offsets = [
-        tx - hx
-        for hx in header_x
-        for tx in time_x
-        if 50 <= tx - hx <= 100
-    ]
-    offset = median(offsets) if offsets else 73.0
-
-    column_starts = []
-    for hx in header_x:
-        expected = hx + offset
-        nearest = min(time_x, key=lambda value: abs(value - expected)) if time_x else expected
-        column_starts.append(nearest if abs(nearest - expected) <= 8 else expected)
-
-    if any(right <= left for left, right in zip(column_starts, column_starts[1:])):
-        return None
+    column_bounds = []
+    for index, center in enumerate(header_centers):
+        previous_gap = center - header_centers[index - 1] if index > 0 else header_centers[1] - center
+        next_gap = header_centers[index + 1] - center if index < 6 else center - header_centers[index - 1]
+        left = center - previous_gap / 2 if index == 0 else (header_centers[index - 1] + center) / 2
+        right = center + next_gap / 2 if index == 6 else (center + header_centers[index + 1]) / 2
+        left = max(0.0, left)
+        right = min(float(page_width) + 1, right)
+        if right <= left:
+            return None
+        column_bounds.append((left, right))
 
     days = {}
-    for index, left in enumerate(column_starts):
-        right = column_starts[index + 1] if index < 6 else float(page_width) + 1
+    for index, (left, right) in enumerate(column_bounds):
         day_date = week_start + timedelta(days=index)
         iso_date = day_date.isoformat()
         date_label = f"{MONTH_ABBR[day_date.month]} {day_date.day}, {day_date.year}"
@@ -336,7 +328,7 @@ def parse_week_page_words(week_start_iso, words, page_width):
         cell_words = [
             word for word in words
             if float(word.get("top", 0)) > 60
-            and left - 1 <= float(word["x0"]) < right - 1
+            and left <= float(word["x0"]) < right
         ]
         cell_words.sort(key=lambda word: (float(word.get("top", 0)), float(word.get("x0", 0))))
         cell_text = " ".join(str(word.get("text", "")) for word in cell_words)

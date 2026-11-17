@@ -48,7 +48,8 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
             ("pon.", 87.2), ("wt.", 201.1), ("śr.", 313.9), ("czw.", 422.1),
             ("pt.", 536.3), ("sob.", 645.2), ("niedz.", 753.5),
         ]
-        words = [{"text": label, "x0": x, "top": 55.4} for label, x in headers]
+        words = [{"text": label, "x0": x, "x1": x + 20, "top": 55.4} for label, x in headers]
+        # Poniedziałek jest pusty. Pierwsze zajęcia zaczynają się w kolumnie wtorku.
         words += [
             {"text": "16:45–17:30", "x0": 161.1, "top": 100.0},
             {"text": "Wszyscy", "x0": 241.0, "top": 100.0},
@@ -71,14 +72,14 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
         ]
         parsed = parse_week_page_words("2026-11-16", words, 841.9)
         self.assertEqual(len(parsed), 7)
-        self.assertEqual(parsed["2026-11-16"]["items"][0]["title"], "Elementy samoobrony")
-        self.assertEqual(parsed["2026-11-17"]["items"][0]["title"], "Komunikacja interpersonalna")
-        self.assertEqual(parsed["2026-11-16"]["items"][0]["room"], "H24")
-        self.assertEqual(parsed["2026-11-17"]["items"][0]["room"], "104")
-        self.assertEqual(parsed["2026-11-18"]["items"], [])
+        self.assertEqual(parsed["2026-11-16"]["items"], [])
+        self.assertEqual(parsed["2026-11-17"]["items"][0]["title"], "Elementy samoobrony")
+        self.assertEqual(parsed["2026-11-18"]["items"][0]["title"], "Komunikacja interpersonalna")
+        self.assertEqual(parsed["2026-11-17"]["items"][0]["room"], "H24")
+        self.assertEqual(parsed["2026-11-18"]["items"][0]["room"], "104")
         self.assertNotEqual(
-            parsed["2026-11-16"]["items"][0]["title"],
             parsed["2026-11-17"]["items"][0]["title"],
+            parsed["2026-11-18"]["items"][0]["title"],
         )
 
     def test_only_group_codes_are_preserved(self):
