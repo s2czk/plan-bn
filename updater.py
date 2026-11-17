@@ -1,4 +1,5 @@
 # AUDYT PDF: pełne ponowne parsowanie i porównanie z opublikowanym schedule.json.
+# AUDYT PDF v7: kontrola granic kolumn na tygodniowych stronach, w tym pustych dni.
 # AUDIT RUN: trigger one controlled end-to-end Push delivery test.
 # AUDIT RUN: fresh source-PDF download and end-to-end update verification.
 import hashlib
