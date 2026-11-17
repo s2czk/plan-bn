@@ -103,11 +103,14 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
         )
         date, day = parse_single_page(sample)
         self.assertEqual(date, "2026-11-07")
-        self.assertEqual(len(day["items"]), 1)
+        self.assertEqual(len(day["items"]), 2)
         self.assertEqual(day["items"][0]["title"], "Administracja publiczna")
-        self.assertEqual(day["items"][0]["time"], "08:00-09:30")
-        self.assertEqual(day["items"][0]["lecturer"], "mgr Jan Kowalski / mgr Anna Nowak")
-        self.assertEqual(day["items"][0]["type"], "wykład / ćwiczenia")
+        self.assertEqual(day["items"][0]["time"], "08:00-08:45")
+        self.assertEqual(day["items"][0]["lecturer"], "mgr Jan Kowalski")
+        self.assertEqual(day["items"][0].get("room", ""), "")
+        self.assertEqual(day["items"][1]["title"], "Administracja publiczna")
+        self.assertEqual(day["items"][1]["time"], "08:45-09:30")
+        self.assertEqual(day["items"][1]["lecturer"], "mgr Anna Nowak")
         self.assertEqual(day["mode"], "ZDALNE")
 
 
