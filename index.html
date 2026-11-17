@@ -565,7 +565,7 @@
         btn.dataset.date=dayISO;
         btn.innerHTML='<span class="day-name">'+weekdaysShort[d.getDay()]+'</span><span class="day-number">'+String(d.getDate()).padStart(2,'0')+'</span>';
         if(modes.size){const dots=document.createElement('span');dots.className='date-markers';if(modes.has('STACJONARNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dots.append(dot)}if(modes.has('ZDALNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}btn.append(dots)}
-        btn.addEventListener('click',()=>selectedDateChange(dayISO));container.append(btn);
+        btn.addEventListener('click',()=>selectedDateChange(btn.dataset.date));container.append(btn);
         iso=addDays(dayISO,1);
       }
       const active=container.querySelector('.date-chip.active');

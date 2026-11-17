@@ -100,7 +100,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 0, 1)));
         self.assertIsNotNone(strip)
         code = strip.group(0)
         self.assertIn("const dayISO=iso", code)
-        self.assertIn("btn.addEventListener('click',()=>selectedDateChange(dayISO))", code)
+        self.assertIn("btn.addEventListener('click',()=>selectedDateChange(btn.dataset.date))", code)
         self.assertNotIn("btn.addEventListener('click',()=>selectedDateChange(iso))", code)
         self.assertIn("btn.dataset.date=dayISO", code)
 
@@ -349,7 +349,7 @@ console.log(JSON.stringify({
 
     def test_service_worker_fetches_push_config_from_network_first(self):
         service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-        self.assertIn('pans-plan-shell-v6', service_worker)
+        self.assertIn('pans-plan-shell-v7', service_worker)
         self.assertIn('const isNavigation = request.mode === "navigate" || url.pathname.endsWith("/index.html")', service_worker)
         self.assertIn('const liveRequest = new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const isPushConfig = url.pathname.endsWith("/push-config.js")', service_worker)

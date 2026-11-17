@@ -18,7 +18,6 @@ on:
       - 'cloudflare/**'
       - 'tests/**'
       - 'push-config.js'
-      - 'live_domain_smoke.py'
       - '.github/workflows/tests.yml'
 
 permissions:
@@ -48,10 +47,6 @@ jobs:
 
       - name: Uruchom testy
         run: python -m unittest discover -s tests -v
-
-      - name: Kontrola wdrożenia live plan.mandaro.eu (diagnostyka jednorazowa)
-        if: contains(github.event.head_commit.message, 'LIVE DOMAIN CHECK 17.11')
-        run: python live_domain_smoke.py
 
       - name: Zainstaluj narzędzia Cloudflare
         working-directory: cloudflare
