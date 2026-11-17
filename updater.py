@@ -7,6 +7,7 @@ import json
 import os
 import re
 from datetime import datetime, timedelta
+from statistics import median
 from zoneinfo import ZoneInfo
 from urllib.parse import urljoin
 
@@ -23,7 +24,7 @@ PUSH_PAYLOAD_FILE = "push_payload.json"
 PENDING_PUSH_FILE = "pending_push.json"
 UPDATE_SEQUENCE_FILE = "update_sequence.txt"
 PARSER_VERSION_FILE = "parser_version.txt"
-PARSER_VERSION = "4"
+PARSER_VERSION = "5"
 WARSAW_TZ = ZoneInfo("Europe/Warsaw")
 
 
@@ -130,48 +131,42 @@ def extract_class_types(text):
 
 
 def merge_adjacent_blocks(raw_blocks):
-    """Scalaj kolejne wystąpienia tego samego przedmiotu; przerwy i metadane nie rozdzielają bloku."""
-    ordered = sorted(raw_blocks, key=lambda item: time_to_minutes(item["start"]))
+    """Łączy wyłącznie ciągłe części tego samego przedmiotu z identycznymi metadanymi."""
+    ordered = sorted(raw_blocks, key=lambda item: (time_to_minutes(item["start"]), time_to_minutes(item["end"])))
     grouped = []
 
-    for block in ordered:
-        detected_groups = unique_values(extract_group_labels(block.get("title", "")) + [block.get("group", "")])
-        title = clean_subject_title(block.get("title"))
-        key = normalize_subject_title(title)
-        if grouped and normalize_subject_title(grouped[-1]["title"]) == key:
+    for source in ordered:
+        block = dict(source)
+        block["title"] = clean_subject_title(block.get("title"))
+        block.setdefault("group", "")
+        block.setdefault("room", "")
+        block.setdefault("lecturer", "PANS")
+        block.setdefault("type", "zajęcia")
+        key = normalize_subject_title(block["title"])
+        if grouped:
             current = grouped[-1]
-            if time_to_minutes(block["end"]) > time_to_minutes(current["end"]):
+            same_metadata = all(
+                current.get(field, "") == block.get(field, "")
+                for field in ("lecturer", "type", "group", "room", "remote")
+            )
+            contiguous = time_to_minutes(current["end"]) == time_to_minutes(block["start"])
+            if normalize_subject_title(current["title"]) == key and same_metadata and contiguous:
                 current["end"] = block["end"]
-            current["_lecturers"] = unique_values(current["_lecturers"] + [block.get("lecturer", "")])
-            current["_types"] = unique_values(current["_types"] + [block.get("type", "")])
-            current["_groups"] = unique_values(current["_groups"] + detected_groups)
-            current["_rooms"] = unique_values(current["_rooms"] + [block.get("room", "")])
-            current["_modes"] = unique_values(current["_modes"] + ["ZDALNE" if block.get("remote") else "STACJONARNE"])
-        else:
-            grouped.append({
-                "start": block["start"],
-                "end": block["end"],
-                "title": title,
-                "_lecturers": unique_values([block.get("lecturer", "")]),
-                "_types": unique_values([block.get("type", "")]),
-                "_groups": detected_groups,
-                "_rooms": unique_values([block.get("room", "")]),
-                "_modes": ["ZDALNE" if block.get("remote") else "STACJONARNE"],
-            })
+                continue
+        grouped.append(block)
 
     result = []
     for block in grouped:
-        modes = block.pop("_modes")
-        lecturers = block.pop("_lecturers")
-        types = block.pop("_types")
-        groups = block.pop("_groups")
-        rooms = block.pop("_rooms")
-        block["lecturer"] = " / ".join(lecturers) or "PANS"
-        block["type"] = " / ".join(types) or "zajęcia"
-        block["group"] = " / ".join(groups)
-        block["room"] = " / ".join(rooms)
-        block["mode"] = modes[0] if len(modes) == 1 else "MIESZANE"
-        result.append(block)
+        result.append({
+            "start": block["start"],
+            "end": block["end"],
+            "title": block["title"],
+            "lecturer": block.get("lecturer", "PANS"),
+            "type": block.get("type", "zajęcia"),
+            "group": block.get("group", ""),
+            "room": block.get("room", ""),
+            "mode": "ZDALNE" if block.get("remote") else "STACJONARNE",
+        })
     return result
 
 def parse_single_page(text):
@@ -225,7 +220,7 @@ def parse_single_page(text):
         title = re.sub(r"\bWszyscy\b|\bBezpieczeństwo\s*Narodowe\b", "", title, flags=re.IGNORECASE)
         title = re.sub(r"\s+", " ", title).strip(" .-–—")
         if not title:
-            title = "Zajęcia kierunkowe BN"
+            continue
 
         room = ""
         if not remote:
@@ -244,8 +239,9 @@ def parse_single_page(text):
                 room_match = re.search(r"\bH\d+\b", room_text)
                 room = room_match.group(0) if room_match else ""
             else:
-                room_match = re.search(r"\b(020|104|105|106|107|11|3)\b", room_text)
-                room = room_match.group(1) if room_match else "BRAK SALI"
+                room_text = re.sub(r"\b20\d{2}\s*/\s*20\d{2}\b", " ", room_text)
+                room_match = re.search(r"\b(0\d{2}|[1-9]\d{2})\b", room_text)
+                room = room_match.group(1) if room_match else ""
 
         raw_blocks.append({
             "start": start_time,
@@ -276,6 +272,106 @@ def parse_single_page(text):
             item["room"] = block["room"]
         items.append(item)
     return iso_date, {"mode": day_mode, "items": items}
+
+
+WEEKDAY_LABELS = ("pon", "wt", "śr", "czw", "pt", "sob", "niedz")
+MONTH_ABBR = {
+    1: "sty", 2: "lut", 3: "mar", 4: "kwi", 5: "maj", 6: "cze",
+    7: "lip", 8: "sie", 9: "wrz", 10: "paź", 11: "lis", 12: "gru",
+}
+
+
+def parse_week_page_words(week_start_iso, words, page_width):
+    """Rozdziela stronę tygodniowego PDF na siedem kolumn dni według współrzędnych X."""
+    week_start = datetime.strptime(week_start_iso, "%Y-%m-%d").date()
+    if week_start.weekday() != 0:
+        return None
+
+    headers = {}
+    for word in words:
+        if float(word.get("top", 999)) > 80:
+            continue
+        label = re.sub(r"[^\wąćęłńóśźż]", "", str(word.get("text", "")).casefold())
+        if label in WEEKDAY_LABELS:
+            headers[label] = float(word["x0"])
+
+    if len(headers) != 7:
+        return None
+
+    header_x = [headers[label] for label in WEEKDAY_LABELS]
+    if any(right <= left for left, right in zip(header_x, header_x[1:])):
+        return None
+
+    time_pattern = re.compile(r"\d{1,2}:\d{2}[–—-]\d{1,2}:\d{2}")
+    time_x = sorted({
+        round(float(word["x0"]), 1)
+        for word in words
+        if time_pattern.fullmatch(str(word.get("text", "")).strip())
+    })
+
+    offsets = [
+        tx - hx
+        for hx in header_x
+        for tx in time_x
+        if 50 <= tx - hx <= 100
+    ]
+    offset = median(offsets) if offsets else 73.0
+
+    column_starts = []
+    for hx in header_x:
+        expected = hx + offset
+        nearest = min(time_x, key=lambda value: abs(value - expected)) if time_x else expected
+        column_starts.append(nearest if abs(nearest - expected) <= 8 else expected)
+
+    if any(right <= left for left, right in zip(column_starts, column_starts[1:])):
+        return None
+
+    days = {}
+    for index, left in enumerate(column_starts):
+        right = column_starts[index + 1] if index < 6 else float(page_width) + 1
+        day_date = week_start + timedelta(days=index)
+        iso_date = day_date.isoformat()
+        date_label = f"{MONTH_ABBR[day_date.month]} {day_date.day}, {day_date.year}"
+
+        cell_words = [
+            word for word in words
+            if float(word.get("top", 0)) > 60
+            and left - 1 <= float(word["x0"]) < right - 1
+        ]
+        cell_words.sort(key=lambda word: (float(word.get("top", 0)), float(word.get("x0", 0))))
+        cell_text = " ".join(str(word.get("text", "")) for word in cell_words)
+
+        parsed_date, day_obj = parse_single_page(date_label + " " + cell_text)
+        if parsed_date != iso_date:
+            raise ValueError(f"Nieprawidłowa data kolumny PDF: oczekiwano {iso_date}, otrzymano {parsed_date}")
+        days[iso_date] = day_obj or {"mode": "STACJONARNE", "items": []}
+
+    return days
+
+
+def parse_week_page(page):
+    """Parsuje nowy układ PDF: jedna strona zawiera kolumny od poniedziałku do niedzieli."""
+    text = page.extract_text() or ""
+    if not text:
+        return None
+
+    date_match = re.search(
+        r"(sty|lut|mar|kwi|maj|cze|lip|sie|wrz|paź|paz|lis|gru)\s+(\d{1,2})\s*,\s*(\d{4})",
+        text,
+        re.IGNORECASE,
+    )
+    if not date_match:
+        return None
+
+    month = MONTHS_MAP[date_match.group(1).lower()]
+    week_start_iso = f"{date_match.group(3)}-{month}-{int(date_match.group(2)):02d}"
+    words = page.extract_words(
+        x_tolerance=2,
+        y_tolerance=3,
+        keep_blank_chars=False,
+        use_text_flow=False,
+    )
+    return parse_week_page_words(week_start_iso, words, page.width)
 
 def event_mode(item, day):
     return item.get("mode") or day.get("mode", "STACJONARNE")
@@ -580,10 +676,23 @@ def main():
     old_days = old_payload.get("days") or {}
     days_dict = {}
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
-        for page in pdf.pages:
+        for page_number, page in enumerate(pdf.pages, start=1):
+            weekly_days = parse_week_page(page)
+            if weekly_days is not None:
+                for iso_date, day_obj in weekly_days.items():
+                    if iso_date in days_dict:
+                        raise RuntimeError(f"PDF zawiera więcej niż jedną stronę dla daty {iso_date}; przerwano zapis.")
+                    days_dict[iso_date] = day_obj
+                print(f"Strona {page_number}: prawidłowo rozdzielono tydzień od {min(weekly_days)} do {max(weekly_days)}.")
+                continue
+
             page_text = page.extract_text() or ""
+            if re.search(r"\bpon\.?.*\bwt\.?.*\bśr\.?.*\bczw\.?", page_text, re.IGNORECASE):
+                raise RuntimeError(f"Nie udało się bezpiecznie rozdzielić kolumn tygodniowych na stronie {page_number}.")
             iso_date, day_obj = parse_single_page(page_text)
             if iso_date and day_obj:
+                if iso_date in days_dict:
+                    raise RuntimeError(f"PDF zawiera więcej niż jedną stronę dla daty {iso_date}; przerwano zapis.")
                 days_dict[iso_date] = day_obj
 
     validate_schedule(days_dict)

@@ -11,6 +11,7 @@ from updater import (
     HEADERS,
     find_bn_resource_link,
     parse_single_page,
+    parse_week_page,
     validate_schedule,
 )
 
@@ -86,6 +87,18 @@ def main():
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
         page_count = len(pdf.pages)
         for page_number, page in enumerate(pdf.pages, start=1):
+            weekly_days = parse_week_page(page)
+            if weekly_days is not None:
+                for date, day in weekly_days.items():
+                    if date in seen_dates:
+                        duplicate_dates.append({"date": date, "page": page_number})
+                        continue
+                    seen_dates.add(date)
+                    parsed_days[date] = day
+                    if not day.get("items"):
+                        pages_with_date_but_no_classes.append({"date": date, "page": page_number})
+                continue
+
             page_text = page.extract_text() or ""
             date, day = parse_single_page(page_text)
             if not date:

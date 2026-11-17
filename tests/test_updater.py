@@ -1,6 +1,6 @@
 import unittest
 
-from updater import build_change_notifications, clean_subject_title, extract_group_labels, group_change_notifications, merge_adjacent_blocks, merge_pending_notifications, parse_single_page
+from updater import build_change_notifications, clean_subject_title, extract_group_labels, group_change_notifications, merge_adjacent_blocks, merge_pending_notifications, parse_single_page, parse_week_page_words
 
 
 def block(start, end, title="Ekonomia", lecturer="dr A. Kowalski", class_type="wykład", remote=True, room=""):
@@ -16,18 +16,24 @@ def block(start, end, title="Ekonomia", lecturer="dr A. Kowalski", class_type="w
 
 
 class MergeAdjacentBlocksTests(unittest.TestCase):
-    def test_merges_same_subject_across_any_gap_and_metadata(self):
+    def test_merges_only_contiguous_same_subject_with_identical_metadata(self):
         result = merge_adjacent_blocks([
             block("08:00", "08:45", title="Administracja publiczna"),
-            block("09:00", "09:45", title="Administracja publiczna – wykład", lecturer="dr Anna Nowak", class_type="ćwiczenia"),
-            block("11:00", "11:45", title="Administracja publiczna grupa 1", lecturer="mgr Jan Kowalski", class_type="wykład"),
+            block("08:45", "09:30", title="Administracja publiczna"),
+            block("10:00", "10:45", title="Administracja publiczna", lecturer="dr Anna Nowak", class_type="ćwiczenia"),
         ])
-        self.assertEqual(len(result), 1)
+        self.assertEqual(len(result), 2)
         self.assertEqual(result[0]["start"], "08:00")
-        self.assertEqual(result[0]["end"], "11:45")
-        self.assertEqual(result[0]["lecturer"], "dr A. Kowalski / dr Anna Nowak / mgr Jan Kowalski")
-        self.assertEqual(result[0]["type"], "wykład / ćwiczenia")
-        self.assertEqual(result[0]["group"], "grupa 1")
+        self.assertEqual(result[0]["end"], "09:30")
+        self.assertEqual(result[1]["start"], "10:00")
+        self.assertEqual(result[1]["lecturer"], "dr Anna Nowak")
+
+    def test_same_subject_across_gap_is_not_merged(self):
+        result = merge_adjacent_blocks([
+            block("08:00", "08:45", title="Administracja publiczna"),
+            block("09:00", "09:45", title="Administracja publiczna"),
+        ])
+        self.assertEqual(len(result), 2)
     
     def test_different_subject_breaks_merging(self):
         result = merge_adjacent_blocks([
@@ -36,6 +42,44 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
             block("11:00", "11:45", title="Administracja publiczna"),
         ])
         self.assertEqual(len(result), 3)
+
+    def test_weekly_pdf_columns_are_split_into_separate_dates_and_subjects(self):
+        headers = [
+            ("pon.", 87.2), ("wt.", 201.1), ("śr.", 313.9), ("czw.", 422.1),
+            ("pt.", 536.3), ("sob.", 645.2), ("niedz.", 753.5),
+        ]
+        words = [{"text": label, "x0": x, "top": 55.4} for label, x in headers]
+        words += [
+            {"text": "16:45–17:30", "x0": 161.1, "top": 100.0},
+            {"text": "Wszyscy", "x0": 241.0, "top": 100.0},
+            {"text": "Elementy", "x0": 161.1, "top": 105.0},
+            {"text": "samoobrony", "x0": 188.0, "top": 105.0},
+            {"text": "mgr", "x0": 161.1, "top": 110.0},
+            {"text": "Sebastian", "x0": 172.3, "top": 110.0},
+            {"text": "Tałaj", "x0": 197.5, "top": 110.0},
+            {"text": "H24", "x0": 251.9, "top": 110.0},
+            {"text": "Ćwiczenia", "x0": 161.1, "top": 115.0},
+            {"text": "16:45–17:30", "x0": 272.6, "top": 100.0},
+            {"text": "Wszyscy", "x0": 352.6, "top": 100.0},
+            {"text": "Komunikacja", "x0": 272.6, "top": 105.0},
+            {"text": "interpersonalna", "x0": 308.8, "top": 105.0},
+            {"text": "mgr", "x0": 272.6, "top": 110.0},
+            {"text": "Sylwia", "x0": 283.8, "top": 110.0},
+            {"text": "Hille-Jarząbek", "x0": 300.7, "top": 110.0},
+            {"text": "104", "x0": 364.0, "top": 110.0},
+            {"text": "Ćwiczenia", "x0": 272.6, "top": 115.0},
+        ]
+        parsed = parse_week_page_words("2026-11-16", words, 841.9)
+        self.assertEqual(len(parsed), 7)
+        self.assertEqual(parsed["2026-11-16"]["items"][0]["title"], "Elementy samoobrony")
+        self.assertEqual(parsed["2026-11-17"]["items"][0]["title"], "Komunikacja interpersonalna")
+        self.assertEqual(parsed["2026-11-16"]["items"][0]["room"], "H24")
+        self.assertEqual(parsed["2026-11-17"]["items"][0]["room"], "104")
+        self.assertEqual(parsed["2026-11-18"]["items"], [])
+        self.assertNotEqual(
+            parsed["2026-11-16"]["items"][0]["title"],
+            parsed["2026-11-17"]["items"][0]["title"],
+        )
 
     def test_only_group_codes_are_preserved(self):
         self.assertEqual(extract_group_labels("Administracja publiczna grupa 1"), ["grupa 1"])
