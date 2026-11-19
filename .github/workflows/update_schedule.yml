@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'updater.py'
+      - 'debug_pdf_status.py'
       - 'audit_plan.py'
       - 'push_dispatch.py'
       - 'requirements.txt'

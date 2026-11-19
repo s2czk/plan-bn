@@ -11,7 +11,7 @@ with pdfplumber.open(io.BytesIO(data)) as pdf:
     found=[]
     for pn,page in enumerate(pdf.pages,1):
         text=page.extract_text() or ""
-        if re.search(r"lis\\s+16,\\s*2026",text,re.I):
+        if "podstawy ekonomii" in text.casefold():
             found.append(pn)
             print("DEBUG_PAGE",pn,"size",page.width,page.height,"chars",len(page.chars),"rects",len(page.rects),"curves",len(page.curves),flush=True)
             print("DEBUG_TEXT_BEGIN",flush=True)
@@ -21,7 +21,7 @@ with pdfplumber.open(io.BytesIO(data)) as pdf:
             marker_words=[i for i,w in enumerate(words) if re.search(r"zwolnienie|lekars",w["text"],re.I)]
             print("DEBUG_MARKER_WORDS",len(marker_words),flush=True)
             for i in marker_words:
-                for w in words[max(0,i-10):min(len(words),i+12)]:
+                for w in words[max(0,i-12):min(len(words),i+16)]:
                     print(f"W {w['top']:.1f} {w['x0']:.1f}-{w['x1']:.1f} {w['text']}",flush=True)
                 print("MARKER_CONTEXT_END",flush=True)
             print("DEBUG_RED_RECTS_BEGIN",flush=True)
