@@ -188,7 +188,7 @@ function renderAll() { renderWeekStrip(); renderDay(); }
 ''' .replace("FIXTURE", fixture) + "\n" + "\n".join(
             match.group(0) for match in (
                 parse_iso, add_days, iso_date, polish_date, day_data, item_mode, filtered,
-                weekdays, weekdays_short, selected, strip, day, is_cancelled
+                weekdays, weekdays_short, selected, strip, day, is_cancelled, is_cancelled
             )
         ) + r'''
 renderAll();
@@ -221,12 +221,12 @@ console.log(JSON.stringify({
         node = shutil.which("node")
         if not node:
             self.skipTest("Node.js is not installed in this environment")
-        card = re.search(r"function classCard\\(item,day\\)\\{.*?\\n    \\}", html, re.S)
-        day = re.search(r"function renderDay\\(\\)\\{.*?\\n    \\}", html, re.S)
-        item_mode = re.search(r"function itemMode\\(item,day\\)\\{.*?\\}", html)
-        is_cancelled = re.search(r"function isCancelledItem\\(item\\)\\{.*?\\}", html)
-        filtered = re.search(r"function filteredItems\\(day\\)\\{.*?\\}", html)
-        esc = re.search(r"function esc\\(value\\)\\{.*?\\}", html)
+        card = re.search(r"function classCard\(item,day\)\{.*?\n    \}", html, re.S)
+        day = re.search(r"function renderDay\(\)\{.*?\n    \}", html, re.S)
+        item_mode = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
+        is_cancelled = re.search(r"function isCancelledItem\(item\)\{.*?\}", html)
+        filtered = re.search(r"function filteredItems\(day\)\{.*?\}", html)
+        esc = re.search(r"function esc\(value\)\{.*?\}", html)
         for name, match in (("classCard", card), ("renderDay", day), ("itemMode", item_mode),
                             ("isCancelledItem", is_cancelled), ("filteredItems", filtered), ("esc", esc)):
             self.assertIsNotNone(match, f"Brak funkcji {name}")
