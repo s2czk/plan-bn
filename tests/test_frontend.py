@@ -23,18 +23,31 @@ class FrontendChecks(unittest.TestCase):
 
     def test_fluid_color_theme_is_defined_and_accessible(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("--remote:#ffb34e", html)
-        self.assertIn("--onsite:#43e2d2", html)
-        self.assertIn("--purple:#a342dd", html)
+        self.assertIn("--remote:#ffad1f", html)
+        self.assertIn("--onsite:#00f5d4", html)
+        self.assertIn("--purple:#a100ff", html)
         self.assertIn(".class-card.cancelled{", html)
         self.assertIn(".class-card.cancelled:before", html)
         self.assertIn("color:#1c203d", html)
-        self.assertIn('<meta name="theme-color" content="#20233e">', html)
+        self.assertIn('<meta name="theme-color" content="#070b24">', html)
+
+    def test_neon_aurora_visual_quality_tokens_are_present(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        for token in (
+            "rgba(255,151,22,.90)",
+            "rgba(255,25,126,.82)",
+            "rgba(174,20,255,.62)",
+            "rgba(0,245,212,.58)",
+            "filter:saturate(1.85)",
+            "@keyframes mandaro-aurora",
+            ".class-card:after",
+        ):
+            self.assertIn(token, html)
 
     def test_manifest_is_valid_and_pwa_ready(self):
         manifest = json.loads((ROOT / "manifest.webmanifest").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["background_color"], "#101b32")
-        self.assertEqual(manifest["theme_color"], "#20233e")
+        self.assertEqual(manifest["background_color"], "#05091f")
+        self.assertEqual(manifest["theme_color"], "#070b24")
         self.assertTrue(manifest["start_url"])
         self.assertTrue(manifest["icons"])
 
@@ -402,7 +415,7 @@ console.log(JSON.stringify({
 
     def test_service_worker_fetches_push_config_from_network_first(self):
         service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-        self.assertIn('pans-plan-shell-v9', service_worker)
+        self.assertIn('pans-plan-shell-v10', service_worker)
         self.assertIn('const isNavigation = request.mode === "navigate" || url.pathname.endsWith("/index.html")', service_worker)
         self.assertIn('const liveRequest = new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const isPushConfig = url.pathname.endsWith("/push-config.js")', service_worker)
