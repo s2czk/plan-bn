@@ -218,15 +218,24 @@ console.log(JSON.stringify({
 
     def test_cancelled_classes_render_red_and_are_not_counted_as_normal_lessons(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
+        schedule = json.loads((ROOT / "schedule.json").read_text(encoding="utf-8"))
+        source_day = schedule["days"]["2026-11-19"]
+        cancelled = [item for item in source_day["items"] if item.get("status") == "ODWOŁANE"]
+        self.assertEqual(
+            sorted(item["time"] for item in cancelled),
+            ["15:00-15:45", "15:45-16:30", "16:45-17:30", "17:30-18:15"],
+        )
+        self.assertTrue(all(item.get("status_reason") == "Zwolnienie lekarskie" for item in cancelled))
+
         node = shutil.which("node")
         if not node:
             self.skipTest("Node.js is not installed in this environment")
-        card = re.search(r"function classCard\(item,day\)\{.*?\n    \}", html, re.S)
-        day = re.search(r"function renderDay\(\)\{.*?\n    \}", html, re.S)
-        item_mode = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
-        is_cancelled = re.search(r"function isCancelledItem\(item\)\{.*?\}", html)
-        filtered = re.search(r"function filteredItems\(day\)\{.*?\}", html)
-        day_data = re.search(r"function dayData\(iso\)\{.*?\}", html)
+        card = re.search(r"function classCard\\(item,day\\)\\{.*?\\n    \\}", html, re.S)
+        day = re.search(r"function renderDay\\(\\)\\{.*?\\n    \\}", html, re.S)
+        item_mode = re.search(r"function itemMode\\(item,day\\)\\{.*?\\}", html)
+        is_cancelled = re.search(r"function isCancelledItem\\(item\\)\\{.*?\\}", html)
+        filtered = re.search(r"function filteredItems\\(day\\)\\{.*?\\}", html)
+        day_data = re.search(r"function dayData\\(iso\\)\\{.*?\\}", html)
         for name, match in (("classCard", card), ("renderDay", day), ("dayData", day_data), ("itemMode", item_mode),
                             ("isCancelledItem", is_cancelled), ("filteredItems", filtered)):
             self.assertIsNotNone(match, f"Brak funkcji {name}")
@@ -235,29 +244,26 @@ const state = {
   selectedDate: "2026-11-19",
   isLoading: false,
   loadError: false,
-  days: {"2026-11-19": {mode:"STACJONARNE",items:[
-    {time:"15:00-15:45",title:"Podstawy ekonomii",lecturer:"dr Małgorzata Guziń",type:"ćwiczenia",mode:"STACJONARNE",status:"ODWOŁANE",status_reason:"Zwolnienie lekarskie"},
-    {time:"15:45-16:30",title:"Podstawy ekonomii",lecturer:"dr Małgorzata Guziń",type:"ćwiczenia",mode:"STACJONARNE",status:"ODWOŁANE",status_reason:"Zwolnienie lekarskie"},
-    {time:"16:45-17:30",title:"Podstawy ekonomii",lecturer:"dr Małgorzata Guziń",type:"ćwiczenia",mode:"STACJONARNE",status:"ODWOŁANE",status_reason:"Zwolnienie lekarskie"},
-    {time:"17:30-18:15",title:"Podstawy ekonomii",lecturer:"dr Małgorzata Guziń",type:"ćwiczenia",mode:"STACJONARNE",status:"ODWOŁANE",status_reason:"Zwolnienie lekarskie"}
-  ]}}
+  days: __DAYS__
 };
 const dayCount={textContent:""};
 const dayClasses={innerHTML:""};
 function $(id){if(id==="dayCount")return dayCount;if(id==="dayClasses")return dayClasses;throw new Error(id)}
 function renderUpcomingLessons(){}
 function esc(value){return String(value??'');}
-""" + "\n" + "\n".join(match.group(0) for match in (day_data,item_mode,is_cancelled,filtered,card,day)) + r"""
+""" .replace("__DAYS__", json.dumps({"2026-11-19": source_day}, ensure_ascii=False)) + "\\n" + "\\n".join(
+            match.group(0) for match in (day_data,item_mode,is_cancelled,filtered,card,day)
+        ) + r"""
 renderDay();
 console.log(JSON.stringify({count:dayCount.textContent,html:dayClasses.innerHTML}));
 """
         result = subprocess.run([node, "-e", script], check=True, capture_output=True, text=True)
         output = json.loads(result.stdout)
-        self.assertEqual(output["count"], "0 zajęć · 4 odwołane")
+        self.assertEqual(output["count"], "1 zajęcia · 4 odwołane")
         self.assertEqual(output["html"].count("class-card cancelled"), 4)
         self.assertEqual(output["html"].count("Zwolnienie lekarskie"), 4)
         self.assertEqual(output["html"].count("ODWOŁANE"), 4)
-
+        self.assertIn("Wspólna polityka zagraniczna", output["html"])
     def test_explicit_date_deep_links_override_automatic_date(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("hasExplicitDate?queryDate:localISODate()", html)
