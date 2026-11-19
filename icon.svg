@@ -1,13 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#773bea"/>
-      <stop offset="1" stop-color="#263fc0"/>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd26b"/>
+      <stop offset=".42" stop-color="#ff8d76"/>
+      <stop offset=".74" stop-color="#d34eaf"/>
+      <stop offset="1" stop-color="#753ed0"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#d9fff7"/>
+    </linearGradient>
+    <linearGradient id="check" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38e4d3"/>
+      <stop offset="1" stop-color="#83f0d8"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="112" fill="#070918"/>
-  <rect x="44" y="44" width="424" height="424" rx="96" fill="url(#bg)"/>
-  <rect x="132" y="120" width="248" height="272" rx="34" fill="none" stroke="#fff" stroke-width="25"/>
-  <path d="M190 88v76M322 88v76M132 202h248" fill="none" stroke="#fff" stroke-width="25" stroke-linecap="round"/>
-  <path d="m190 280 43 43 91-91" fill="none" stroke="#c7f43b" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="512" height="512" rx="112" fill="#101b32"/>
+  <rect x="36" y="36" width="440" height="440" rx="100" fill="url(#tile)"/>
+  <circle cx="390" cy="112" r="94" fill="#fff" opacity=".12"/>
+  <circle cx="120" cy="390" r="110" fill="#24d8ca" opacity=".18"/>
+  <rect x="132" y="118" width="248" height="274" rx="35" fill="#17253f" fill-opacity=".92" stroke="url(#paper)" stroke-width="19"/>
+  <path d="M190 88v72M322 88v72M132 202h248" fill="none" stroke="url(#paper)" stroke-width="23" stroke-linecap="round"/>
+  <path d="m190 286 43 43 91-91" fill="none" stroke="url(#check)" stroke-width="29" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="364" cy="352" r="23" fill="#ffc15e"/>
 </svg>
