@@ -117,6 +117,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 0, 1)));
         day_data = re.search(r"function dayData\(iso\)\{.*?\}", html)
         item_mode = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
         filtered = re.search(r"function filteredItems\(day\)\{.*?\}", html)
+        is_cancelled = re.search(r"function isCancelledItem\(item\)\{.*?\}", html)
         parse_iso = re.search(r"function parseISO\(iso\)\{.*?\}", html)
         add_days = re.search(r"function addDays\(iso,n\)\{.*?\}", html)
         iso_date = re.search(r"function isoDate\(d\)\{.*?\}", html)
@@ -127,7 +128,7 @@ console.log(defaultSelectedISODate(new Date(2026, 10, 16, 0, 1)));
         for name, match in (
             ("selectedDateChange", selected), ("renderWeekStrip", strip), ("renderDay", day),
             ("dayData", day_data), ("itemMode", item_mode), ("filteredItems", filtered),
-            ("parseISO", parse_iso), ("addDays", add_days), ("isoDate", iso_date), ("polishDate", polish_date),
+            ("isCancelledItem", is_cancelled), ("parseISO", parse_iso), ("addDays", add_days), ("isoDate", iso_date), ("polishDate", polish_date),
             ("weekdays", weekdays), ("weekdaysShort", weekdays_short),
         ):
             self.assertIsNotNone(match, f"Brak funkcji/stałej {name}")
@@ -187,7 +188,7 @@ function renderAll() { renderWeekStrip(); renderDay(); }
 ''' .replace("FIXTURE", fixture) + "\n" + "\n".join(
             match.group(0) for match in (
                 parse_iso, add_days, iso_date, polish_date, day_data, item_mode, filtered,
-                weekdays, weekdays_short, selected, strip, day
+                weekdays, weekdays_short, selected, strip, day, is_cancelled
             )
         ) + r'''
 renderAll();
