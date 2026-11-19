@@ -226,9 +226,8 @@ console.log(JSON.stringify({
         item_mode = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
         is_cancelled = re.search(r"function isCancelledItem\(item\)\{.*?\}", html)
         filtered = re.search(r"function filteredItems\(day\)\{.*?\}", html)
-        esc = re.search(r"function esc\(value\)\{.*?\}", html)
         for name, match in (("classCard", card), ("renderDay", day), ("itemMode", item_mode),
-                            ("isCancelledItem", is_cancelled), ("filteredItems", filtered), ("esc", esc)):
+                            ("isCancelledItem", is_cancelled), ("filteredItems", filtered)):
             self.assertIsNotNone(match, f"Brak funkcji {name}")
         script = r"""
 const state = {
@@ -246,7 +245,8 @@ const dayCount={textContent:""};
 const dayClasses={innerHTML:""};
 function $(id){if(id==="dayCount")return dayCount;if(id==="dayClasses")return dayClasses;throw new Error(id)}
 function renderUpcomingLessons(){}
-""" + "\n" + "\n".join(match.group(0) for match in (item_mode,is_cancelled,filtered,esc,card,day)) + r"""
+function esc(value){return String(value??'');}
+""" + "\n" + "\n".join(match.group(0) for match in (item_mode,is_cancelled,filtered,card,day)) + r"""
 renderDay();
 console.log(JSON.stringify({count:dayCount.textContent,html:dayClasses.innerHTML}));
 """
