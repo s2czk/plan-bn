@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-17 22:11",
+  "last_updated": "2026-11-19 13:58",
   "source_label": "plan bn 1 stacjonarne 2026 11 17 plik",
   "days": {
     "2026-09-28": {
@@ -1150,14 +1150,28 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-16:30",
+          "time": "15:00-15:45",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guziń",
           "type": "ćwiczenia",
           "mode": "STACJONARNE"
         },
         {
-          "time": "16:45-18:15",
+          "time": "15:45-16:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guziń",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "16:45-17:30",
+          "title": "Podstawy ekonomii",
+          "lecturer": "dr Małgorzata Guziń",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE"
+        },
+        {
+          "time": "17:30-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guziń",
           "type": "ćwiczenia",
