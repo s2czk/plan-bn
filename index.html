@@ -404,6 +404,16 @@
     @media(prefers-reduced-motion:reduce){
       .icon-button,.tab,.date-chip,.action-button{transition:none!important}
     }
+  
+    .class-card.cancelled{border:1.5px solid rgba(255,75,92,.92);background:linear-gradient(112deg,rgba(65,19,39,.96),rgba(27,13,38,.98));box-shadow:inset 0 0 0 1px rgba(255,80,100,.2),0 0 12px rgba(255,55,80,.12)}
+    .class-card.cancelled:before{background:#ff526b;box-shadow:0 0 10px rgba(255,70,95,.65)}
+    .class-status{margin-top:5px;color:#ff8d9e;font-size:11px;font-weight:850;letter-spacing:.25px}
+    .meta-tag.cancelled,.event-badge.cancelled{border-color:rgba(255,84,105,.8);background:rgba(255,65,90,.16);color:#ff9eac}
+    .week-event.cancelled{border:1.5px solid rgba(255,75,92,.85);border-left:3px solid #ff526b;background:linear-gradient(145deg,rgba(83,26,49,.88),rgba(32,17,42,.97))}
+    .week-event.cancelled .event-title{color:#ffdce2}
+    .event-cancel-reason{display:block;margin-top:4px;color:#ff9eac;font-size:9px;font-weight:750}
+    .date-markers i.cancelled,.calendar-day .dots i.cancelled{background:#ff526b;box-shadow:0 0 7px rgba(255,70,95,.6)}
+
   </style>
 </head>
 <body>
@@ -546,7 +556,9 @@
     function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(lastToastTimer);lastToastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
     function dayData(iso){return state.days[iso]||null}
     function itemMode(item,day){return item.mode||day?.mode||'STACJONARNE'}
-    function modeOf(day){if(!day||!day.items?.length)return 'WOLNE';const modes=new Set(day.items.map(i=>itemMode(i,day)));return modes.size>1||modes.has('MIESZANE')?'MIESZANE':(modes.has('ZDALNE')?'ZDALNE':'STACJONARNE')}
+    function isCancelledItem(item){return item?.status==='ODWOŁANE'}
+    function activeItems(day){return (day?.items||[]).filter(item=>!isCancelledItem(item))}
+    function modeOf(day){const items=activeItems(day);if(!items.length)return 'WOLNE';const modes=new Set(items.map(i=>itemMode(i,day)));return modes.size>1||modes.has('MIESZANE')?'MIESZANE':(modes.has('ZDALNE')?'ZDALNE':'STACJONARNE')}
     function modeClass(mode){return mode==='ZDALNE'?'mode-remote':mode==='STACJONARNE'?'mode-onsite':mode==='MIESZANE'?'mode-mixed':'mode-free'}
     function filteredItems(day){return day?.items||[]}
     function selectedDateChange(iso){state.selectedDate=iso;state.hasUserSelectedDate=true;state.month=parseISO(iso).getMonth();renderAll();window.scrollTo({top:0,behavior:'smooth'})}
@@ -558,13 +570,13 @@
       let iso=start;
       while(iso<=end){
         const dayISO=iso;
-        const d=parseISO(dayISO),data=dayData(dayISO),modes=new Set((data?.items||[]).map(x=>itemMode(x,data)));
+        const d=parseISO(dayISO),data=dayData(dayISO),items=data?.items||[],modes=new Set(items.filter(x=>!isCancelledItem(x)).map(x=>itemMode(x,data))),hasCancelled=items.some(isCancelledItem);
         const btn=document.createElement('button');btn.type='button';btn.className='date-chip'+(dayISO===state.selectedDate?' active':'');
         btn.setAttribute('aria-label',weekdays[d.getDay()]+' '+polishDate(dayISO));
         btn.setAttribute('aria-pressed',dayISO===state.selectedDate?'true':'false');
         btn.dataset.date=dayISO;
         btn.innerHTML='<span class="day-name">'+weekdaysShort[d.getDay()]+'</span><span class="day-number">'+String(d.getDate()).padStart(2,'0')+'</span>';
-        if(modes.size){const dots=document.createElement('span');dots.className='date-markers';if(modes.has('STACJONARNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dots.append(dot)}if(modes.has('ZDALNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}btn.append(dots)}
+        if(modes.size||hasCancelled){const dots=document.createElement('span');dots.className='date-markers';if(modes.has('STACJONARNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dots.append(dot)}if(modes.has('ZDALNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}if(hasCancelled){const dot=document.createElement('i');dot.className='cancelled';dots.append(dot)}btn.append(dots)}
         btn.addEventListener('click',()=>selectedDateChange(btn.dataset.date));container.append(btn);
         iso=addDays(dayISO,1);
       }
@@ -572,13 +584,16 @@
       if(active)container.scrollLeft=Math.max(0,active.offsetLeft-(container.clientWidth-active.offsetWidth)/2);
     }
     function classCard(item,day){
-      const mode=itemMode(item,day),tags=[];
-      if(mode==='ZDALNE')tags.push('<span class="meta-tag remote">ZDALNE</span>');
+      const cancelled=isCancelledItem(item),mode=itemMode(item,day),tags=[];
+      if(cancelled)tags.push('<span class="meta-tag cancelled">ODWOŁANE</span>');
+      else if(mode==='ZDALNE')tags.push('<span class="meta-tag remote">ZDALNE</span>');
       else if(mode==='STACJONARNE')tags.push('<span class="meta-tag onsite">STACJONARNE</span>');
       else tags.push('<span class="meta-tag remote">ZDALNE</span><span class="meta-tag onsite">STACJONARNE</span>');
       if(item.room)tags.push('<span class="meta-tag room">'+esc(item.room)+'</span>');
       const group=item.group?'<span class="class-group">'+esc(item.group)+'</span>':'';
-      return '<article class="class-card '+(mode==='ZDALNE'?'remote':mode==='MIESZANE'?'mixed':'')+'"><div class="class-info"><div class="class-line"><span class="class-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="class-subject">'+esc(item.title)+'</span></div><div class="class-teacher">'+esc(item.lecturer||'Prowadzący niepodany')+'</div><div class="class-extra"><span class="class-type">'+esc(item.type||'zajęcia')+'</span>'+group+'</div></div><div class="class-meta">'+tags.join('')+'</div></article>';
+      const statusLine=cancelled?'<div class="class-status">BRAK ZAJĘĆ · '+esc(item.status_reason||'Odwołane w źródłowym PDF')+'</div>':'';
+      const cardClass='class-card'+(mode==='ZDALNE'?' remote':mode==='MIESZANE'?' mixed':'')+(cancelled?' cancelled':'');
+      return '<article class="'+cardClass+'"><div class="class-info"><div class="class-line"><span class="class-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="class-subject">'+esc(item.title)+'</span></div>'+statusLine+'<div class="class-teacher">'+esc(item.lecturer||'Prowadzący niepodany')+'</div><div class="class-extra"><span class="class-type">'+esc(item.type||'zajęcia')+'</span>'+group+'</div></div><div class="class-meta">'+tags.join('')+'</div></article>';
     }
     function renderLoadingDay(host){
       $('dayCount').textContent='Ładowanie';
@@ -587,7 +602,7 @@
     function renderUpcomingLessons(host){
       const today=localISODate();
       const anchor=state.selectedDate>=today?state.selectedDate:today;
-      const nextDate=Object.keys(state.days).filter(date=>date>=anchor&&(state.days[date]?.items||[]).length>0).sort()[0];
+      const nextDate=Object.keys(state.days).filter(date=>date>=anchor&&activeItems(state.days[date]).length>0).sort()[0];
       if(!nextDate){
         const note=document.createElement('div');
         note.className='upcoming-no-data';
@@ -595,7 +610,7 @@
         host.append(note);
         return;
       }
-      const day=state.days[nextDate],items=day.items||[];
+      const day=state.days[nextDate],items=activeItems(day);
       const card=document.createElement('section');
       card.className='upcoming-card';
       const head=document.createElement('div');
@@ -660,7 +675,10 @@
         $('retrySchedule').addEventListener('click',()=>loadSchedule(false));
         return;
       }
-      $('dayCount').textContent=items.length+' '+(items.length===1?'zajęcia':items.length>=2&&items.length<=4?'zajęcia':'zajęć');
+      const activeCount=items.filter(item=>!isCancelledItem(item)).length;
+      const cancelledCount=items.filter(isCancelledItem).length;
+      const activeLabel=activeCount+' '+(activeCount===1?'zajęcia':activeCount>=2&&activeCount<=4?'zajęcia':'zajęć');
+      $('dayCount').textContent=activeLabel+(cancelledCount?' · '+cancelledCount+' odwołane':'');
       if(!items.length){
         host.innerHTML='<div class="empty-state">'+(day?.items?.length?'Nie znaleziono przedmiotów pasujących do wyszukiwania.':'Nie masz zaplanowanych zajęć w wybranym dniu.')+'</div>';
         if(!day?.items?.length)renderUpcomingLessons(host);
@@ -676,11 +694,12 @@
         const col=document.createElement('div');col.className='week-day'+(iso===state.selectedDate?' selected':'');
         const head=document.createElement('button');head.className='week-day-header';head.innerHTML='<div class="day-name">'+weekdaysMon[i]+'</div><div class="day-date">'+String(d.getDate()).padStart(2,'0')+'</div>';head.addEventListener('click',()=>selectedDateChange(iso));col.append(head);
         if(items.length){items.forEach(item=>{
-          const mode=itemMode(item,day),remote=mode==='ZDALNE';
-          const event=document.createElement('button');event.className='week-event'+(remote?' remote':'');
-          const badges=mode==='ZDALNE'?'<span class="event-badge remote">ZDALNE</span>':mode==='STACJONARNE'?'<span class="event-badge">STACJONARNE</span>':'<span class="event-badge remote">ZDALNE</span><span class="event-badge">STACJONARNE</span>';
+          const cancelled=isCancelledItem(item),mode=itemMode(item,day),remote=mode==='ZDALNE';
+          const event=document.createElement('button');event.className='week-event'+(remote?' remote':'')+(cancelled?' cancelled':'');
+          const badges=cancelled?'<span class="event-badge cancelled">ODWOŁANE</span>':mode==='ZDALNE'?'<span class="event-badge remote">ZDALNIE</span>':mode==='STACJONARNE'?'<span class="event-badge">STACJONARNIE</span>':'<span class="event-badge remote">ZDALNIE</span><span class="event-badge">STACJONARNIE</span>';
           const room=item.room?'<span class="event-badge room">'+esc(item.room)+'</span>':'';
-          event.innerHTML='<span class="event-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="event-title">'+esc(item.title)+'</span><span class="event-type">'+esc(item.type||'zajęcia')+(item.group?' · '+esc(item.group):'')+'</span><span class="event-meta">'+badges+room+'</span>';
+          const status=cancelled?'<span class="event-cancel-reason">'+esc(item.status_reason||'Odwołane w źródłowym PDF')+'</span>':'';
+          event.innerHTML='<span class="event-time">'+esc(String(item.time||'').replace('-', '–'))+'</span><span class="event-title">'+esc(item.title)+'</span>'+status+'<span class="event-type">'+esc(item.type||'zajęcia')+(item.group?' · '+esc(item.group):'')+'</span><span class="event-meta">'+badges+room+'</span>';
           event.addEventListener('click',()=>selectedDateChange(iso));col.append(event);
         })}
         else{const empty=document.createElement('div');empty.className='week-empty';empty.textContent='—';col.append(empty)}
@@ -698,9 +717,10 @@
         const cell=document.createElement('button');cell.type='button';cell.className='calendar-day'+(iso===state.selectedDate?' selected':'');
         const num=document.createElement('span');num.className='daynum';num.textContent=dayNum;cell.append(num);
         const dots=document.createElement('span');dots.className='dots';
-        const modes=new Set(items.map(item=>itemMode(item,data)));
+        const active=items.filter(item=>!isCancelledItem(item)),modes=new Set(active.map(item=>itemMode(item,data))),hasCancelled=items.some(isCancelledItem);
         if(modes.has('STACJONARNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dots.append(dot)}
         if(modes.has('ZDALNE')||modes.has('MIESZANE')){const dot=document.createElement('i');dot.className='remote';dots.append(dot)}
+        if(hasCancelled){const dot=document.createElement('i');dot.className='cancelled';dots.append(dot)}
         cell.append(dots);cell.addEventListener('click',()=>selectedDateChange(iso));host.append(cell);
       }
     }
@@ -714,8 +734,8 @@
     }
     function dayTxt(iso){
       const day=dayData(iso),head=polishDate(iso)+' '+modeOf(day);
-      if(!day?.items?.length)return '====================\n'+polishDate(iso)+' WOLNE\n====================\nBrak zaplanowanych zajęć.';
-      return '====================\n'+head+'\n====================\n'+day.items.map(item=>String(item.time||'').replace('-', '–')+' | '+item.title+'\n              '+(item.lecturer||'Prowadzący niepodany')+' ('+(item.type||'Zajęcia')+')'+(item.room?' \n              SALA: '+item.room:'')).join('\n\n');
+      if(!day?.items?.length)return '====================\\n'+polishDate(iso)+' WOLNE\\n====================\\nBrak zaplanowanych zajęć.';
+      return '====================\\n'+head+'\\n====================\\n'+day.items.map(item=>String(item.time||'').replace('-', '–')+' | '+item.title+'\\n              '+(item.lecturer||'Prowadzący niepodany')+' ('+(item.type||'Zajęcia')+')'+(isCancelledItem(item)?'\\n              ODWOŁANE: '+(item.status_reason||'Odwołane w źródłowym PDF'):'')+(item.room?' \\n              SALA: '+item.room:'')).join('\\n\\n');
     }
     async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Skopiowano do schowka')}catch(e){const box=document.createElement('textarea');box.value=text;document.body.append(box);box.select();document.execCommand('copy');box.remove();toast('Skopiowano do schowka')}}
     function downloadText(name,text){const blob=new Blob([text],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Przygotowano plik '+name)}
@@ -769,7 +789,7 @@
       const read=getStoredSet(readIdsKey),unread=state.notifications.filter(n=>!read.has(n.id)).length;
       const badge=$('unreadDot');badge.textContent=unread>99?'99+':String(unread);badge.style.display=unread?'inline-flex':'none';
     }
-    function notificationTypeLabel(type){return type==='added'?'DODANO':type==='cancelled'?'USUNIĘTO':type==='changed'?'ZMIENIONO':'ZMIANA'}
+    function notificationTypeLabel(type){return type==='added'?'DODANO':type==='cancelled'?'ODWOŁANO':type==='restored'?'PRZYWRÓCONO':type==='changed'?'ZMIENIONO':'ZMIANA'}
     function renderNotifications(){
       const host=$('notificationList');host.innerHTML='';
       if(!state.notifications.length){host.innerHTML='<div class="empty-state">Brak zmian w planie z ostatnich 7 dni.</div>';updateUnreadDot();return}
@@ -868,7 +888,7 @@
       const results=[];
       for(const [date,day] of Object.entries(state.days||{})){
         for(const item of day.items||[]){
-          const searchable=normalizeSearchText([item.title,item.lecturer,item.type,item.room,item.group,item.time,date,weekdays[parseISO(date).getDay()]].filter(Boolean).join(' '));
+          const searchable=normalizeSearchText([item.title,item.lecturer,item.type,item.room,item.group,item.time,item.status,item.status_reason,date,weekdays[parseISO(date).getDay()]].filter(Boolean).join(' '));
           if(tokens.every(token=>searchable.includes(token)))results.push({date,day,item});
         }
       }
@@ -923,7 +943,7 @@
           dayInfo.append(weekday,dateLabel);
           const time=document.createElement('span');
           time.className='search-occurrence-time';
-          time.textContent=item.time||'Godzina niepodana';
+          time.textContent=(item.time||'Godzina niepodana')+(isCancelledItem(item)?' · ODWOŁANE':'');
           button.append(dayInfo,time);
           button.setAttribute('aria-label',group.title+', '+weekday.textContent+', '+dateLabel.textContent+', '+time.textContent);
           button.addEventListener('click',()=>{

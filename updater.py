@@ -25,7 +25,7 @@ PUSH_PAYLOAD_FILE = "push_payload.json"
 PENDING_PUSH_FILE = "pending_push.json"
 UPDATE_SEQUENCE_FILE = "update_sequence.txt"
 PARSER_VERSION_FILE = "parser_version.txt"
-PARSER_VERSION = "8"
+PARSER_VERSION = "9"
 WARSAW_TZ = ZoneInfo("Europe/Warsaw")
 
 

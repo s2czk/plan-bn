@@ -215,6 +215,47 @@ console.log(JSON.stringify({
             ],
         )
 
+    def test_cancelled_classes_render_red_and_are_not_counted_as_normal_lessons(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("Node.js is not installed in this environment")
+        card = re.search(r"function classCard\\(item,day\\)\\{.*?\\n    \\}", html, re.S)
+        day = re.search(r"function renderDay\\(\\)\\{.*?\\n    \\}", html, re.S)
+        item_mode = re.search(r"function itemMode\\(item,day\\)\\{.*?\\}", html)
+        is_cancelled = re.search(r"function isCancelledItem\\(item\\)\\{.*?\\}", html)
+        filtered = re.search(r"function filteredItems\\(day\\)\\{.*?\\}", html)
+        esc = re.search(r"function esc\\(value\\)\\{.*?\\}", html)
+        for name, match in (("classCard", card), ("renderDay", day), ("itemMode", item_mode),
+                            ("isCancelledItem", is_cancelled), ("filteredItems", filtered), ("esc", esc)):
+            self.assertIsNotNone(match, f"Brak funkcji {name}")
+        script = r"""
+const state = {
+  selectedDate: "2026-11-19",
+  isLoading: false,
+  loadError: false,
+  days: {"2026-11-19": {mode:"STACJONARNE",items:[
+    {time:"15:00-15:45",title:"Podstawy ekonomii",lecturer:"dr Małgorzata Guziń",type:"ćwiczenia",mode:"STACJONARNE",status:"ODWOŁANE",status_reason:"Zwolnienie lekarskie"},
+    {time:"15:45-16:30",title:"Podstawy ekonomii",lecturer:"dr Małgorzata Guziń",type:"ćwiczenia",mode:"STACJONARNE",status:"ODWOŁANE",status_reason:"Zwolnienie lekarskie"},
+    {time:"16:45-17:30",title:"Podstawy ekonomii",lecturer:"dr Małgorzata Guziń",type:"ćwiczenia",mode:"STACJONARNE",status:"ODWOŁANE",status_reason:"Zwolnienie lekarskie"},
+    {time:"17:30-18:15",title:"Podstawy ekonomii",lecturer:"dr Małgorzata Guziń",type:"ćwiczenia",mode:"STACJONARNE",status:"ODWOŁANE",status_reason:"Zwolnienie lekarskie"}
+  ]}}
+};
+const dayCount={textContent:""};
+const dayClasses={innerHTML:""};
+function $(id){if(id==="dayCount")return dayCount;if(id==="dayClasses")return dayClasses;throw new Error(id)}
+function renderUpcomingLessons(){}
+""" + "\n" + "\n".join(match.group(0) for match in (item_mode,is_cancelled,filtered,esc,card,day)) + r"""
+renderDay();
+console.log(JSON.stringify({count:dayCount.textContent,html:dayClasses.innerHTML}));
+"""
+        result = subprocess.run([node, "-e", script], check=True, capture_output=True, text=True)
+        output = json.loads(result.stdout)
+        self.assertEqual(output["count"], "0 zajęć · 4 odwołane")
+        self.assertEqual(output["html"].count("class-card cancelled"), 4)
+        self.assertEqual(output["html"].count("Zwolnienie lekarskie"), 4)
+        self.assertEqual(output["html"].count("ODWOŁANE"), 4)
+
     def test_explicit_date_deep_links_override_automatic_date(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("hasExplicitDate?queryDate:localISODate()", html)
@@ -349,7 +390,7 @@ console.log(JSON.stringify({
 
     def test_service_worker_fetches_push_config_from_network_first(self):
         service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-        self.assertIn('pans-plan-shell-v7', service_worker)
+        self.assertIn('pans-plan-shell-v8', service_worker)
         self.assertIn('const isNavigation = request.mode === "navigate" || url.pathname.endsWith("/index.html")', service_worker)
         self.assertIn('const liveRequest = new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const isPushConfig = url.pathname.endsWith("/push-config.js")', service_worker)
