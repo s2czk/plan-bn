@@ -57,6 +57,25 @@ def compare_days(stored_days, parsed_days):
     return {"missing": missing, "added": added, "changed": changed}
 
 
+def check_known_medical_leave_example(days):
+    """Kontrola referencyjna z oryginalnego zrzutu PDF: cztery czerwone pola 19.11."""
+    expected_times = ["15:00-15:45", "15:45-16:30", "16:45-17:30", "17:30-18:15"]
+    items = (days.get("2026-11-19") or {}).get("items", [])
+    actual = [
+        item for item in items
+        if item.get("title") == "Podstawy ekonomii"
+        and item.get("status") == "ODWOŁANE"
+        and item.get("status_reason") == "Zwolnienie lekarskie"
+    ]
+    actual_times = sorted(item.get("time", "") for item in actual)
+    return {
+        "result": "PASS" if actual_times == expected_times else "FAIL",
+        "expected_times": expected_times,
+        "actual_times": actual_times,
+        "count": len(actual),
+    }
+
+
 def main():
     resource_url, label = find_bn_resource_link()
     print(f"Źródło PDF: {resource_url}")
@@ -122,8 +141,13 @@ def main():
     stored_days = stored_payload.get("days") or {}
     comparison = compare_days(stored_days, parsed_days)
     overlaps = check_overlaps(parsed_days)
+    medical_leave_check = check_known_medical_leave_example(parsed_days)
 
     total_items = sum(len(day.get("items", [])) for day in parsed_days.values())
+    cancelled_items = sum(
+        1 for day in parsed_days.values() for item in day.get("items", [])
+        if item.get("status") == "ODWOŁANE"
+    )
     print(json.dumps({
         "audit": "FULL_PDF_PARSE",
         "result": "PASS" if not any(comparison.values()) and not overlaps else "FAIL",
@@ -136,6 +160,8 @@ def main():
         "dated_pages_without_classes": pages_with_date_but_no_classes,
         "parsed_days": len(parsed_days),
         "parsed_classes": total_items,
+        "cancelled_items": cancelled_items,
+        "reference_medical_leave_check": medical_leave_check,
         "published_days": len(stored_days),
         "published_classes": sum(len(day.get("items", [])) for day in stored_days.values()),
         "comparison": comparison,
@@ -146,6 +172,8 @@ def main():
     if weekly_page_count and weekly_page_count == page_count and len(parsed_days) != page_count * 7:
         raise SystemExit("Pełny audyt PDF nie znalazł dokładnie 7 dat na każdej stronie tygodniowej.")
 
+    if medical_leave_check["result"] != "PASS":
+        raise SystemExit("Pełny audyt PDF nie rozpoznał czterech odwołanych pól z powodu zwolnienia lekarskiego z oryginalnego zrzutu.")
     if any(comparison.values()) or overlaps:
         raise SystemExit("Pełny audyt PDF nie przeszedł: wynik parsowania różni się od opublikowanych danych lub zawiera kolizje godzin.")
 

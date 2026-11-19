@@ -317,6 +317,9 @@ def parse_single_page(text, red_frame_flags=None):
             item["group"] = block["group"]
         if block.get("room"):
             item["room"] = block["room"]
+        for field in ("status", "status_reason", "status_source"):
+            if block.get(field):
+                item[field] = block[field]
         items.append(item)
     return iso_date, {"mode": day_mode, "items": items}
 

@@ -70,17 +70,68 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
             {"text": "104", "x0": 364.0, "top": 110.0},
             {"text": "Ćwiczenia", "x0": 272.6, "top": 115.0},
         ]
-        parsed = parse_week_page_words("2026-11-16", words, 841.9)
+        parsed = parse_week_page_words("2026-11-16", words, 841.9, red_boxes=[{"x0": 150, "x1": 261, "top": 95, "bottom": 120}])
         self.assertEqual(len(parsed), 7)
         self.assertEqual(parsed["2026-11-16"]["items"], [])
         self.assertEqual(parsed["2026-11-17"]["items"][0]["title"], "Elementy samoobrony")
         self.assertEqual(parsed["2026-11-18"]["items"][0]["title"], "Komunikacja interpersonalna")
         self.assertEqual(parsed["2026-11-17"]["items"][0]["room"], "H24")
+        self.assertEqual(parsed["2026-11-17"]["items"][0]["status"], "ODWOŁANE")
+        self.assertEqual(parsed["2026-11-17"]["items"][0]["status_source"], "PDF_RED_FRAME")
         self.assertEqual(parsed["2026-11-18"]["items"][0]["room"], "104")
         self.assertNotEqual(
             parsed["2026-11-17"]["items"][0]["title"],
             parsed["2026-11-18"]["items"][0]["title"],
         )
+
+    def test_medical_leave_marker_marks_class_cancelled_and_keeps_original_teacher(self):
+        sample = (
+            "lis 19, 2026 "
+            "15:00-15:45 Podstawy ekonomii Wszyscy dr Małgorzata Guziń…Zwolnienie lekar… Ćwiczenia I (2026/2027)"
+        )
+        date, day = parse_single_page(sample, [True])
+        self.assertEqual(date, "2026-11-19")
+        self.assertEqual(len(day["items"]), 1)
+        item = day["items"][0]
+        self.assertEqual(item["title"], "Podstawy ekonomii")
+        self.assertEqual(item["lecturer"], "dr Małgorzata Guziń")
+        self.assertEqual(item["status"], "ODWOŁANE")
+        self.assertEqual(item["status_reason"], "Zwolnienie lekarskie")
+        self.assertEqual(item["status_source"], "PDF_TEXT_AND_RED_FRAME")
+
+    def test_red_frame_without_text_still_marks_item_cancelled(self):
+        sample = "lis 19, 2026 15:00-15:45 Podstawy ekonomii dr Małgorzata Guziń Ćwiczenia"
+        _, day = parse_single_page(sample, [True])
+        item = day["items"][0]
+        self.assertEqual(item["status"], "ODWOŁANE")
+        self.assertEqual(item["status_reason"], "Czerwona ramka w źródłowym PDF")
+        self.assertEqual(item["status_source"], "PDF_RED_FRAME")
+
+    def test_four_medical_leave_slots_remain_four_separate_cancelled_items(self):
+        slots = ["15:00-15:45", "15:45-16:30", "16:45-17:30", "17:30-18:15"]
+        sample = "lis 19, 2026 " + " ".join(
+            slot + " Podstawy ekonomii Wszyscy dr Małgorzata Guziń…Zwolnienie lekar… Ćwiczenia"
+            for slot in slots
+        )
+        _, day = parse_single_page(sample, [True, True, True, True])
+        self.assertEqual([item["time"] for item in day["items"]], slots)
+        self.assertTrue(all(item["status"] == "ODWOŁANE" for item in day["items"]))
+        self.assertTrue(all(item["status_reason"] == "Zwolnienie lekarskie" for item in day["items"]))
+
+    def test_status_transition_to_medical_leave_is_a_cancellation_notification(self):
+        old_day = {"mode": "STACJONARNE", "items": [{
+            "time": "15:00-16:30", "title": "Podstawy ekonomii",
+            "lecturer": "dr Małgorzata Guziń", "type": "ćwiczenia", "mode": "STACJONARNE"
+        }]}
+        new_day = {"mode": "STACJONARNE", "items": [{
+            "time": "15:00-16:30", "title": "Podstawy ekonomii",
+            "lecturer": "dr Małgorzata Guziń", "type": "ćwiczenia", "mode": "STACJONARNE",
+            "status": "ODWOŁANE", "status_reason": "Zwolnienie lekarskie"
+        }]}
+        changes = build_change_notifications({"2026-11-19": old_day}, {"2026-11-19": new_day}, "medical-leave")
+        self.assertEqual(len(changes), 1)
+        self.assertEqual(changes[0]["type"], "cancelled")
+        self.assertIn("Zwolnienie lekarskie", " ".join(changes[0]["details"]))
 
     def test_only_group_codes_are_preserved(self):
         self.assertEqual(extract_group_labels("Administracja publiczna grupa 1"), ["grupa 1"])
