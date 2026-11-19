@@ -232,7 +232,7 @@ console.log(JSON.stringify({
         node = shutil.which("node")
         if not node:
             self.skipTest("Node.js is not installed in this environment")
-        card = re.search(r"function classCard\\(item,day\\)\\{.*?\\n\\s+\\}", html, re.S)
+        card = re.search(r"function classCard\(item,day\)\{.*?\n\s+\}", html, re.S)
         item_mode = re.search(r"function itemMode\\(item,day\\)\\{.*?\\}", html)
         is_cancelled = re.search(r"function isCancelledItem\\(item\\)\\{.*?\\}", html)
         for name, match in (("classCard", card), ("itemMode", item_mode), ("isCancelledItem", is_cancelled)):
@@ -240,7 +240,7 @@ console.log(JSON.stringify({
         script = r"""
 const day = __DAY__;
 function esc(value){return String(value??'');}
-""" .replace("__DAY__", json.dumps(source_day, ensure_ascii=False)) + "\\n" + "\\n".join(
+""" .replace("__DAY__", json.dumps(source_day, ensure_ascii=False)) + "\n" + "\n".join(
             match.group(0) for match in (item_mode,is_cancelled,card)
         ) + r"""
 const html = day.items.map(item => classCard(item,day)).join("");
