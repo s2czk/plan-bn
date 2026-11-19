@@ -188,7 +188,7 @@ function renderAll() { renderWeekStrip(); renderDay(); }
 ''' .replace("FIXTURE", fixture) + "\n" + "\n".join(
             match.group(0) for match in (
                 parse_iso, add_days, iso_date, polish_date, day_data, item_mode, filtered,
-                weekdays, weekdays_short, selected, strip, day, is_cancelled, is_cancelled
+                weekdays, weekdays_short, selected, strip, day, is_cancelled
             )
         ) + r'''
 renderAll();
