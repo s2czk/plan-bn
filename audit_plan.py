@@ -1,3 +1,4 @@
+# AUDYT PDF: weryfikacja czterech czerwonych wpisów z powodu zwolnienia lekarskiego na 19.11.2026.
 import hashlib
 import io
 import json
