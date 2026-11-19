@@ -384,8 +384,8 @@ def parse_week_page_words(week_start_iso, words, page_width, red_boxes=None):
         time_words = [word for word in cell_words if time_pattern.fullmatch(str(word.get("text", "")).strip())]
         red_frame_flags = []
         for word in time_words:
-            cx = (float(word["x0"]) + float(word["x1"])) / 2
-            cy = (float(word["top"]) + float(word["bottom"])) / 2
+            cx = (float(word["x0"]) + float(word.get("x1", word["x0"]))) / 2
+            cy = (float(word["top"]) + float(word.get("bottom", word["top"]))) / 2
             red_frame_flags.append(any(
                 box["x0"] - 1 <= cx <= box["x1"] + 1
                 and box["top"] - 1 <= cy <= box["bottom"] + 1
