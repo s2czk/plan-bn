@@ -230,8 +230,8 @@ console.log(JSON.stringify({
         node = shutil.which("node")
         if not node:
             self.skipTest("Node.js is not installed in this environment")
-        card = re.search(r"function classCard\\(item,day\\)\\{.*?\\n\\s+\\}", html, re.S)
-        day = re.search(r"function renderDay\\(\\)\\{.*?\\n\\s+\\}", html, re.S)
+        card = re.search(r"function classCard\(item,day\)\{.*?\n\s+\}", html, re.S)
+        day = re.search(r"function renderDay\(\)\{.*?\n\s+\}", html, re.S)
         item_mode = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
         is_cancelled = re.search(r"function isCancelledItem\(item\)\{.*?\}", html)
         filtered = re.search(r"function filteredItems\(day\)\{.*?\}", html)
