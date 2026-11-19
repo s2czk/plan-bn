@@ -233,8 +233,8 @@ console.log(JSON.stringify({
         if not node:
             self.skipTest("Node.js is not installed in this environment")
         card = re.search(r"function classCard\(item,day\)\{.*?\n\s+\}", html, re.S)
-        item_mode = re.search(r"function itemMode\\(item,day\\)\\{.*?\\}", html)
-        is_cancelled = re.search(r"function isCancelledItem\\(item\\)\\{.*?\\}", html)
+        item_mode = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
+        is_cancelled = re.search(r"function isCancelledItem\(item\)\{.*?\}", html)
         for name, match in (("classCard", card), ("itemMode", item_mode), ("isCancelledItem", is_cancelled)):
             self.assertIsNotNone(match, f"Brak funkcji {name}")
         script = r"""
