@@ -1,6 +1,6 @@
 import unittest
 
-from updater import build_change_notifications, clean_subject_title, extract_group_labels, group_change_notifications, merge_adjacent_blocks, merge_pending_notifications, parse_single_page, parse_week_page_words
+from updater import build_change_notifications, clean_subject_title, extract_group_labels, extract_red_status_boxes, group_change_notifications, merge_adjacent_blocks, merge_pending_notifications, parse_single_page, parse_week_page_words
 
 
 def block(start, end, title="Ekonomia", lecturer="dr A. Kowalski", class_type="wykład", remote=True, room=""):
@@ -13,6 +13,28 @@ def block(start, end, title="Ekonomia", lecturer="dr A. Kowalski", class_type="w
         "remote": remote,
         "room": room,
     }
+
+
+class RedStatusBoxExtractionTests(unittest.TestCase):
+    def test_red_rectangle_objects_are_detected_even_when_not_curves(self):
+        red_rect = {
+            "stroking_color": (1.0, 0.0, 0.0), "stroke": True,
+            "x0": 150.0, "x1": 261.0, "top": 95.0, "bottom": 137.0,
+        }
+        page = type("Page", (), {"rects": [red_rect], "curves": []})()
+        self.assertEqual(
+            extract_red_status_boxes(page),
+            [{"x0": 150.0, "x1": 261.0, "top": 95.0, "bottom": 137.0}],
+        )
+
+    def test_non_red_rectangles_and_small_red_shapes_are_ignored(self):
+        page = type("Page", (), {"rects": [
+            {"stroking_color": (0.5, 0.5, 0.5), "stroke": True,
+             "x0": 150.0, "x1": 261.0, "top": 95.0, "bottom": 137.0},
+            {"stroking_color": (1.0, 0.0, 0.0), "stroke": True,
+             "x0": 150.0, "x1": 160.0, "top": 95.0, "bottom": 137.0},
+        ], "curves": []})()
+        self.assertEqual(extract_red_status_boxes(page), [])
 
 
 class MergeAdjacentBlocksTests(unittest.TestCase):

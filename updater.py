@@ -25,7 +25,7 @@ PUSH_PAYLOAD_FILE = "push_payload.json"
 PENDING_PUSH_FILE = "pending_push.json"
 UPDATE_SEQUENCE_FILE = "update_sequence.txt"
 PARSER_VERSION_FILE = "parser_version.txt"
-PARSER_VERSION = "9"
+PARSER_VERSION = "10"
 WARSAW_TZ = ZoneInfo("Europe/Warsaw")
 
 
@@ -191,20 +191,28 @@ def detect_cancellation_status(chunk, red_frame=False):
 
 
 def extract_red_status_boxes(page):
-    """Zwraca wektorowe czerwone obramowania używane w PDF dla odwołanych zajęć."""
+    """Zwraca czerwone obramowania kart z PDF, niezależnie od typu obiektu PDF."""
     boxes = []
-    for curve in page.curves:
-        color = curve.get("stroking_color")
+    # pdfplumber rozpoznaje prostokąty jako page.rects, a złożone obrysy jako
+    # page.curves. Ograniczenie do curves pomijało zwykłe czerwone prostokąty.
+    candidates = list(getattr(page, "rects", []) or []) + list(getattr(page, "curves", []) or [])
+    seen = set()
+    for shape in candidates:
+        color = shape.get("stroking_color")
         if not (isinstance(color, (tuple, list)) and len(color) >= 3):
             continue
-        red, green, blue = float(color[0]), float(color[1]), float(color[2])
-        if not (red >= 0.75 and green <= 0.18 and blue <= 0.20 and curve.get("stroke")):
+        red, green, blue = (float(color[0]), float(color[1]), float(color[2]))
+        if not (red >= 0.75 and green <= 0.18 and blue <= 0.20 and shape.get("stroke")):
             continue
-        x0, x1 = float(curve["x0"]), float(curve["x1"])
-        top, bottom = float(curve["top"]), float(curve["bottom"])
+        x0, x1 = float(shape["x0"]), float(shape["x1"])
+        top, bottom = float(shape["top"]), float(shape["bottom"])
         width, height = x1 - x0, bottom - top
-        # Pomijamy czerwone kreski/ikony: karta zajęć ma szeroki, niski kontur.
-        if width >= 50 and 14 <= height <= 60 and width >= height * 2:
+        # Karta zajęć ma szeroki, niski kontur; odrzucamy kreski i małe ikony.
+        if width < 50 or not 14 <= height <= 60 or width < height * 2:
+            continue
+        key = (round(x0, 1), round(x1, 1), round(top, 1), round(bottom, 1))
+        if key not in seen:
+            seen.add(key)
             boxes.append({"x0": x0, "x1": x1, "top": top, "bottom": bottom})
     return boxes
 
