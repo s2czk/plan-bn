@@ -25,7 +25,7 @@ PUSH_PAYLOAD_FILE = "push_payload.json"
 PENDING_PUSH_FILE = "pending_push.json"
 UPDATE_SEQUENCE_FILE = "update_sequence.txt"
 PARSER_VERSION_FILE = "parser_version.txt"
-PARSER_VERSION = "7"
+PARSER_VERSION = "8"
 WARSAW_TZ = ZoneInfo("Europe/Warsaw")
 
 
@@ -132,7 +132,7 @@ def extract_class_types(text):
 
 
 def merge_adjacent_blocks(raw_blocks):
-    """Łączy wyłącznie ciągłe części tego samego przedmiotu z identycznymi metadanymi."""
+    """Łączy tylko ciągłe, aktywne bloki o identycznych metadanych. Odwołane pozycje zachowuje osobno."""
     ordered = sorted(raw_blocks, key=lambda item: (time_to_minutes(item["start"]), time_to_minutes(item["end"])))
     grouped = []
 
@@ -148,17 +148,18 @@ def merge_adjacent_blocks(raw_blocks):
             current = grouped[-1]
             same_metadata = all(
                 current.get(field, "") == block.get(field, "")
-                for field in ("lecturer", "type", "group", "room", "remote")
+                for field in ("lecturer", "type", "group", "room", "remote", "status", "status_reason")
             )
             contiguous = time_to_minutes(current["end"]) == time_to_minutes(block["start"])
-            if normalize_subject_title(current["title"]) == key and same_metadata and contiguous:
+            # Czerwone/odwołane pola są osobnymi wpisami i nie wolno ich scalać.
+            if not block.get("status") and not current.get("status") and normalize_subject_title(current["title"]) == key and same_metadata and contiguous:
                 current["end"] = block["end"]
                 continue
         grouped.append(block)
 
     result = []
     for block in grouped:
-        result.append({
+        item = {
             "start": block["start"],
             "end": block["end"],
             "title": block["title"],
@@ -167,10 +168,48 @@ def merge_adjacent_blocks(raw_blocks):
             "group": block.get("group", ""),
             "room": block.get("room", ""),
             "mode": "ZDALNE" if block.get("remote") else "STACJONARNE",
-        })
+        }
+        for field in ("status", "status_reason", "status_source"):
+            if block.get(field):
+                item[field] = block[field]
+        result.append(item)
     return result
 
-def parse_single_page(text):
+
+
+def detect_cancellation_status(chunk, red_frame=False):
+    """Rozpoznaje anulowanie wpisu na podstawie tekstu i obramowania z oryginalnego PDF."""
+    value = " ".join(str(chunk or "").split())
+    if re.search(r"zwolnienie\s+lekar", value, re.IGNORECASE):
+        source = "PDF_TEXT_AND_RED_FRAME" if red_frame else "PDF_TEXT"
+        return "ODWOŁANE", "Zwolnienie lekarskie", source
+    if re.search(r"\b(?:odwołan\w*|nie\s+odbęd\w*|zawieszon\w*)\b", value, re.IGNORECASE):
+        return "ODWOŁANE", "Odwołanie wskazane w PDF", "PDF_TEXT"
+    if red_frame:
+        return "ODWOŁANE", "Czerwona ramka w źródłowym PDF", "PDF_RED_FRAME"
+    return None, None, None
+
+
+def extract_red_status_boxes(page):
+    """Zwraca wektorowe czerwone obramowania używane w PDF dla odwołanych zajęć."""
+    boxes = []
+    for curve in page.curves:
+        color = curve.get("stroking_color")
+        if not (isinstance(color, (tuple, list)) and len(color) >= 3):
+            continue
+        red, green, blue = float(color[0]), float(color[1]), float(color[2])
+        if not (red >= 0.75 and green <= 0.18 and blue <= 0.20 and curve.get("stroke")):
+            continue
+        x0, x1 = float(curve["x0"]), float(curve["x1"])
+        top, bottom = float(curve["top"]), float(curve["bottom"])
+        width, height = x1 - x0, bottom - top
+        # Pomijamy czerwone kreski/ikony: karta zajęć ma szeroki, niski kontur.
+        if width >= 50 and 14 <= height <= 60 and width >= height * 2:
+            boxes.append({"x0": x0, "x1": x1, "top": top, "bottom": bottom})
+    return boxes
+
+
+def parse_single_page(text, red_frame_flags=None):
     """Wyciąga datę i zajęcia z jednej strony PDF."""
     if not text:
         return None, None
@@ -205,6 +244,8 @@ def parse_single_page(text):
         class_types = extract_class_types(chunk)
         groups = extract_group_labels(chunk)
         remote = bool(re.search(r"Zdalnie|Zda\s*dalnie", chunk, re.IGNORECASE))
+        red_frame = bool(red_frame_flags and index < len(red_frame_flags) and red_frame_flags[index])
+        status, status_reason, status_source = detect_cancellation_status(chunk, red_frame)
 
         lecturer_match = re.search(
             r"((?:prof\.|dr\s+hab\.|dr|mgr|mor|mar)\s+[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+\s+[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż\-]+)",
@@ -244,7 +285,7 @@ def parse_single_page(text):
                 room_match = re.search(r"\b(0\d{2}|[1-9]\d{2})\b", room_text)
                 room = room_match.group(1) if room_match else ""
 
-        raw_blocks.append({
+        raw_block = {
             "start": start_time,
             "end": end_time,
             "title": title,
@@ -253,7 +294,12 @@ def parse_single_page(text):
             "group": " / ".join(groups),
             "remote": remote,
             "room": room,
-        })
+        }
+        if status:
+            raw_block.update({"status": status, "status_reason": status_reason, "status_source": status_source})
+        raw_blocks.append(raw_block)
+
+    grouped = merge_adjacent_blocks(raw_blocks)
 
     grouped = merge_adjacent_blocks(raw_blocks)
     modes = {item["mode"] for item in grouped}
@@ -282,7 +328,7 @@ MONTH_ABBR = {
 }
 
 
-def parse_week_page_words(week_start_iso, words, page_width):
+def parse_week_page_words(week_start_iso, words, page_width, red_boxes=None):
     """Rozdziela stronę tygodniowego PDF na siedem kolumn dni według współrzędnych X."""
     week_start = datetime.strptime(week_start_iso, "%Y-%m-%d").date()
     if week_start.weekday() != 0:
@@ -334,7 +380,19 @@ def parse_week_page_words(week_start_iso, words, page_width):
         cell_words.sort(key=lambda word: (float(word.get("top", 0)), float(word.get("x0", 0))))
         cell_text = " ".join(str(word.get("text", "")) for word in cell_words)
 
-        parsed_date, day_obj = parse_single_page(date_label + " " + cell_text)
+        time_pattern = re.compile(r"\d{1,2}:\d{2}[–—-]\d{1,2}:\d{2}")
+        time_words = [word for word in cell_words if time_pattern.fullmatch(str(word.get("text", "")).strip())]
+        red_frame_flags = []
+        for word in time_words:
+            cx = (float(word["x0"]) + float(word["x1"])) / 2
+            cy = (float(word["top"]) + float(word["bottom"])) / 2
+            red_frame_flags.append(any(
+                box["x0"] - 1 <= cx <= box["x1"] + 1
+                and box["top"] - 1 <= cy <= box["bottom"] + 1
+                for box in (red_boxes or [])
+            ))
+
+        parsed_date, day_obj = parse_single_page(date_label + " " + cell_text, red_frame_flags)
         if parsed_date != iso_date:
             raise ValueError(f"Nieprawidłowa data kolumny PDF: oczekiwano {iso_date}, otrzymano {parsed_date}")
         days[iso_date] = day_obj or {"mode": "STACJONARNE", "items": []}
@@ -364,7 +422,7 @@ def parse_week_page(page):
         keep_blank_chars=False,
         use_text_flow=False,
     )
-    return parse_week_page_words(week_start_iso, words, page.width)
+    return parse_week_page_words(week_start_iso, words, page.width, extract_red_status_boxes(page))
 
 def event_mode(item, day):
     return item.get("mode") or day.get("mode", "STACJONARNE")
@@ -379,6 +437,8 @@ def item_fingerprint(item, day):
         event_mode(item, day),
         item.get("room", "").strip().casefold(),
         item.get("group", "").strip().casefold(),
+        item.get("status", ""),
+        item.get("status_reason", "").strip().casefold(),
     )
 
 
@@ -452,12 +512,24 @@ def build_change_notifications(old_days, new_days, update_id, created_at=None):
                 details.append(f'Tryb: {old_mode} → {new_mode}')
             if old_item.get("room", "") != new_item.get("room", ""):
                 details.append(f'Sala: {old_item.get("room") or "—"} → {new_item.get("room") or "—"}')
+            old_status, new_status = old_item.get("status", ""), new_item.get("status", "")
+            if old_status != new_status:
+                details.append(f'Status: {old_status or "AKTYWNE"} → {new_status or "AKTYWNE"}')
+            old_reason, new_reason = old_item.get("status_reason", ""), new_item.get("status_reason", "")
+            if old_reason != new_reason and (old_reason or new_reason):
+                details.append(f'Powód: {old_reason or "—"} → {new_reason or "—"}')
             if details:
+                event_type = "cancelled" if new_status == "ODWOŁANE" and old_status != "ODWOŁANE" else (
+                    "restored" if old_status == "ODWOŁANE" and new_status != "ODWOŁANE" else "changed"
+                )
+                event_title = "Odwołano zajęcia" if event_type == "cancelled" else (
+                    "Przywrócono zajęcia" if event_type == "restored" else "Zmieniono zajęcia"
+                )
                 changes.append({
                     "id": f"{update_id}-{date}-change-{len(changes)+1}",
                     "date": date,
-                    "type": "changed",
-                    "title": "Zmieniono zajęcia",
+                    "type": event_type,
+                    "title": event_title,
                     "message": new_item.get("title") or old_item.get("title") or "Zajęcia",
                     "details": details,
                     "created_at": created_at,
@@ -513,7 +585,7 @@ def group_change_notifications(changes, update_id, created_at):
             f"Wykryto {count} zmiany" if 2 <= count % 10 <= 4 and not 12 <= count % 100 <= 14
             else f"Wykryto {count} zmian"
         )
-        push_labels = {"added": "DODANO", "cancelled": "USUNIĘTO", "changed": "ZMIENIONO"}
+        push_labels = {"added": "DODANO", "cancelled": "ODWOŁANO", "restored": "PRZYWRÓCONO", "changed": "ZMIENIONO"}
         push_parts = []
         for event in events:
             label = push_labels.get(event.get("type"), "ZMIANA")
@@ -568,6 +640,10 @@ def validate_schedule(days):
         for item in day.get("items", []):
             if not item.get("title", "").strip():
                 raise ValueError(f"Brak nazwy przedmiotu dla {date}")
+            if item.get("status") and item.get("status") != "ODWOŁANE":
+                raise ValueError(f"Nieznany status wpisu {item.get('status')} dla {date}")
+            if item.get("status") == "ODWOŁANE" and not item.get("status_reason"):
+                raise ValueError(f"Brak powodu odwołania dla {date}: {item.get('title')}")
             start, end = item["time"].split("-", 1)
             if time_to_minutes(start) >= time_to_minutes(end):
                 raise ValueError(f"Nieprawidłowy przedział czasu {item['time']} dla {date}")
