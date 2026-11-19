@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-19 13:58",
+  "last_updated": "2026-11-19 21:20",
   "source_label": "plan bn 1 stacjonarne 2026 11 17 plik",
   "days": {
     "2026-09-28": {
@@ -1154,28 +1154,40 @@
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guziń",
           "type": "ćwiczenia",
-          "mode": "STACJONARNE"
+          "mode": "STACJONARNE",
+          "status": "ODWOŁANE",
+          "status_reason": "Zwolnienie lekarskie",
+          "status_source": "PDF_TEXT_AND_RED_FRAME"
         },
         {
           "time": "15:45-16:30",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guziń",
           "type": "ćwiczenia",
-          "mode": "STACJONARNE"
+          "mode": "STACJONARNE",
+          "status": "ODWOŁANE",
+          "status_reason": "Zwolnienie lekarskie",
+          "status_source": "PDF_TEXT_AND_RED_FRAME"
         },
         {
           "time": "16:45-17:30",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guziń",
           "type": "ćwiczenia",
-          "mode": "STACJONARNE"
+          "mode": "STACJONARNE",
+          "status": "ODWOŁANE",
+          "status_reason": "Zwolnienie lekarskie",
+          "status_source": "PDF_TEXT_AND_RED_FRAME"
         },
         {
           "time": "17:30-18:15",
           "title": "Podstawy ekonomii",
           "lecturer": "dr Małgorzata Guziń",
           "type": "ćwiczenia",
-          "mode": "STACJONARNE"
+          "mode": "STACJONARNE",
+          "status": "ODWOŁANE",
+          "status_reason": "Zwolnienie lekarskie",
+          "status_source": "PDF_TEXT_AND_RED_FRAME"
         },
         {
           "time": "18:30-20:00",
