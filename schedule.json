@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-11-20 07:51",
-  "source_label": "plan bn 1 stacjonarne 2026 11 17 plik",
+  "last_updated": "2026-11-20 15:33",
+  "source_label": "plan bn 1 stacjonarne 2026 11 20 plik",
   "days": {
     "2026-09-28": {
       "mode": "STACJONARNE",
@@ -1344,7 +1344,7 @@
           "lecturer": "dr Adam Czarnecki",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "106"
         },
         {
           "time": "16:45-18:15",
@@ -1352,15 +1352,14 @@
           "lecturer": "dr Danuta Apanel",
           "type": "wykład",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "106"
         },
         {
           "time": "18:30-20:00",
           "title": "Technologia informacyjna",
           "lecturer": "mgr Jacek Moszyński",
           "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "mode": "STACJONARNE"
         }
       ]
     },
@@ -1373,7 +1372,7 @@
           "lecturer": "dr Małgorzata Guzińska",
           "type": "wykład",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "105"
         },
         {
           "time": "16:45-18:15",
@@ -1381,7 +1380,7 @@
           "lecturer": "dr Małgorzata Guzińska",
           "type": "wykład",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "105"
         },
         {
           "time": "18:30-20:00",
@@ -1389,7 +1388,7 @@
           "lecturer": "dr Adam Czarnecki",
           "type": "wykład",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "105"
         }
       ]
     },
@@ -1402,7 +1401,7 @@
           "lecturer": "dr Adam Czarnecki",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "105"
         },
         {
           "time": "16:45-18:15",
@@ -1410,7 +1409,7 @@
           "lecturer": "dr Beata Gostomczyk",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "105"
         },
         {
           "time": "18:30-20:00",
@@ -1418,7 +1417,7 @@
           "lecturer": "mgr Adam Nowak",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "HALA SPORTOWA"
         }
       ]
     },
@@ -1746,14 +1745,6 @@
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
           "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "10:30-11:15",
-          "title": "Administracja publiczna",
-          "lecturer": "dr Artur Dąbek",
-          "type": "wykład",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }
@@ -2293,6 +2284,14 @@
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
+        },
+        {
+          "time": "15:00-16:30",
+          "title": "Technologia informacyjna",
+          "lecturer": "mgr Jacek Moszyński",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
         }
       ]
     },
@@ -2656,6 +2655,14 @@
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
           "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "16:45-17:30",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
         }

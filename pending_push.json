@@ -1,3 +1,213 @@
 {
-  "notifications": []
+  "notifications": [
+    {
+      "id": "3-8b8c9a5015ab-2026-11-25",
+      "date": "2026-11-25",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 3 zmiany w planie zajęć.",
+      "push_message": "Wykryto 3 zmiany: ZMIENIONO: Technologia informacyjna — Sala: BRAK SALI → — | ZMIENIONO: Podstawy socjologii — Sala: BRAK SALI → 106 | ZMIENIONO: Historia Polski na tle historii Europy — Sala: BRAK SALI → 106",
+      "events": [
+        {
+          "id": "3-8b8c9a5015ab-2026-11-25-change-1",
+          "date": "2026-11-25",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Technologia informacyjna",
+          "details": [
+            "Sala: BRAK SALI → —"
+          ],
+          "created_at": "2026-11-20 15:33"
+        },
+        {
+          "id": "3-8b8c9a5015ab-2026-11-25-change-2",
+          "date": "2026-11-25",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Podstawy socjologii",
+          "details": [
+            "Sala: BRAK SALI → 106"
+          ],
+          "created_at": "2026-11-20 15:33"
+        },
+        {
+          "id": "3-8b8c9a5015ab-2026-11-25-change-3",
+          "date": "2026-11-25",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Historia Polski na tle historii Europy",
+          "details": [
+            "Sala: BRAK SALI → 106"
+          ],
+          "created_at": "2026-11-20 15:33"
+        }
+      ],
+      "created_at": "2026-11-20 15:33",
+      "url": "./?date=2026-11-25"
+    },
+    {
+      "id": "3-8b8c9a5015ab-2026-11-26",
+      "date": "2026-11-26",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 3 zmiany w planie zajęć.",
+      "push_message": "Wykryto 3 zmiany: ZMIENIONO: Geografia polityczna i gospodarcza — Sala: BRAK SALI → 105 | ZMIENIONO: Podstawy ekonomii — Sala: BRAK SALI → 105 | ZMIENIONO: Podstawy ekonomii — Sala: BRAK SALI → 105",
+      "events": [
+        {
+          "id": "3-8b8c9a5015ab-2026-11-26-change-4",
+          "date": "2026-11-26",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Geografia polityczna i gospodarcza",
+          "details": [
+            "Sala: BRAK SALI → 105"
+          ],
+          "created_at": "2026-11-20 15:33"
+        },
+        {
+          "id": "3-8b8c9a5015ab-2026-11-26-change-5",
+          "date": "2026-11-26",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Podstawy ekonomii",
+          "details": [
+            "Sala: BRAK SALI → 105"
+          ],
+          "created_at": "2026-11-20 15:33"
+        },
+        {
+          "id": "3-8b8c9a5015ab-2026-11-26-change-6",
+          "date": "2026-11-26",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Podstawy ekonomii",
+          "details": [
+            "Sala: BRAK SALI → 105"
+          ],
+          "created_at": "2026-11-20 15:33"
+        }
+      ],
+      "created_at": "2026-11-20 15:33",
+      "url": "./?date=2026-11-26"
+    },
+    {
+      "id": "3-8b8c9a5015ab-2026-11-27",
+      "date": "2026-11-27",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 3 zmiany w planie zajęć.",
+      "push_message": "Wykryto 3 zmiany: ZMIENIONO: Wychowanie fizyczne — Sala: BRAK SALI → HALA SPORTOWA | ZMIENIONO: Język obcy specjalistyczny - j. angi… — Sala: BRAK SALI → 105 | ZMIENIONO: Historia Polski na tle historii Europy — Sala: BRAK SALI → 105",
+      "events": [
+        {
+          "id": "3-8b8c9a5015ab-2026-11-27-change-7",
+          "date": "2026-11-27",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Wychowanie fizyczne",
+          "details": [
+            "Sala: BRAK SALI → HALA SPORTOWA"
+          ],
+          "created_at": "2026-11-20 15:33"
+        },
+        {
+          "id": "3-8b8c9a5015ab-2026-11-27-change-8",
+          "date": "2026-11-27",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Język obcy specjalistyczny - j. angi…",
+          "details": [
+            "Sala: BRAK SALI → 105"
+          ],
+          "created_at": "2026-11-20 15:33"
+        },
+        {
+          "id": "3-8b8c9a5015ab-2026-11-27-change-9",
+          "date": "2026-11-27",
+          "type": "changed",
+          "title": "Zmieniono zajęcia",
+          "message": "Historia Polski na tle historii Europy",
+          "details": [
+            "Sala: BRAK SALI → 105"
+          ],
+          "created_at": "2026-11-20 15:33"
+        }
+      ],
+      "created_at": "2026-11-20 15:33",
+      "url": "./?date=2026-11-27"
+    },
+    {
+      "id": "3-8b8c9a5015ab-2026-12-13",
+      "date": "2026-12-13",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 1 zmianę w planie zajęć.",
+      "push_message": "Wykryto 1 zmianę: ODWOŁANO: Administracja publiczna · 10:30-11:15 — dr Artur Dąbek",
+      "events": [
+        {
+          "id": "3-8b8c9a5015ab-2026-12-13-cancelled-10",
+          "date": "2026-12-13",
+          "type": "cancelled",
+          "title": "Odwołano zajęcia",
+          "message": "Administracja publiczna · 10:30-11:15",
+          "details": [
+            "dr Artur Dąbek"
+          ],
+          "created_at": "2026-11-20 15:33"
+        }
+      ],
+      "created_at": "2026-11-20 15:33",
+      "url": "./?date=2026-12-13"
+    },
+    {
+      "id": "3-8b8c9a5015ab-2027-01-16",
+      "date": "2027-01-16",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 1 zmianę w planie zajęć.",
+      "push_message": "Wykryto 1 zmianę: DODANO: Technologia informacyjna · 15:00-16:30 — mgr Jacek Moszyński; Tryb: STACJONARNE; Sala: BRAK SALI",
+      "events": [
+        {
+          "id": "3-8b8c9a5015ab-2027-01-16-added-11",
+          "date": "2027-01-16",
+          "type": "added",
+          "title": "Dodano nowe zajęcia",
+          "message": "Technologia informacyjna · 15:00-16:30",
+          "details": [
+            "mgr Jacek Moszyński",
+            "Tryb: STACJONARNE",
+            "Sala: BRAK SALI"
+          ],
+          "created_at": "2026-11-20 15:33"
+        }
+      ],
+      "created_at": "2026-11-20 15:33",
+      "url": "./?date=2027-01-16"
+    },
+    {
+      "id": "3-8b8c9a5015ab-2027-02-02",
+      "date": "2027-02-02",
+      "type": "summary",
+      "title": "Zmiany w planie zajęć",
+      "message": "Wykryto 1 zmianę w planie zajęć.",
+      "push_message": "Wykryto 1 zmianę: DODANO: Administracja publiczna · 16:45-17:30 — dr Artur Dąbek; Tryb: STACJONARNE; Sala: BRAK SALI",
+      "events": [
+        {
+          "id": "3-8b8c9a5015ab-2027-02-02-added-12",
+          "date": "2027-02-02",
+          "type": "added",
+          "title": "Dodano nowe zajęcia",
+          "message": "Administracja publiczna · 16:45-17:30",
+          "details": [
+            "dr Artur Dąbek",
+            "Tryb: STACJONARNE",
+            "Sala: BRAK SALI"
+          ],
+          "created_at": "2026-11-20 15:33"
+        }
+      ],
+      "created_at": "2026-11-20 15:33",
+      "url": "./?date=2027-02-02"
+    }
+  ],
+  "updated_at": "2026-11-20 15:33"
 }
