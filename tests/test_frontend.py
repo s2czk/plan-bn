@@ -241,14 +241,26 @@ console.log(JSON.stringify({
 
     def test_cancelled_classes_render_red_and_are_not_counted_as_normal_lessons(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        schedule = json.loads((ROOT / "schedule.json").read_text(encoding="utf-8"))
-        source_day = schedule["days"]["2026-11-19"]
-        cancelled = [item for item in source_day["items"] if item.get("status") == "ODWOŁANE"]
-        self.assertEqual(
-            sorted(item["time"] for item in cancelled),
-            ["15:00-15:45", "15:45-16:30", "16:45-17:30", "17:30-18:15"],
-        )
-        self.assertTrue(all(item.get("status_reason") == "Zwolnienie lekarskie" for item in cancelled))
+        source_day = {
+            "mode": "STACJONARNE",
+            "items": [
+                {"time": "15:00-15:45", "title": "Podstawy ekonomii", "lecturer": "dr Małgorzata Guziń",
+                 "type": "ćwiczenia", "mode": "STACJONARNE", "status": "ODWOŁANE",
+                 "status_reason": "Zwolnienie lekarskie", "status_source": "PDF_TEXT_AND_RED_FRAME"},
+                {"time": "15:45-16:30", "title": "Podstawy ekonomii", "lecturer": "dr Małgorzata Guziń",
+                 "type": "ćwiczenia", "mode": "STACJONARNE", "status": "ODWOŁANE",
+                 "status_reason": "Zwolnienie lekarskie", "status_source": "PDF_TEXT_AND_RED_FRAME"},
+                {"time": "16:45-17:30", "title": "Podstawy ekonomii", "lecturer": "dr Małgorzata Guziń",
+                 "type": "ćwiczenia", "mode": "STACJONARNE", "status": "ODWOŁANE",
+                 "status_reason": "Zwolnienie lekarskie", "status_source": "PDF_TEXT_AND_RED_FRAME"},
+                {"time": "17:30-18:15", "title": "Podstawy ekonomii", "lecturer": "dr Małgorzata Guziń",
+                 "type": "ćwiczenia", "mode": "STACJONARNE", "status": "ODWOŁANE",
+                 "status_reason": "Zwolnienie lekarskie", "status_source": "PDF_TEXT_AND_RED_FRAME"},
+                {"time": "18:30-20:00", "title": "Wspólna polityka zagraniczna i bezpieczeństwo",
+                 "lecturer": "dr Jolanta Martuszewska", "type": "ćwiczenia", "mode": "STACJONARNE", "room": "105"},
+            ],
+        }
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn(".class-card.cancelled{", html)
         self.assertIn(".class-status{", html)
 
@@ -281,6 +293,7 @@ console.log(JSON.stringify({
         self.assertEqual(output["html"].count("Zwolnienie lekarskie"), 4)
         self.assertEqual(output["html"].count("ODWOŁANE"), 4)
         self.assertIn("Wspólna polityka zagraniczna", output["html"])
+
     def test_explicit_date_deep_links_override_automatic_date(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("hasExplicitDate?queryDate:localISODate()", html)
@@ -415,12 +428,25 @@ console.log(JSON.stringify({
 
     def test_service_worker_fetches_push_config_from_network_first(self):
         service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-        self.assertIn('pans-plan-shell-v10', service_worker)
+        self.assertIn('pans-plan-shell-v11', service_worker)
         self.assertIn('const isNavigation = request.mode === "navigate" || url.pathname.endsWith("/index.html")', service_worker)
         self.assertIn('const liveRequest = new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const isPushConfig = url.pathname.endsWith("/push-config.js")', service_worker)
         self.assertIn('new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const response = await fetch(liveRequest)', service_worker)
+        self.assertIn('const stableRequest = new Request(url.origin + url.pathname', service_worker)
+        self.assertIn('await cache.put(stableRequest, response.clone())', service_worker)
+        self.assertIn('caches.match(stableRequest)', service_worker)
+
+
+    def test_full_pdf_audit_is_mandatory_before_schedule_publication(self):
+        workflow = (ROOT / ".github" / "workflows" / "update_schedule.yml").read_text(encoding="utf-8")
+        audit_pos = workflow.find("run: python audit_plan.py")
+        publish_pos = workflow.find("name: Zapisz plan, historię i oczekujące powiadomienia")
+        self.assertGreaterEqual(audit_pos, 0)
+        self.assertGreater(publish_pos, audit_pos)
+        audit_section = workflow[workflow.rfind("- name:", 0, audit_pos):audit_pos]
+        self.assertNotIn("if:", audit_section)
 
     def test_push_backend_setup_is_documented(self):
         setup = (ROOT / "cloudflare" / "README.md").read_text(encoding="utf-8")

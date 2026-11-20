@@ -38,6 +38,28 @@ class ScheduleAuditTests(unittest.TestCase):
         }
         self.assertEqual(check_overlaps(days), [])
 
+    def test_parallel_sessions_for_distinct_groups_are_not_student_conflicts(self):
+        days = {
+            "2026-11-21": {
+                "items": [
+                    {"time": "09:00-10:30", "title": "Prawo", "group": "grupa 1"},
+                    {"time": "09:00-10:30", "title": "Socjologia", "group": "grupa 2"},
+                ]
+            }
+        }
+        self.assertEqual(check_overlaps(days), [])
+
+    def test_overlap_for_the_same_group_is_still_reported(self):
+        days = {
+            "2026-11-21": {
+                "items": [
+                    {"time": "09:00-10:30", "title": "Prawo", "group": "grupa 1"},
+                    {"time": "09:30-11:00", "title": "Socjologia", "group": "grupa 1"},
+                ]
+            }
+        }
+        self.assertEqual(len(check_overlaps(days)), 1)
+
     def test_nested_overlaps_are_all_detected(self):
         days = {
             "2026-11-15": {

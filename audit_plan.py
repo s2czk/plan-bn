@@ -1,4 +1,4 @@
-# AUDYT PDF: weryfikacja czterech czerwonych wpisów z powodu zwolnienia lekarskiego na 19.11.2026.
+# Obowiązkowy audyt źródłowego PDF przed publikacją harmonogramu.
 import hashlib
 import io
 import json
@@ -10,9 +10,14 @@ import requests
 
 from updater import (
     HEADERS,
+    extract_red_frame_flags,
+    extract_red_status_boxes,
+    extract_weekday_labels,
     find_bn_resource_link,
     parse_single_page,
     parse_week_page,
+    validate_day_source_text,
+    validate_pdf_page_coverage,
     validate_schedule,
 )
 
@@ -24,7 +29,16 @@ def minutes(value):
     return int(match.group(1)) * 60 + int(match.group(2))
 
 
+def _group_set(item):
+    return {
+        group.strip().casefold()
+        for group in re.split(r"\s*/\s*", str(item.get("group") or ""))
+        if group.strip()
+    }
+
+
 def check_overlaps(days):
+    """Wykrywa kolizje dla tej samej grupy; równoległe grupy nie są konfliktem."""
     overlaps = []
     for date, day in days.items():
         events = []
@@ -36,12 +50,18 @@ def check_overlaps(days):
             for second in events[index + 1:]:
                 if second[0] >= first[1]:
                     break
+                first_groups = _group_set(first[2])
+                second_groups = _group_set(second[2])
+                if first_groups and second_groups and first_groups.isdisjoint(second_groups):
+                    continue
                 overlaps.append({
                     "date": date,
                     "first": first[2].get("title"),
                     "first_time": first[2].get("time"),
+                    "first_group": first[2].get("group", ""),
                     "second": second[2].get("title"),
                     "second_time": second[2].get("time"),
+                    "second_group": second[2].get("group", ""),
                 })
     return overlaps
 
@@ -56,25 +76,6 @@ def compare_days(stored_days, parsed_days):
         if stored_days[date] != parsed_days[date]
     )
     return {"missing": missing, "added": added, "changed": changed}
-
-
-def check_known_medical_leave_example(days):
-    """Kontrola referencyjna z oryginalnego zrzutu PDF: cztery czerwone pola 19.11."""
-    expected_times = ["15:00-15:45", "15:45-16:30", "16:45-17:30", "17:30-18:15"]
-    items = (days.get("2026-11-19") or {}).get("items", [])
-    actual = [
-        item for item in items
-        if item.get("title") == "Podstawy ekonomii"
-        and item.get("status") == "ODWOŁANE"
-        and item.get("status_reason") == "Zwolnienie lekarskie"
-    ]
-    actual_times = sorted(item.get("time", "") for item in actual)
-    return {
-        "result": "PASS" if actual_times == expected_times else "FAIL",
-        "expected_times": expected_times,
-        "actual_times": actual_times,
-        "count": len(actual),
-    }
 
 
 def main():
@@ -96,15 +97,17 @@ def main():
     expected_hash = Path("last_hash.txt").read_text(encoding="utf-8").strip()
     if source_hash != expected_hash:
         raise RuntimeError(
-            "PDF zmienił się od ostatniej publikacji. "
-            "Przerwano audyt porównawczy, aby nie porównywać różnych wersji planu."
+            "PDF zmienił się między parsowaniem a audytem. "
+            "Przerwano publikację; poprzedni plan pozostaje bez zmian."
         )
 
     parsed_days = {}
-    duplicate_dates = []
     seen_dates = set()
+    duplicate_dates = []
     weekly_page_count = 0
-    pages_with_date_but_no_classes = []
+    parsed_page_count = 0
+    pages_without_classes = []
+
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
         page_count = len(pdf.pages)
         for page_number, page in enumerate(pdf.pages, start=1):
@@ -118,22 +121,40 @@ def main():
                     seen_dates.add(date)
                     parsed_days[date] = day
                     if not day.get("items"):
-                        pages_with_date_but_no_classes.append({"date": date, "page": page_number})
+                        pages_without_classes.append({"date": date, "page": page_number})
+                parsed_page_count += 1
                 continue
 
+            page_words = page.extract_words(
+                x_tolerance=2,
+                y_tolerance=3,
+                keep_blank_chars=False,
+                use_text_flow=False,
+            )
+            weekday_labels = extract_weekday_labels(page_words)
+            if weekday_labels:
+                raise RuntimeError(
+                    f"Audyt: strona {page_number} zawiera nagłówki dni {sorted(weekday_labels)}, "
+                    "ale nie dała się bezpiecznie podzielić na siedem kolumn."
+                )
+
             page_text = page.extract_text() or ""
-            date, day = parse_single_page(page_text)
+            red_frame_flags = extract_red_frame_flags(page_words, extract_red_status_boxes(page))
+            date, day = parse_single_page(page_text, red_frame_flags)
             if not date:
-                continue
+                raise RuntimeError(f"Audyt: strona {page_number} nie została przypisana do żadnej daty.")
             if date in seen_dates:
                 duplicate_dates.append({"date": date, "page": page_number})
                 continue
+            day = day or {"mode": "STACJONARNE", "items": []}
+            validate_day_source_text(date, page_text, day, red_frame_flags)
             seen_dates.add(date)
-            if day:
-                parsed_days[date] = day
-            else:
-                pages_with_date_but_no_classes.append({"date": date, "page": page_number})
+            parsed_days[date] = day
+            if not day.get("items"):
+                pages_without_classes.append({"date": date, "page": page_number})
+            parsed_page_count += 1
 
+    validate_pdf_page_coverage(page_count, parsed_page_count, weekly_page_count, len(parsed_days))
     validate_schedule(parsed_days)
     if duplicate_dates:
         raise RuntimeError(f"PDF zawiera powtórzone strony/daty: {duplicate_dates[:10]}")
@@ -142,41 +163,43 @@ def main():
     stored_days = stored_payload.get("days") or {}
     comparison = compare_days(stored_days, parsed_days)
     overlaps = check_overlaps(parsed_days)
-    medical_leave_check = check_known_medical_leave_example(parsed_days)
+    cancelled_by_reason = {}
+    for day in parsed_days.values():
+        for item in day.get("items", []):
+            if item.get("status") == "ODWOŁANE":
+                reason = item.get("status_reason") or "Bez podanej przyczyny"
+                cancelled_by_reason[reason] = cancelled_by_reason.get(reason, 0) + 1
 
     total_items = sum(len(day.get("items", [])) for day in parsed_days.values())
-    cancelled_items = sum(
-        1 for day in parsed_days.values() for item in day.get("items", [])
-        if item.get("status") == "ODWOŁANE"
-    )
-    print(json.dumps({
+    audit_passed = not any(comparison.values()) and not overlaps
+    report = {
         "audit": "FULL_PDF_PARSE",
-        "result": "PASS" if not any(comparison.values()) and not overlaps else "FAIL",
+        "result": "PASS" if audit_passed else "FAIL",
         "source_url": resource_url,
         "source_label": label,
         "pdf_bytes": len(pdf_bytes),
         "pdf_sha256": source_hash,
         "pdf_pages": page_count,
+        "classified_pages": parsed_page_count,
         "weekly_pages": weekly_page_count,
-        "dated_pages_without_classes": pages_with_date_but_no_classes,
         "parsed_days": len(parsed_days),
         "parsed_classes": total_items,
-        "cancelled_items": cancelled_items,
-        "reference_medical_leave_check": medical_leave_check,
+        "cancelled_items": sum(cancelled_by_reason.values()),
+        "cancelled_by_reason": cancelled_by_reason,
+        "pages_without_classes": pages_without_classes,
         "published_days": len(stored_days),
         "published_classes": sum(len(day.get("items", [])) for day in stored_days.values()),
         "comparison": comparison,
         "overlaps": overlaps[:20],
         "overlap_count": len(overlaps),
-    }, ensure_ascii=False, indent=2))
+    }
+    print(json.dumps(report, ensure_ascii=False, indent=2))
 
-    if weekly_page_count and weekly_page_count == page_count and len(parsed_days) != page_count * 7:
-        raise SystemExit("Pełny audyt PDF nie znalazł dokładnie 7 dat na każdej stronie tygodniowej.")
-
-    if medical_leave_check["result"] != "PASS":
-        raise SystemExit("Pełny audyt PDF nie rozpoznał czterech odwołanych pól z powodu zwolnienia lekarskiego z oryginalnego zrzutu.")
-    if any(comparison.values()) or overlaps:
-        raise SystemExit("Pełny audyt PDF nie przeszedł: wynik parsowania różni się od opublikowanych danych lub zawiera kolizje godzin.")
+    if not audit_passed:
+        raise SystemExit(
+            "Pełny audyt PDF nie przeszedł: wynik parsowania różni się od opublikowanych danych "
+            "lub wykryto kolizje zajęć dla tej samej grupy."
+        )
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import unittest
 
-from updater import build_change_notifications, clean_subject_title, extract_group_labels, extract_red_status_boxes, group_change_notifications, merge_adjacent_blocks, merge_pending_notifications, parse_single_page, parse_week_page_words, validate_day_source_text
+from updater import build_change_notifications, clean_subject_title, extract_group_labels, extract_red_status_boxes, extract_red_frame_flags, group_change_notifications, merge_adjacent_blocks, merge_pending_notifications, parse_single_page, parse_week_page_words, validate_day_source_text, validate_pdf_page_coverage, validate_schedule
 
 
 def block(start, end, title="Ekonomia", lecturer="dr A. Kowalski", class_type="wykład", remote=True, room=""):
@@ -35,6 +35,15 @@ class RedStatusBoxExtractionTests(unittest.TestCase):
              "x0": 150.0, "x1": 160.0, "top": 95.0, "bottom": 137.0},
         ], "curves": []})()
         self.assertEqual(extract_red_status_boxes(page), [])
+
+
+    def test_red_frame_flags_are_mapped_to_the_matching_time_card_only(self):
+        words = [
+            {"text": "15:00-15:45", "x0": 160, "x1": 205, "top": 100, "bottom": 110},
+            {"text": "15:45-16:30", "x0": 160, "x1": 205, "top": 140, "bottom": 150},
+        ]
+        boxes = [{"x0": 150, "x1": 260, "top": 95, "bottom": 120}]
+        self.assertEqual(extract_red_frame_flags(words, boxes), [True, False])
 
 
 class SourceCardValidationTests(unittest.TestCase):
@@ -152,14 +161,13 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
             {"text": "104", "x0": 364.0, "top": 110.0},
             {"text": "Ćwiczenia", "x0": 272.6, "top": 115.0},
         ]
-        parsed = parse_week_page_words("2026-11-16", words, 841.9, red_boxes=[{"x0": 150, "x1": 261, "top": 95, "bottom": 120}])
+        parsed = parse_week_page_words("2026-11-16", words, 841.9, red_boxes=[])
         self.assertEqual(len(parsed), 7)
         self.assertEqual(parsed["2026-11-16"]["items"], [])
         self.assertEqual(parsed["2026-11-17"]["items"][0]["title"], "Elementy samoobrony")
         self.assertEqual(parsed["2026-11-18"]["items"][0]["title"], "Komunikacja interpersonalna")
         self.assertEqual(parsed["2026-11-17"]["items"][0]["room"], "H24")
-        self.assertEqual(parsed["2026-11-17"]["items"][0]["status"], "ODWOŁANE")
-        self.assertEqual(parsed["2026-11-17"]["items"][0]["status_source"], "PDF_RED_FRAME")
+        self.assertNotIn("status", parsed["2026-11-17"]["items"][0])
         self.assertEqual(parsed["2026-11-18"]["items"][0]["room"], "104")
         self.assertNotEqual(
             parsed["2026-11-17"]["items"][0]["title"],
@@ -246,6 +254,40 @@ class MergeAdjacentBlocksTests(unittest.TestCase):
         self.assertEqual(day["items"][1]["time"], "08:45-09:30")
         self.assertEqual(day["items"][1]["lecturer"], "mgr Anna Nowak")
         self.assertEqual(day["mode"], "ZDALNE")
+
+
+class ScheduleValidationTests(unittest.TestCase):
+    def test_cancelled_item_requires_reason_and_recognized_source(self):
+        base = {
+            "time": "15:00-15:45", "title": "Podstawy ekonomii",
+            "mode": "STACJONARNE", "status": "ODWOŁANE",
+            "status_reason": "Zwolnienie lekarskie",
+            "status_source": "PDF_TEXT_AND_RED_FRAME",
+        }
+        self.assertIsNone(validate_schedule({"2026-11-19": {"items": [base]}}))
+        missing_reason = dict(base)
+        missing_reason.pop("status_reason")
+        with self.assertRaisesRegex(ValueError, "powodu odwołania"):
+            validate_schedule({"2026-11-19": {"items": [missing_reason]}})
+        bad_source = dict(base, status_source="UNKNOWN")
+        with self.assertRaisesRegex(ValueError, "źródło statusu"):
+            validate_schedule({"2026-11-19": {"items": [bad_source]}})
+
+    def test_active_item_cannot_carry_orphan_cancellation_metadata(self):
+        item = {
+            "time": "18:30-20:00", "title": "Wspólna polityka zagraniczna",
+            "mode": "STACJONARNE", "status_reason": "Zwolnienie lekarskie",
+        }
+        with self.assertRaisesRegex(ValueError, "bez statusu ODWOŁANE"):
+            validate_schedule({"2026-11-19": {"items": [item]}})
+
+    def test_weekly_pdf_must_produce_seven_dates_per_page(self):
+        self.assertIsNone(validate_pdf_page_coverage(19, 19, 19, 133))
+        with self.assertRaisesRegex(RuntimeError, "oczekiwano 133 dat"):
+            validate_pdf_page_coverage(19, 19, 19, 132)
+        with self.assertRaisesRegex(RuntimeError, "strony PDF"):
+            validate_pdf_page_coverage(19, 18, 19, 133)
+
 
 
 class NotificationDiffTests(unittest.TestCase):

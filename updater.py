@@ -25,7 +25,7 @@ PUSH_PAYLOAD_FILE = "push_payload.json"
 PENDING_PUSH_FILE = "pending_push.json"
 UPDATE_SEQUENCE_FILE = "update_sequence.txt"
 PARSER_VERSION_FILE = "parser_version.txt"
-PARSER_VERSION = "11"
+PARSER_VERSION = "12"
 WARSAW_TZ = ZoneInfo("Europe/Warsaw")
 
 
@@ -216,6 +216,31 @@ def extract_red_status_boxes(page):
             boxes.append({"x0": x0, "x1": x1, "top": top, "bottom": bottom})
     return boxes
 
+def extract_red_frame_flags(words, red_boxes):
+    """Mapuje czerwone obramowania PDF na karty według środka wiersza z godziną."""
+    time_pattern = re.compile(r"\d{1,2}:\d{2}[–—-]\d{1,2}:\d{2}")
+    time_words = [
+        word for word in words
+        if time_pattern.fullmatch(str(word.get("text", "")).strip())
+    ]
+    time_words.sort(key=lambda word: (float(word.get("top", 0)), float(word.get("x0", 0))))
+
+    flags = []
+    for word in time_words:
+        x0 = float(word["x0"])
+        x1 = float(word.get("x1", x0))
+        top = float(word.get("top", 0))
+        bottom = float(word.get("bottom", top))
+        cx = (x0 + x1) / 2
+        cy = (top + bottom) / 2
+        flags.append(any(
+            box["x0"] - 1 <= cx <= box["x1"] + 1
+            and box["top"] - 1 <= cy <= box["bottom"] + 1
+            for box in (red_boxes or [])
+        ))
+    return flags
+
+
 
 def parse_single_page(text, red_frame_flags=None):
     """Wyciąga datę i zajęcia z jednej strony PDF."""
@@ -308,8 +333,6 @@ def parse_single_page(text, red_frame_flags=None):
         if status:
             raw_block.update({"status": status, "status_reason": status_reason, "status_source": status_source})
         raw_blocks.append(raw_block)
-
-    grouped = merge_adjacent_blocks(raw_blocks)
 
     grouped = merge_adjacent_blocks(raw_blocks)
     modes = {item["mode"] for item in grouped}
@@ -504,17 +527,7 @@ def parse_week_page_words(week_start_iso, words, page_width, red_boxes=None):
         cell_words.sort(key=lambda word: (float(word.get("top", 0)), float(word.get("x0", 0))))
         cell_text = " ".join(str(word.get("text", "")) for word in cell_words)
 
-        time_pattern = re.compile(r"\d{1,2}:\d{2}[–—-]\d{1,2}:\d{2}")
-        time_words = [word for word in cell_words if time_pattern.fullmatch(str(word.get("text", "")).strip())]
-        red_frame_flags = []
-        for word in time_words:
-            cx = (float(word["x0"]) + float(word.get("x1", word["x0"]))) / 2
-            cy = (float(word["top"]) + float(word.get("bottom", word["top"]))) / 2
-            red_frame_flags.append(any(
-                box["x0"] - 1 <= cx <= box["x1"] + 1
-                and box["top"] - 1 <= cy <= box["bottom"] + 1
-                for box in (red_boxes or [])
-            ))
+        red_frame_flags = extract_red_frame_flags(cell_words, red_boxes)
 
         parsed_date, day_obj = parse_single_page(date_label + " " + cell_text, red_frame_flags)
         if parsed_date != iso_date:
@@ -757,23 +770,70 @@ def keep_recent_notifications(notifications, now=None):
 
 
 def validate_schedule(days):
-    if not days:
+    if not isinstance(days, dict) or not days:
         raise RuntimeError("Parser nie odczytał żadnego dnia — poprzedni schedule.json pozostaje bez zmian.")
+
+    allowed_modes = {"ZDALNE", "STACJONARNE", "MIESZANE"}
+    allowed_status_sources = {"PDF_TEXT", "PDF_RED_FRAME", "PDF_TEXT_AND_RED_FRAME"}
+
     for date, day in days.items():
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
             raise ValueError(f"Nieprawidłowa data w planie: {date}")
         datetime.strptime(date, "%Y-%m-%d")
-        for item in day.get("items", []):
-            if not item.get("title", "").strip():
+        if not isinstance(day, dict) or not isinstance(day.get("items"), list):
+            raise ValueError(f"Nieprawidłowa struktura dnia {date}: oczekiwano tablicy items.")
+
+        for item in day["items"]:
+            if not isinstance(item, dict):
+                raise ValueError(f"Nieprawidłowy rekord zajęć dla {date}.")
+            title = item.get("title")
+            if not isinstance(title, str) or not title.strip():
                 raise ValueError(f"Brak nazwy przedmiotu dla {date}")
-            if item.get("status") and item.get("status") != "ODWOŁANE":
-                raise ValueError(f"Nieznany status wpisu {item.get('status')} dla {date}")
-            if item.get("status") == "ODWOŁANE" and not item.get("status_reason"):
-                raise ValueError(f"Brak powodu odwołania dla {date}: {item.get('title')}")
-            start, end = item["time"].split("-", 1)
+
+            item_mode = item.get("mode", day.get("mode", "STACJONARNE"))
+            if item_mode not in allowed_modes:
+                raise ValueError(f"Nieprawidłowy tryb zajęć {item_mode!r} dla {date}.")
+
+            time_value = item.get("time", "")
+            time_match = re.fullmatch(r"(\d{1,2}:\d{2})-(\d{1,2}:\d{2})", str(time_value))
+            if not time_match:
+                raise ValueError(f"Nieprawidłowy format czasu {time_value!r} dla {date}.")
+            start, end = time_match.groups()
             if time_to_minutes(start) >= time_to_minutes(end):
-                raise ValueError(f"Nieprawidłowy przedział czasu {item['time']} dla {date}")
-    print(f"Kontrola danych: {len(days)} dni, {sum(len(d.get('items', [])) for d in days.values())} bloków zajęć.")
+                raise ValueError(f"Nieprawidłowy przedział czasu {time_value} dla {date}")
+
+            status = item.get("status")
+            reason = item.get("status_reason")
+            source = item.get("status_source")
+            if status:
+                if status != "ODWOŁANE":
+                    raise ValueError(f"Nieznany status wpisu {status} dla {date}")
+                if not isinstance(reason, str) or not reason.strip():
+                    raise ValueError(f"Brak powodu odwołania dla {date}: {title}")
+                if source not in allowed_status_sources:
+                    raise ValueError(f"Brak lub nieznane źródło statusu dla {date}: {title}")
+            elif reason or source:
+                raise ValueError(f"Rekord {date} {title} ma przyczynę/źródło statusu bez statusu ODWOŁANE.")
+
+    total_items = sum(len(day["items"]) for day in days.values())
+    print(f"Kontrola danych: {len(days)} dni, {total_items} bloków zajęć.")
+
+
+def validate_pdf_page_coverage(page_count, parsed_page_count, weekly_page_count, parsed_day_count):
+    """Nie pozwala opublikować częściowo odczytanego PDF."""
+    if page_count < 1:
+        raise RuntimeError("Źródłowy PDF nie zawiera żadnych stron.")
+    if parsed_page_count != page_count:
+        raise RuntimeError(
+            f"Nie wszystkie strony PDF przeszły walidację: {parsed_page_count}/{page_count}."
+        )
+    if weekly_page_count < 0 or weekly_page_count > page_count:
+        raise RuntimeError("Nieprawidłowa liczba stron tygodniowych w raporcie parsera.")
+    if weekly_page_count == page_count and parsed_day_count != page_count * 7:
+        raise RuntimeError(
+            f"PDF tygodniowy: oczekiwano {page_count * 7} dat, odczytano {parsed_day_count}."
+        )
+
 
 def read_json_if_exists(path, default):
     if not os.path.exists(path):
@@ -874,11 +934,13 @@ def main():
         if not pdf.pages:
             raise RuntimeError("Źródłowy PDF nie zawiera żadnych stron.")
         parsed_page_count = 0
+        weekly_page_count = 0
         for page_number, page in enumerate(pdf.pages, start=1):
             weekly_days = parse_week_page(page)
             if weekly_days is not None:
                 if len(weekly_days) != 7:
                     raise RuntimeError(f"Strona {page_number}: oczekiwano siedmiu dat w układzie tygodniowym.")
+                weekly_page_count += 1
                 for iso_date, day_obj in weekly_days.items():
                     if iso_date in days_dict:
                         raise RuntimeError(f"PDF zawiera więcej niż jedną stronę dla daty {iso_date}; przerwano zapis.")
@@ -898,7 +960,8 @@ def main():
                 )
 
             page_text = page.extract_text() or ""
-            iso_date, day_obj = parse_single_page(page_text)
+            red_frame_flags = extract_red_frame_flags(page_words, extract_red_status_boxes(page))
+            iso_date, day_obj = parse_single_page(page_text, red_frame_flags)
             if not iso_date:
                 raise RuntimeError(
                     f"Strona {page_number}: nie udało się przypisać treści PDF do daty. "
@@ -907,14 +970,11 @@ def main():
             if iso_date in days_dict:
                 raise RuntimeError(f"PDF zawiera więcej niż jedną stronę dla daty {iso_date}; przerwano zapis.")
             day_obj = day_obj or {"mode": "STACJONARNE", "items": []}
-            validate_day_source_text(iso_date, page_text, day_obj)
+            validate_day_source_text(iso_date, page_text, day_obj, red_frame_flags)
             days_dict[iso_date] = day_obj
             parsed_page_count += 1
 
-        if parsed_page_count != len(pdf.pages):
-            raise RuntimeError(
-                f"Nie wszystkie strony PDF przeszły walidację: {parsed_page_count}/{len(pdf.pages)}."
-            )
+        validate_pdf_page_coverage(len(pdf.pages), parsed_page_count, weekly_page_count, len(days_dict))
 
     validate_schedule(days_dict)
     now = local_now()

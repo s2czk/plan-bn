@@ -51,8 +51,7 @@ jobs:
       - name: Pobierz, sparsuj i zweryfikuj każdą kartę PDF — publikacja tylko po PASS
         run: python updater.py
 
-      - name: Pełny audyt ponownego parsowania PDF (tylko kontrolny przebieg)
-        if: contains(github.event.head_commit.message, 'AUDYT PDF')
+      - name: Pełny audyt ponownego parsowania PDF — obowiązkowy przed publikacją
         run: python audit_plan.py
 
       # Najpierw publikujemy plan i zapisujemy kolejkę w repozytorium.

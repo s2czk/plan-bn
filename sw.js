@@ -1,4 +1,4 @@
-const CACHE_NAME = "pans-plan-shell-v10";
+const CACHE_NAME = "pans-plan-shell-v11";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./push-config.js"];
 
 self.addEventListener("install", event => {
@@ -71,15 +71,27 @@ self.addEventListener("fetch", event => {
   }
 
   if (isLiveData) {
-    event.respondWith(
-      fetch(request).then(response => {
+    event.respondWith((async () => {
+      // App adds ?ts=... to bypass browser caches. Store live data under a stable
+      // URL so offline fallback can still find the last successfully downloaded plan.
+      const stableRequest = new Request(url.origin + url.pathname, { method: "GET" });
+      try {
+        const liveRequest = new Request(request, { cache: "no-store" });
+        const response = await fetch(liveRequest);
         if (response.ok) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(stableRequest, response.clone());
         }
         return response;
-      }).catch(() => caches.match(request))
-    );
+      } catch (_) {
+        const cached = await caches.match(stableRequest);
+        if (cached) return cached;
+        return new Response(JSON.stringify({ error: "Dane planu nie są dostępne bez internetu." }), {
+          status: 503,
+          headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" }
+        });
+      }
+    })());
     return;
   }
 
