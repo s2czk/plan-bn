@@ -51,12 +51,28 @@ def find_bn_resource_link():
         response = requests.get(COURSE_URL, headers=HEADERS, timeout=25)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
+        candidates = []
         for anchor in soup.find_all("a", href=True):
-            label = " ".join(anchor.get_text().split()).lower()
+            label = " ".join(anchor.get_text().split()).casefold()
             href = anchor["href"]
-            if "mod/resource/view.php" in href and "bn" in label:
-                if "mgr" not in label and "niestacjonarne" not in label:
-                    return urljoin(COURSE_URL, href), label
+            if "mod/resource/view.php" in href:
+                candidates.append({
+                    "label": label,
+                    "url": urljoin(COURSE_URL, href),
+                    "title": " ".join(str(anchor.get("title", "")).split()),
+                })
+        print("ZASOBY PDF NA STRONIE KURSU: " + json.dumps(candidates, ensure_ascii=False))
+        bn_candidates = [
+            item for item in candidates
+            if "bn" in item["label"]
+            and "mgr" not in item["label"]
+            and "niestacjonarne" not in item["label"]
+        ]
+        print("KANDYDACI BN I STACJONARNE: " + json.dumps(bn_candidates, ensure_ascii=False))
+        if bn_candidates:
+            selected = bn_candidates[0]
+            print("WYBRANY PDF BN: " + json.dumps(selected, ensure_ascii=False))
+            return selected["url"], selected["label"]
     except Exception as exc:
         print(f"Ostrzeżenie podczas skanowania kursu: {exc}")
     return FALLBACK_RESOURCE_URL, "plan BN I stacjonarne (link bezpośredni)"
