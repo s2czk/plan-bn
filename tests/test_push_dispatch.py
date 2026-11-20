@@ -70,6 +70,30 @@ class PushDispatchTests(unittest.TestCase):
         )
         self.assertEqual(result["sent"], 1)
 
+    def test_notification_payload_preserves_polish_text_and_day_link(self):
+        notification = {
+            "id": "unicode-check",
+            "title": "TEST: Plan PANS",
+            "push_message": "To test: zajęcia odwołane z powodu zwolnienia lekarskiego.",
+            "url": "./?date=2026-11-20",
+        }
+        captured = {}
+
+        def opener(request, timeout):
+            captured["payload"] = json.loads(request.data)
+            return FakeResponse(response_payload(sent=1, devices=1, notifications=1))
+
+        dispatch_notifications(
+            "https://worker.example",
+            "test-token",
+            [notification],
+            opener=opener,
+            sleeper=lambda _: None,
+        )
+        sent = captured["payload"]["notifications"][0]
+        self.assertEqual(sent["push_message"], notification["push_message"])
+        self.assertEqual(sent["url"], "./?date=2026-11-20")
+
     def test_noop_preflight_accepts_empty_queue_without_devices(self):
         result = dispatch_notifications(
             "https://worker.example",

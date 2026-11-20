@@ -1,3 +1,14 @@
 {
-  "notifications": []
+  "notifications": [
+    {
+      "id": "manual-validation-20261120-plan-mandaro",
+      "date": "2026-11-20",
+      "title": "TEST: Powiadomienia planu PANS",
+      "message": "Jednorazowy test techniczny systemu Push.",
+      "push_message": "To tylko test powiadomień planu PANS. Nie wymaga żadnej reakcji.",
+      "created_at": "2026-11-20 08:10",
+      "url": "./?date=2026-11-20"
+    }
+  ],
+  "updated_at": "2026-11-20"
 }
