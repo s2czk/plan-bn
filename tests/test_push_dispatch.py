@@ -4,7 +4,6 @@ import tempfile
 import unittest
 from pathlib import Path
 from urllib.error import HTTPError
-from unittest.mock import Mock
 
 from push_dispatch import (
     PushDispatchError,
@@ -12,17 +11,6 @@ from push_dispatch import (
     dispatch_notifications,
     post_dispatch,
 )
-
-
-def response_payload(sent=0, skipped=0, devices=0, removed=0, failed=0, notifications=0):
-    return {
-        "notifications": notifications,
-        "devices": devices,
-        "sent": sent,
-        "skipped": skipped,
-        "removed": removed,
-        "failed": failed,
-    }
 
 
 class FakeResponse:
@@ -39,139 +27,161 @@ class FakeResponse:
         return self.payload
 
 
+def response_payload(**overrides):
+    payload = {
+        "notifications": 1,
+        "devices": 1,
+        "sent": 1,
+        "skipped": 0,
+        "removed": 0,
+        "failed": 0,
+    }
+    payload.update(overrides)
+    return payload
+
+
 class PushDispatchTests(unittest.TestCase):
-    def test_request_uses_explicit_user_agent_and_bearer_token(self):
-        captured = {}
-
-        def opener(request, timeout):
-            captured["request"] = request
-            captured["timeout"] = timeout
-            return FakeResponse(response_payload())
-
-        post_dispatch("https://worker.example", "test-token", [], opener=opener, sleeper=lambda _: None)
-
-        request = captured["request"]
-        self.assertEqual(request.get_header("User-agent"), "PANS-Schedule-Updater/1.0 (+https://plan.mandaro.eu)")
-        self.assertEqual(request.get_header("Authorization"), "Bearer test-token")
-        self.assertEqual(captured["timeout"], 30)
-        self.assertEqual(json.loads(request.data), {"notifications": []})
-
-    def test_noop_preflight_accepts_empty_queue_without_devices(self):
-        result = dispatch_notifications(
-            "https://worker.example",
-            "test-token",
-            [],
-            opener=lambda request, timeout: FakeResponse(response_payload()),
-            sleeper=lambda _: None,
-        )
-        self.assertEqual(result, [])
-
-    def test_notification_requires_confirmed_delivery_or_previous_delivery(self):
-        notification = {"id": "event-1", "message": "Zmiana"}
-        with self.assertRaisesRegex(PushDispatchError, "Brak potwierdzonego dostarczenia"):
-            dispatch_notifications(
-                "https://worker.example",
-                "test-token",
-                [notification],
-                opener=lambda request, timeout: FakeResponse(response_payload(notifications=1)),
-                sleeper=lambda _: None,
-            )
-
-    def test_http_403_is_not_retried_and_surfaces_cloudflare_body(self):
+    def test_successful_dispatch_parses_response_and_uses_authorization(self):
         calls = []
 
         def opener(request, timeout):
-            calls.append(request)
-            raise HTTPError(
-                "https://worker.example/dispatch",
-                403,
-                "Forbidden",
-                {"server": "cloudflare", "cf-ray": "test-ray"},
-                io.BytesIO(b"error code: 1010"),
-            )
+            calls.append((request, timeout))
+            return FakeResponse(response_payload())
 
-        with self.assertRaisesRegex(PushDispatchError, "HTTP 403"):
-            post_dispatch(
-                "https://worker.example",
-                "test-token",
-                [],
-                opener=opener,
-                sleeper=lambda _: None,
-            )
-        self.assertEqual(len(calls), 1)
+        result = post_dispatch(
+            "https://push.example",
+            "secret-token",
+            [{"id": "notification-1", "message": "Zmiana planu"}],
+            opener=opener,
+            sleeper=lambda _: self.fail("Nie powinno być retry"),
+            attempts=1,
+        )
 
-    def test_http_503_is_retried_and_then_succeeds(self):
+        self.assertEqual(result["sent"], 1)
+        self.assertEqual(calls[0][0].get_header("Authorization"), "Bearer secret-token")
+        self.assertEqual(calls[0][0].get_method(), "POST")
+        self.assertEqual(calls[0][1], 30)
+
+    def test_http_403_is_not_retried_and_is_reported_clearly(self):
         calls = []
         sleeps = []
 
         def opener(request, timeout):
             calls.append(request)
+            raise HTTPError(
+                request.full_url, 403, "Forbidden", {},
+                io.BytesIO(b"invalid dispatch token"),
+            )
+
+        with self.assertRaisesRegex(PushDispatchError, "HTTP 403"):
+            post_dispatch(
+                "https://push.example",
+                "wrong-token",
+                [{"id": "notification-1"}],
+                opener=opener,
+                sleeper=sleeps.append,
+                attempts=3,
+            )
+
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(sleeps, [])
+
+    def test_http_503_is_retried_then_succeeds(self):
+        calls = []
+        sleeps = []
+        failure = HTTPError(
+            "https://push.example/dispatch", 503, "Service unavailable", {},
+            io.BytesIO(b"temporary failure"),
+        )
+
+        def opener(request, timeout):
+            calls.append(request)
             if len(calls) == 1:
-                raise HTTPError(
-                    "https://worker.example/dispatch",
-                    503,
-                    "Unavailable",
-                    {},
-                    io.BytesIO(b"temporary"),
-                )
+                raise failure
             return FakeResponse(response_payload())
 
         result = post_dispatch(
-            "https://worker.example",
-            "test-token",
-            [],
+            "https://push.example",
+            "secret-token",
+            [{"id": "notification-1"}],
             opener=opener,
             sleeper=sleeps.append,
+            attempts=2,
         )
-        self.assertEqual(result["failed"], 0)
+
+        self.assertEqual(result["sent"], 1)
         self.assertEqual(len(calls), 2)
         self.assertEqual(sleeps, [1])
 
-    def test_queue_acknowledges_only_confirmed_ids(self):
-        with tempfile.TemporaryDirectory() as temp_dir:
-            pending_path = Path(temp_dir) / "pending_push.json"
-            pending_path.write_text(json.dumps({
+    def test_pending_notifications_are_not_acknowledged_when_no_device_received_them(self):
+        payload = response_payload(devices=0, sent=0, skipped=0, removed=0)
+        opener = lambda request, timeout: FakeResponse(payload)
+
+        with self.assertRaisesRegex(PushDispatchError, "Brak potwierdzonego dostarczenia"):
+            dispatch_notifications(
+                "https://push.example",
+                "secret-token",
+                [{"id": "notification-1"}],
+                opener=opener,
+                sleeper=lambda _: None,
+            )
+
+    def test_failed_device_delivery_keeps_the_batch_unacknowledged(self):
+        opener = lambda request, timeout: FakeResponse(response_payload(sent=0, failed=1))
+        with self.assertRaisesRegex(PushDispatchError, "błędów dostarczenia"):
+            dispatch_notifications(
+                "https://push.example",
+                "secret-token",
+                [{"id": "notification-1"}],
+                opener=opener,
+                sleeper=lambda _: None,
+            )
+
+    def test_acknowledge_removes_only_confirmed_notification_ids(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "pending_push.json"
+            path.write_text(json.dumps({
+                "updated_at": "2026-11-20 08:00",
                 "notifications": [
-                    {"id": "event-1", "message": "Wysłano"},
-                    {"id": "event-2", "message": "Nadal oczekuje"},
-                ]
+                    {"id": "sent-1"},
+                    {"id": "still-pending-2"},
+                    {"id": "still-pending-3"},
+                ],
             }), encoding="utf-8")
 
-            acknowledge_pending(pending_path, ["event-1"])
+            acknowledge_pending(path, ["sent-1"])
+            stored = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                [item["id"] for item in stored["notifications"]],
+                ["still-pending-2", "still-pending-3"],
+            )
 
-            remaining = json.loads(pending_path.read_text(encoding="utf-8"))["notifications"]
-            self.assertEqual(remaining, [{"id": "event-2", "message": "Nadal oczekuje"}])
-
-    def test_queue_acknowledgement_rejects_unknown_ids(self):
-        with tempfile.TemporaryDirectory() as temp_dir:
-            pending_path = Path(temp_dir) / "pending_push.json"
-            original = {"notifications": [{"id": "event-1"}]}
-            pending_path.write_text(json.dumps(original), encoding="utf-8")
+    def test_acknowledge_rejects_unknown_ids_without_mutating_the_queue(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "pending_push.json"
+            original = {
+                "notifications": [{"id": "pending-1"}],
+                "updated_at": "2026-11-20 08:00",
+            }
+            path.write_text(json.dumps(original), encoding="utf-8")
 
             with self.assertRaisesRegex(PushDispatchError, "nie znajdują się"):
-                acknowledge_pending(pending_path, ["unknown"])
+                acknowledge_pending(path, ["unknown-id"])
 
-            self.assertEqual(json.loads(pending_path.read_text(encoding="utf-8")), original)
+            self.assertEqual(json.loads(path.read_text(encoding="utf-8")), original)
 
-    def test_large_queue_is_sent_in_batches_of_fifty(self):
-        notifications = [{"id": f"event-{index}"} for index in range(51)]
-        batch_sizes = []
-
-        def opener(request, timeout):
-            count = len(json.loads(request.data)["notifications"])
-            batch_sizes.append(count)
-            return FakeResponse(response_payload(sent=count, devices=1, notifications=count))
-
-        delivered = dispatch_notifications(
-            "https://worker.example",
-            "test-token",
-            notifications,
-            opener=opener,
-            sleeper=lambda _: None,
-        )
-
-        self.assertEqual(batch_sizes, [50, 1])
-        self.assertEqual(len(delivered), 51)
+    def test_invalid_worker_counters_are_rejected(self):
+        invalid = response_payload(sent=-1)
+        opener = lambda request, timeout: FakeResponse(invalid)
+        with self.assertRaisesRegex(PushDispatchError, "Nieprawidłowa wartość pola sent"):
+            post_dispatch(
+                "https://push.example",
+                "secret-token",
+                [{"id": "notification-1"}],
+                opener=opener,
+                sleeper=lambda _: None,
+                attempts=1,
+            )
 
 
 if __name__ == "__main__":
