@@ -1,6 +1,6 @@
 import unittest
 
-from updater import build_change_notifications, clean_subject_title, extract_group_labels, extract_red_status_boxes, group_change_notifications, merge_adjacent_blocks, merge_pending_notifications, parse_single_page, parse_week_page_words
+from updater import build_change_notifications, clean_subject_title, extract_group_labels, extract_red_status_boxes, group_change_notifications, merge_adjacent_blocks, merge_pending_notifications, parse_single_page, parse_week_page_words, validate_day_source_text
 
 
 def block(start, end, title="Ekonomia", lecturer="dr A. Kowalski", class_type="wykład", remote=True, room=""):
@@ -35,6 +35,66 @@ class RedStatusBoxExtractionTests(unittest.TestCase):
              "x0": 150.0, "x1": 160.0, "top": 95.0, "bottom": 137.0},
         ], "curves": []})()
         self.assertEqual(extract_red_status_boxes(page), [])
+
+
+class SourceCardValidationTests(unittest.TestCase):
+    def test_source_card_fields_match_pdf_text(self):
+        source = "16:45–17:30 Elementy samoobrony mgr Sebastian Tałaj H24 Ćwiczenia Wszyscy"
+        day = {"items": [{
+            "time": "16:45-17:30", "title": "Elementy samoobrony",
+            "lecturer": "mgr Sebastian Tałaj", "type": "ćwiczenia",
+            "mode": "STACJONARNE", "room": "H24",
+        }]}
+        self.assertTrue(validate_day_source_text("2026-11-17", source, day, [False]))
+
+    def test_wrong_subject_is_a_hard_error(self):
+        source = "16:45–17:30 Elementy samoobrony mgr Sebastian Tałaj H24 Ćwiczenia"
+        day = {"items": [{
+            "time": "16:45-17:30", "title": "Komunikacja interpersonalna",
+            "lecturer": "mgr Sebastian Tałaj", "type": "ćwiczenia",
+            "mode": "STACJONARNE", "room": "H24",
+        }]}
+        with self.assertRaisesRegex(RuntimeError, "przedmiot"):
+            validate_day_source_text("2026-11-17", source, day, [False])
+
+    def test_wrong_lecturer_is_a_hard_error(self):
+        source = "16:45–17:30 Elementy samoobrony mgr Sebastian Tałaj H24 Ćwiczenia"
+        day = {"items": [{
+            "time": "16:45-17:30", "title": "Elementy samoobrony",
+            "lecturer": "mgr Adam Nowak", "type": "ćwiczenia",
+            "mode": "STACJONARNE", "room": "H24",
+        }]}
+        with self.assertRaisesRegex(RuntimeError, "prowadzący"):
+            validate_day_source_text("2026-11-17", source, day, [False])
+
+    def test_medical_leave_status_and_reason_must_match_source_text_and_frame(self):
+        source = "15:00–15:45 Podstawy ekonomii dr Małgorzata Guziń ćwiczenia Zwolnienie lekarskie 105"
+        day = {"items": [{
+            "time": "15:00-15:45", "title": "Podstawy ekonomii",
+            "lecturer": "dr Małgorzata Guziń", "type": "ćwiczenia",
+            "mode": "STACJONARNE", "room": "105",
+            "status": "ODWOŁANE", "status_reason": "Zwolnienie lekarskie",
+            "status_source": "PDF_TEXT_AND_RED_FRAME",
+        }]}
+        self.assertTrue(validate_day_source_text("2026-11-19", source, day, [True]))
+
+    def test_missing_medical_leave_status_is_a_hard_error(self):
+        source = "15:00–15:45 Podstawy ekonomii dr Małgorzata Guziń ćwiczenia Zwolnienie lekarskie"
+        day = {"items": [{
+            "time": "15:00-15:45", "title": "Podstawy ekonomii",
+            "lecturer": "dr Małgorzata Guziń", "type": "ćwiczenia",
+            "mode": "STACJONARNE",
+        }]}
+        with self.assertRaisesRegex(RuntimeError, "status"):
+            validate_day_source_text("2026-11-19", source, day, [False])
+
+    def test_missing_source_card_is_a_hard_error(self):
+        source = "15:00–15:45 Podstawy ekonomii dr Małgorzata Guziń ćwiczenia"
+        with self.assertRaisesRegex(RuntimeError, "przedziały godzin"):
+            validate_day_source_text("2026-11-19", source, {"items": []})
+
+    def test_empty_subject_is_not_replaced_by_generic_placeholder(self):
+        self.assertEqual(clean_subject_title(""), "")
 
 
 class MergeAdjacentBlocksTests(unittest.TestCase):

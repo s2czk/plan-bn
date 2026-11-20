@@ -94,7 +94,7 @@ def clean_subject_title(value):
 
     title = re.sub(r"\s+(?:zdalnie|zda\s*dalnie|stacjonarnie)\s*$", "", title, flags=re.IGNORECASE)
     title = re.sub(r"\s+", " ", title).strip(" .-–—,:;")
-    return title or "Zajęcia kierunkowe BN"
+    return title
 
 
 def normalize_subject_title(value):
@@ -270,7 +270,9 @@ def parse_single_page(text, red_frame_flags=None):
         title = re.sub(r"\bWszyscy\b|\bBezpieczeństwo\s*Narodowe\b", "", title, flags=re.IGNORECASE)
         title = re.sub(r"\s+", " ", title).strip(" .-–—")
         if not title:
-            continue
+            raise RuntimeError(
+                f"{iso_date} {match.group(0)}: karta PDF zawiera godzinę, ale nie udało się odczytać nazwy przedmiotu."
+            )
 
         room = ""
         if not remote:
@@ -330,6 +332,117 @@ def parse_single_page(text, red_frame_flags=None):
                 item[field] = block[field]
         items.append(item)
     return iso_date, {"mode": day_mode, "items": items}
+
+
+def extract_room(chunk, remote=False):
+    if remote:
+        return ""
+    room_text = re.sub(r"\b\d{1,2}:\d{2}\b", " ", chunk)
+    if re.search(r"Br[aą]k\s*sal", room_text, re.IGNORECASE):
+        return "BRAK SALI"
+    if re.search(r"HALA\s*SPORTOWA", room_text, re.IGNORECASE):
+        return "HALA SPORTOWA"
+    if re.search(r"10-BIBLIOTEKA", room_text, re.IGNORECASE):
+        return "10-BIBLIOTEKA"
+    if re.search(r"Aula\s*\d+", room_text, re.IGNORECASE):
+        return re.search(r"Aula\s*\d+", room_text, re.IGNORECASE).group(0)
+    if re.search(r"\bH\d+\b", room_text):
+        return re.search(r"\bH\d+\b", room_text).group(0)
+    room_text = re.sub(r"\b20\d{2}\s*/\s*20\d{2}\b", " ", room_text)
+    match = re.search(r"\b(0\d{2}|[1-9]\d{2})\b", room_text)
+    return match.group(1) if match else ""
+
+
+def _coalesce_intervals(intervals):
+    merged = []
+    for start, end in sorted(intervals):
+        if not merged or start > merged[-1][1]:
+            merged.append([start, end])
+        else:
+            merged[-1][1] = max(merged[-1][1], end)
+    return [tuple(value) for value in merged]
+
+
+def validate_day_source_text(date, source_text, day, red_frame_flags=None):
+    """Obowiązkowe porównanie każdej karty w PDF z odpowiadającym jej rekordem."""
+    pattern = re.compile(r"(\d{1,2}:\d{2})\s*[-–—]\s*(\d{1,2}:\d{2})")
+    matches = list(pattern.finditer(source_text or ""))
+    items = list((day or {}).get("items", []))
+    if red_frame_flags is not None and len(red_frame_flags) != len(matches):
+        raise RuntimeError(f"{date}: liczba czerwonych ramek nie zgadza się z liczbą kart.")
+
+    source_intervals = [
+        (time_to_minutes(match.group(1)), time_to_minutes(match.group(2)))
+        for match in matches
+    ]
+    output_intervals = []
+    for item in items:
+        start, end = item["time"].split("-", 1)
+        output_intervals.append((time_to_minutes(start), time_to_minutes(end)))
+    if _coalesce_intervals(source_intervals) != _coalesce_intervals(output_intervals):
+        raise RuntimeError(f"{date}: przedziały godzin w JSON nie odpowiadają kartom w PDF.")
+
+    for index, match in enumerate(matches):
+        start = time_to_minutes(match.group(1))
+        end = time_to_minutes(match.group(2))
+        candidates = []
+        for item in items:
+            item_start, item_end = item["time"].split("-", 1)
+            if time_to_minutes(item_start) <= start and time_to_minutes(item_end) >= end:
+                candidates.append(item)
+        if len(candidates) != 1:
+            raise RuntimeError(f"{date} {match.group(0)}: karta PDF nie ma dokładnie jednego rekordu JSON.")
+        item = candidates[0]
+        chunk_end = matches[index + 1].start() if index + 1 < len(matches) else len(source_text or "")
+        chunk = (source_text or "")[match.end():chunk_end]
+
+        lecturer_match = re.search(
+            r"((?:prof\.|dr\s+hab\.|dr|mgr|mor|mar)\s+[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż]+\s+[A-ZĄĆĘŁŃÓŚŹŻa-ząćęłńóśźż\-]+)",
+            chunk, re.IGNORECASE,
+        )
+        expected_lecturer = (
+            lecturer_match.group(1).replace("mor ", "mgr ").replace("mar ", "mgr ")
+            if lecturer_match else "PANS"
+        )
+        title_source = chunk[:lecturer_match.start()] if lecturer_match else chunk
+        expected_title = clean_subject_title(title_source)
+        expected_title = re.sub(
+            r"\bWszyscy\b|\bBezpieczeństwo\s*Narodowe\b", "", expected_title, flags=re.IGNORECASE
+        )
+        expected_title = re.sub(r"\s+", " ", expected_title).strip(" .-–—")
+        if not expected_title:
+            raise RuntimeError(f"{date} {match.group(0)}: karta PDF nie zawiera rozpoznanej nazwy przedmiotu.")
+
+        remote = bool(re.search(r"Zdalnie|Zda\s*dalnie", chunk, re.IGNORECASE))
+        red_frame = bool(red_frame_flags[index]) if red_frame_flags is not None else False
+        expected_status, expected_reason, expected_status_source = detect_cancellation_status(chunk, red_frame)
+        expected = {
+            "przedmiot": (normalize_subject_title(item.get("title", "")), normalize_subject_title(expected_title)),
+            "prowadzący": (item.get("lecturer", "PANS"), expected_lecturer),
+            "rodzaj": (item.get("type", "zajęcia"), " / ".join(extract_class_types(chunk))),
+            "grupa": (item.get("group", ""), " / ".join(extract_group_labels(chunk))),
+            "tryb": (item.get("mode", "STACJONARNE"), "ZDALNE" if remote else "STACJONARNE"),
+            "sala": (item.get("room", ""), extract_room(chunk, remote)),
+            "status": (item.get("status"), expected_status),
+            "powód": (item.get("status_reason"), expected_reason),
+            "źródło statusu": (item.get("status_source"), expected_status_source),
+        }
+        for field, (actual, expected_value) in expected.items():
+            if actual != expected_value:
+                raise RuntimeError(
+                    f"{date} {match.group(0)}: niezgodność pola {field}; "
+                    f"PDF={expected_value!r}, JSON={actual!r}, karta={item.get('title')!r}."
+                )
+    return True
+
+
+def extract_weekday_labels(words):
+    labels = set()
+    for word in words:
+        label = re.sub(r"[^\wąćęłńóśźż]", "", str(word.get("text", "")).casefold())
+        if label in WEEKDAY_LABELS:
+            labels.add(label)
+    return labels
 
 
 WEEKDAY_LABELS = ("pon", "wt", "śr", "czw", "pt", "sob", "niedz")
@@ -406,7 +519,9 @@ def parse_week_page_words(week_start_iso, words, page_width, red_boxes=None):
         parsed_date, day_obj = parse_single_page(date_label + " " + cell_text, red_frame_flags)
         if parsed_date != iso_date:
             raise ValueError(f"Nieprawidłowa data kolumny PDF: oczekiwano {iso_date}, otrzymano {parsed_date}")
-        days[iso_date] = day_obj or {"mode": "STACJONARNE", "items": []}
+        day_obj = day_obj or {"mode": "STACJONARNE", "items": []}
+        validate_day_source_text(iso_date, cell_text, day_obj, red_frame_flags)
+        days[iso_date] = day_obj
 
     return days
 
@@ -756,24 +871,50 @@ def main():
     old_days = old_payload.get("days") or {}
     days_dict = {}
     with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+        if not pdf.pages:
+            raise RuntimeError("Źródłowy PDF nie zawiera żadnych stron.")
+        parsed_page_count = 0
         for page_number, page in enumerate(pdf.pages, start=1):
             weekly_days = parse_week_page(page)
             if weekly_days is not None:
+                if len(weekly_days) != 7:
+                    raise RuntimeError(f"Strona {page_number}: oczekiwano siedmiu dat w układzie tygodniowym.")
                 for iso_date, day_obj in weekly_days.items():
                     if iso_date in days_dict:
                         raise RuntimeError(f"PDF zawiera więcej niż jedną stronę dla daty {iso_date}; przerwano zapis.")
                     days_dict[iso_date] = day_obj
-                print(f"Strona {page_number}: prawidłowo rozdzielono tydzień od {min(weekly_days)} do {max(weekly_days)}.")
+                parsed_page_count += 1
+                print(f"Strona {page_number}: zweryfikowano tydzień {min(weekly_days)} — {max(weekly_days)}.")
                 continue
 
+            page_words = page.extract_words(
+                x_tolerance=2, y_tolerance=3, keep_blank_chars=False, use_text_flow=False
+            )
+            weekday_labels = extract_weekday_labels(page_words)
+            if weekday_labels:
+                raise RuntimeError(
+                    f"Strona {page_number}: wykryto nagłówki dni {sorted(weekday_labels)}, "
+                    "ale parser nie rozpoznał bezpiecznie wszystkich siedmiu kolumn."
+                )
+
             page_text = page.extract_text() or ""
-            if re.search(r"\bpon\.?.*\bwt\.?.*\bśr\.?.*\bczw\.?", page_text, re.IGNORECASE):
-                raise RuntimeError(f"Nie udało się bezpiecznie rozdzielić kolumn tygodniowych na stronie {page_number}.")
             iso_date, day_obj = parse_single_page(page_text)
-            if iso_date and day_obj:
-                if iso_date in days_dict:
-                    raise RuntimeError(f"PDF zawiera więcej niż jedną stronę dla daty {iso_date}; przerwano zapis.")
-                days_dict[iso_date] = day_obj
+            if not iso_date:
+                raise RuntimeError(
+                    f"Strona {page_number}: nie udało się przypisać treści PDF do daty. "
+                    "Poprzedni plan pozostaje bez zmian."
+                )
+            if iso_date in days_dict:
+                raise RuntimeError(f"PDF zawiera więcej niż jedną stronę dla daty {iso_date}; przerwano zapis.")
+            day_obj = day_obj or {"mode": "STACJONARNE", "items": []}
+            validate_day_source_text(iso_date, page_text, day_obj)
+            days_dict[iso_date] = day_obj
+            parsed_page_count += 1
+
+        if parsed_page_count != len(pdf.pages):
+            raise RuntimeError(
+                f"Nie wszystkie strony PDF przeszły walidację: {parsed_page_count}/{len(pdf.pages)}."
+            )
 
     validate_schedule(days_dict)
     now = local_now()
