@@ -45,7 +45,7 @@ class PushDispatchTests(unittest.TestCase):
         def opener(request, timeout):
             captured["request"] = request
             captured["timeout"] = timeout
-            return FakeResponse(response_payload())
+            return FakeResponse(response_payload(sent=1, devices=1, notifications=1))
 
         result = post_dispatch(
             "https://worker.example",
