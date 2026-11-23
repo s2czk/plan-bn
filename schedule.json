@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-11-20 15:33",
-  "source_label": "plan bn 1 stacjonarne 2026 11 20 plik",
+  "last_updated": "2026-11-23 16:30",
+  "source_label": "plan bn 1 stacjonarne 2026 11 23 plik",
   "days": {
     "2026-09-28": {
       "mode": "STACJONARNE",
@@ -1458,20 +1458,6 @@
           "lecturer": "dr Jolanta Martuszewska",
           "type": "wykład",
           "mode": "ZDALNE"
-        },
-        {
-          "time": "16:45-18:15",
-          "title": "Administracja publiczna",
-          "lecturer": "dr Artur Dąbek",
-          "type": "wykład",
-          "mode": "ZDALNE"
-        },
-        {
-          "time": "18:30-20:00",
-          "title": "Administracja publiczna",
-          "lecturer": "dr Artur Dąbek",
-          "type": "wykład",
-          "mode": "ZDALNE"
         }
       ]
     },
@@ -1494,6 +1480,13 @@
         },
         {
           "time": "12:15-13:45",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "14:00-15:30",
           "title": "Administracja publiczna",
           "lecturer": "dr Artur Dąbek",
           "type": "wykład",
@@ -1598,22 +1591,6 @@
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
-        },
-        {
-          "time": "13:15-14:45",
-          "title": "Wychowanie fizyczne",
-          "lecturer": "mgr Adam Nowak",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
-        },
-        {
-          "time": "15:00-16:30",
-          "title": "Wychowanie fizyczne",
-          "lecturer": "mgr Adam Nowak",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
         }
       ]
     },
@@ -1685,6 +1662,13 @@
       "mode": "ZDALNE",
       "items": [
         {
+          "time": "15:00-16:30",
+          "title": "Administracja publiczna",
+          "lecturer": "dr Artur Dąbek",
+          "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
           "time": "16:45-18:15",
           "title": "Język obcy od podstaw - j. niemiecki",
           "lecturer": "mgr Alicja Skoczypiec",
@@ -1723,6 +1707,22 @@
           "time": "11:30-12:15",
           "title": "Kwalifikowana pierwsza pomoc me…",
           "lecturer": "mgr Andrzej Kubiś",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "12:30-14:00",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
+          "type": "ćwiczenia",
+          "mode": "STACJONARNE",
+          "room": "BRAK SALI"
+        },
+        {
+          "time": "14:15-15:45",
+          "title": "Wychowanie fizyczne",
+          "lecturer": "mgr Adam Nowak",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "BRAK SALI"
