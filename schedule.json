@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-11-23 16:30",
-  "source_label": "plan bn 1 stacjonarne 2026 11 23 plik",
+  "last_updated": "2026-11-24 16:25",
+  "source_label": "plan bn 1 stacjonarne 2026 11 24 plik",
   "days": {
     "2026-09-28": {
       "mode": "STACJONARNE",
@@ -1396,17 +1396,9 @@
       "mode": "STACJONARNE",
       "items": [
         {
-          "time": "15:00-16:30",
+          "time": "16:45-18:15",
           "title": "Historia Polski na tle historii Europy",
           "lecturer": "dr Adam Czarnecki",
-          "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "105"
-        },
-        {
-          "time": "16:45-18:15",
-          "title": "Język obcy specjalistyczny - j. angi…",
-          "lecturer": "dr Beata Gostomczyk",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
           "room": "105"
@@ -1889,6 +1881,13 @@
           "title": "Geografia polityczna i gospodarcza",
           "lecturer": "dr Adam Czarnecki",
           "type": "wykład",
+          "mode": "ZDALNE"
+        },
+        {
+          "time": "15:00-16:30",
+          "title": "Język obcy specjalistyczny - j. angi…",
+          "lecturer": "dr Beata Gostomczyk",
+          "type": "ćwiczenia",
           "mode": "ZDALNE"
         }
       ]
