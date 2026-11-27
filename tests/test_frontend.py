@@ -306,10 +306,19 @@ console.log(JSON.stringify({
         node = shutil.which("node")
         if not node:
             self.skipTest("Node.js is not installed in this environment")
-        summary = re.search(r"function dashboardSummary\(day,selectedISO,now=new Date\(\)\)\{.*?\n    \}", html, re.S)
-        time_helper = re.search(r"function dashboardTimeMinutes\(value,part=0\)\{.*?\}", html)
+        time_start = html.find("    function dashboardTimeMinutes(")
+        summary_start = html.find("    function dashboardSummary(", time_start)
+        summary_end = html.find("    function renderDashboard(", summary_start)
+        self.assertGreaterEqual(time_start, 0)
+        self.assertGreater(summary_start, time_start)
+        self.assertGreater(summary_end, summary_start)
+        time_helper = html[time_start:summary_start].strip()
+        summary = html[summary_start:summary_end].strip()
         cancelled_helper = re.search(r"function isCancelledItem\(item\)\{.*?\}", html)
         mode_helper = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
+        for name, code in (("dashboardSummary", summary), ("dashboardTimeMinutes", time_helper)):
+            self.assertTrue(code.startswith("function "+name), f"Brak funkcji {name}")
+        for name, match in (("isCancelledItem", cancelled_helper), ("itemMode", mode_helper)):
         for name, match in (("dashboardSummary", summary), ("dashboardTimeMinutes", time_helper),
                             ("isCancelledItem", cancelled_helper), ("itemMode", mode_helper)):
             self.assertIsNotNone(match, f"Brak funkcji {name}")
@@ -319,7 +328,7 @@ function localISODate(date) {
   return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
 }
 """ .replace("__DAY__", json.dumps(source_day, ensure_ascii=False)) + "\n" + "\n".join(
-            match.group(0) for match in (time_helper,cancelled_helper,mode_helper,summary)
+            time_helper, cancelled_helper.group(0), mode_helper.group(0), summary
         ) + r"""
 const result = dashboardSummary(day,"2026-11-19",new Date(2026,10,19,15,15));
 console.log(JSON.stringify({
@@ -433,7 +442,7 @@ console.log(JSON.stringify({
         self.assertIn("backdrop-filter:blur(20px) saturate(135%)", html)
         self.assertIn(".dashboard-next:after", html)
         self.assertIn(".dashboard-stat.cancelled .dashboard-stat-value", html)
-        self.assertIn("linear-gradient(145deg,rgba(77,31,56,.72),rgba(28,20,44,.88))", html)
+        self.assertIn("linear-gradient(135deg,rgba(77,31,56,.72),rgba(28,20,44,.88))", html)
 
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
