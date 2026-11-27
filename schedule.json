@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-11-24 16:25",
-  "source_label": "plan bn 1 stacjonarne 2026 11 24 plik",
+  "last_updated": "2026-11-27 15:30",
+  "source_label": "plan bn 1 stacjonarne 2026 11 27 plik",
   "days": {
     "2026-09-28": {
       "mode": "STACJONARNE",
@@ -1503,7 +1503,7 @@
           "lecturer": "mgr Sylwia Hille-Jarząbek",
           "type": "wykład",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "Aula 6"
         },
         {
           "time": "16:45-17:30",
@@ -1511,7 +1511,7 @@
           "lecturer": "mgr Sylwia Hille-Jarząbek",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "Aula 6"
         },
         {
           "time": "17:30-18:15",
@@ -1519,7 +1519,7 @@
           "lecturer": "mgr Sylwia Hille-Jarząbek",
           "type": "wykład",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "Aula 6"
         },
         {
           "time": "18:30-20:00",
@@ -1527,7 +1527,7 @@
           "lecturer": "dr Danuta Apanel",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "Aula 6"
         }
       ]
     },
@@ -1540,7 +1540,7 @@
           "lecturer": "dr Małgorzata Guzińska",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "107"
         },
         {
           "time": "16:45-18:15",
@@ -1548,7 +1548,7 @@
           "lecturer": "dr Małgorzata Guzińska",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "107"
         }
       ]
     },
@@ -1560,8 +1560,7 @@
           "title": "Technologia informacyjna",
           "lecturer": "mgr Jacek Moszyński",
           "type": "ćwiczenia",
-          "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "mode": "STACJONARNE"
         }
       ]
     },
@@ -1574,7 +1573,7 @@
           "lecturer": "mgr Danuta Aleksa",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "104"
         },
         {
           "time": "11:30-12:15",
@@ -1582,7 +1581,7 @@
           "lecturer": "mgr Danuta Aleksa",
           "type": "ćwiczenia",
           "mode": "STACJONARNE",
-          "room": "BRAK SALI"
+          "room": "104"
         }
       ]
     },
