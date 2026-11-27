@@ -306,10 +306,10 @@ console.log(JSON.stringify({
         node = shutil.which("node")
         if not node:
             self.skipTest("Node.js is not installed in this environment")
-        summary = re.search(r"function dashboardSummary\\(day,selectedISO,now=new Date\\(\\)\\)\\{.*?\\n    \\}", html, re.S)
-        time_helper = re.search(r"function dashboardTimeMinutes\\(value,part=0\\)\\{.*?\\}", html)
-        cancelled_helper = re.search(r"function isCancelledItem\\(item\\)\\{.*?\\}", html)
-        mode_helper = re.search(r"function itemMode\\(item,day\\)\\{.*?\\}", html)
+        summary = re.search(r"function dashboardSummary\(day,selectedISO,now=new Date\(\)\)\{.*?\n    \}", html, re.S)
+        time_helper = re.search(r"function dashboardTimeMinutes\(value,part=0\)\{.*?\}", html)
+        cancelled_helper = re.search(r"function isCancelledItem\(item\)\{.*?\}", html)
+        mode_helper = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
         for name, match in (("dashboardSummary", summary), ("dashboardTimeMinutes", time_helper),
                             ("isCancelledItem", cancelled_helper), ("itemMode", mode_helper)):
             self.assertIsNotNone(match, f"Brak funkcji {name}")
@@ -318,7 +318,7 @@ const day = __DAY__;
 function localISODate(date) {
   return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
 }
-""" .replace("__DAY__", json.dumps(source_day, ensure_ascii=False)) + "\\n" + "\\n".join(
+""" .replace("__DAY__", json.dumps(source_day, ensure_ascii=False)) + "\n" + "\n".join(
             match.group(0) for match in (time_helper,cancelled_helper,mode_helper,summary)
         ) + r"""
 const result = dashboardSummary(day,"2026-11-19",new Date(2026,10,19,15,15));
@@ -498,7 +498,7 @@ console.log(JSON.stringify({
     def test_push_backend_setup_is_documented(self):
         setup = (ROOT / "cloudflare" / "README.md").read_text(encoding="utf-8")
         for value in ("PUSH_WORKER_URL", "PUSH_DISPATCH_TOKEN", "VAPID_PRIVATE_KEY", "PUSH_KV",
-                      "Root directory", "npm install --no-audit --no-fund",
+                      "Root directory", "npm ci --no-audit --no-fund",
                       "npm run deploy", "Enable Preview Builds"):
             self.assertIn(value, setup)
 
