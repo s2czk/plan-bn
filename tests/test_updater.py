@@ -87,6 +87,35 @@ class SourceCardValidationTests(unittest.TestCase):
         }]}
         self.assertTrue(validate_day_source_text("2026-11-19", source, day, [True]))
 
+    def test_four_medical_leave_cards_keep_separate_status_and_red_frame_flags(self):
+        times = ["15:00-15:45", "15:45-16:30", "16:45-17:30", "17:30-18:15"]
+        source = " ".join(
+            f"{time.replace('-', '–')} Podstawy ekonomii dr Małgorzata Guziń ćwiczenia Zwolnienie lekarskie"
+            for time in times
+        )
+        day = {"items": [
+            {
+                "time": time, "title": "Podstawy ekonomii",
+                "lecturer": "dr Małgorzata Guziń", "type": "ćwiczenia",
+                "mode": "STACJONARNE", "status": "ODWOŁANE",
+                "status_reason": "Zwolnienie lekarskie",
+                "status_source": "PDF_TEXT_AND_RED_FRAME",
+            }
+            for time in times
+        ]}
+        self.assertTrue(validate_day_source_text("2026-11-19", source, day, [True] * 4))
+
+    def test_medical_leave_without_red_frame_is_rejected_even_if_text_matches(self):
+        source = "15:00–15:45 Podstawy ekonomii dr Małgorzata Guziń ćwiczenia Zwolnienie lekarskie"
+        day = {"items": [{
+            "time": "15:00-15:45", "title": "Podstawy ekonomii",
+            "lecturer": "dr Małgorzata Guziń", "type": "ćwiczenia",
+            "mode": "STACJONARNE", "status": "ODWOŁANE",
+            "status_reason": "Zwolnienie lekarskie", "status_source": "PDF_TEXT",
+        }]}
+        with self.assertRaisesRegex(RuntimeError, "czerwonej ramki"):
+            validate_day_source_text("2026-11-19", source, day, [False])
+
     def test_missing_medical_leave_status_is_a_hard_error(self):
         source = "15:00–15:45 Podstawy ekonomii dr Małgorzata Guziń ćwiczenia Zwolnienie lekarskie"
         day = {"items": [{
