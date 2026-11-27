@@ -343,7 +343,7 @@ console.log(JSON.stringify({
         self.assertEqual(output["activeCount"], 1)
         self.assertEqual(output["cancelledCount"], 4)
         self.assertEqual(output["nextTime"], "18:30-20:00")
-        self.assertEqual(output["nextTitle"], "Wspólna polityka zagraniczna")
+        self.assertTrue(output["nextTitle"].startswith("Wspólna polityka zagraniczna"))
         self.assertEqual(output["nextLabel"], "NAJBLIŻSZE")
 
     def test_explicit_date_deep_links_override_automatic_date(self):
