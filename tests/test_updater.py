@@ -154,7 +154,7 @@ class SourceCardValidationTests(unittest.TestCase):
         # Czerwona ramka jest obecna; ten test izoluje brak pola status,
         # a osobny test sprawdza odrzucenie braku czerwonej ramki.
         with self.assertRaisesRegex(RuntimeError, "status"):
-            validate_day_source_text("2026-11-19", source, day, [False])
+            validate_day_source_text("2026-11-19", source, day, [True])
 
     def test_missing_source_card_is_a_hard_error(self):
         source = "15:00–15:45 Podstawy ekonomii dr Małgorzata Guziń ćwiczenia"
