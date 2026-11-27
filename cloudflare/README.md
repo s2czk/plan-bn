@@ -13,7 +13,7 @@ W Cloudflare Dashboard otwórz **Workers & Pages → plan-bn-push → Settings �
 | Git repository | `s2czk/plan-bn` |
 | Production branch | `main` |
 | Root directory | `cloudflare` |
-| Build command | `npm install --no-audit --no-fund` |
+| Build command | `npm ci --no-audit --no-fund` |
 | Deploy command | `npm run deploy` |
 | Preview command | `npm run preview` |
 
@@ -25,7 +25,8 @@ Następnie w **Settings → Build → Branch control**:
 
 Dlaczego te wartości:
 - `cloudflare` jako Root directory izoluje Worker od głównego projektu, w którym znajduje się `requirements.txt` dla parsera PDF.
-- Build command instaluje zależności Node z `cloudflare/package.json`.
+- Build command instaluje dokładne zależności zapisane w `cloudflare/package-lock.json`.
+- `cloudflare/.node-version` przypina Node.js 26.13.1 LTS, a `packageManager` przypina npm 12.2.3.
 - Deploy command uruchamia prawdziwe wdrożenie produkcyjne (`wrangler deploy`), a nie podgląd (`wrangler preview`).
 - Preview Builds są wyłączone, aby gałęzie testowe nie tworzyły wdrożeń z niekompletnymi, produkcyjnymi zależnościami.
 
@@ -77,7 +78,7 @@ W razie problemu sprawdź log Cloudflare. Prawidłowa produkcyjna komenda powinn
 ## 5. Pliki i komendy lokalne
 
 W katalogu `cloudflare`:
-- `npm install --no-audit --no-fund` — instaluje zależności;
+- `npm ci --no-audit --no-fund` — instaluje dokładne zależności z lockfile;
 - `npm test` — testuje API Workera;
 - `npm run deploy` — wdraża produkcyjnego Workera;
 - `npm run preview` — uruchamia Preview (wymaga oddzielnej konfiguracji zasobów, dlatego Preview Builds są obecnie wyłączone).
