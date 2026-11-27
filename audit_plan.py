@@ -78,6 +78,50 @@ def compare_days(stored_days, parsed_days):
     return {"missing": missing, "added": added, "changed": changed}
 
 
+REFERENCE_MEDICAL_LEAVE = {
+    "date": "2026-11-19",
+    "title": "Podstawy ekonomii",
+    "times": ["15:00-15:45", "15:45-16:30", "16:45-17:30", "17:30-18:15"],
+    "status": "ODWOŁANE",
+    "reason": "Zwolnienie lekarskie",
+    "source": "PDF_TEXT_AND_RED_FRAME",
+}
+
+
+def check_reference_medical_leave(days):
+    """Niezależny test regresyjny dla znanego przypadku zwolnienia lekarskiego."""
+    reference = REFERENCE_MEDICAL_LEAVE
+    day = days.get(reference["date"])
+    if day is None:
+        return {
+            "result": "NOT_PRESENT",
+            "date": reference["date"],
+            "note": "Data referencyjna nie występuje w aktualnym PDF; test regresyjny jest poza zakresem tego wydania.",
+        }
+
+    items = [
+        item for item in day.get("items", [])
+        if str(item.get("title", "")).strip().casefold() == reference["title"].casefold()
+    ]
+    actual_times = sorted(item.get("time", "") for item in items)
+    expected_times = sorted(reference["times"])
+    invalid = [
+        item for item in items
+        if item.get("status") != reference["status"]
+        or item.get("status_reason") != reference["reason"]
+        or item.get("status_source") != reference["source"]
+    ]
+    passed = actual_times == expected_times and len(items) == 4 and not invalid
+    return {
+        "result": "PASS" if passed else "FAIL",
+        "date": reference["date"],
+        "title": reference["title"],
+        "expected_times": expected_times,
+        "actual_times": actual_times,
+        "invalid_status_items": len(invalid),
+    }
+
+
 def main():
     resource_url, label = find_bn_resource_link()
     print(f"Źródło PDF: {resource_url}")
@@ -171,7 +215,12 @@ def main():
                 cancelled_by_reason[reason] = cancelled_by_reason.get(reason, 0) + 1
 
     total_items = sum(len(day.get("items", [])) for day in parsed_days.values())
-    audit_passed = not any(comparison.values()) and not overlaps
+    reference_medical_leave_check = check_reference_medical_leave(parsed_days)
+    audit_passed = (
+        not any(comparison.values())
+        and not overlaps
+        and reference_medical_leave_check["result"] != "FAIL"
+    )
     report = {
         "audit": "FULL_PDF_PARSE",
         "result": "PASS" if audit_passed else "FAIL",
@@ -186,6 +235,7 @@ def main():
         "parsed_classes": total_items,
         "cancelled_items": sum(cancelled_by_reason.values()),
         "cancelled_by_reason": cancelled_by_reason,
+        "reference_medical_leave_check": reference_medical_leave_check,
         "pages_without_classes": pages_without_classes,
         "published_days": len(stored_days),
         "published_classes": sum(len(day.get("items", [])) for day in stored_days.values()),
