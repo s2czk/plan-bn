@@ -325,8 +325,9 @@ const day = __DAY__;
 function localISODate(date) {
   return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
 }
-""" .replace("__DAY__", json.dumps(source_day, ensure_ascii=False)) + "\n" + "\n".join(
+""" .replace("__DAY__", json.dumps(source_day, ensure_ascii=False)) + "\n" + "\n".join([
             time_helper, cancelled_helper.group(0), mode_helper.group(0), summary
+        ])
         ) + r"""
 const result = dashboardSummary(day,"2026-11-19",new Date(2026,10,19,15,15));
 console.log(JSON.stringify({
