@@ -319,8 +319,6 @@ console.log(JSON.stringify({
         for name, code in (("dashboardSummary", summary), ("dashboardTimeMinutes", time_helper)):
             self.assertTrue(code.startswith("function "+name), f"Brak funkcji {name}")
         for name, match in (("isCancelledItem", cancelled_helper), ("itemMode", mode_helper)):
-        for name, match in (("dashboardSummary", summary), ("dashboardTimeMinutes", time_helper),
-                            ("isCancelledItem", cancelled_helper), ("itemMode", mode_helper)):
             self.assertIsNotNone(match, f"Brak funkcji {name}")
         script = r"""
 const day = __DAY__;
