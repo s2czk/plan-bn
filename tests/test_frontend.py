@@ -327,7 +327,7 @@ function localISODate(date) {
 }
 """ .replace("__DAY__", json.dumps(source_day, ensure_ascii=False)) + "\n" + "\n".join([
             time_helper, cancelled_helper.group(0), mode_helper.group(0), summary
-        ]) + r
+        ]) + r"""
 const result = dashboardSummary(day,"2026-11-19",new Date(2026,10,19,15,15));
 console.log(JSON.stringify({
   activeCount:result.activeCount,
