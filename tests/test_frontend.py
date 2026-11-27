@@ -499,7 +499,7 @@ console.log(JSON.stringify({
         setup = (ROOT / "cloudflare" / "README.md").read_text(encoding="utf-8")
         for value in ("PUSH_WORKER_URL", "PUSH_DISPATCH_TOKEN", "VAPID_PRIVATE_KEY", "PUSH_KV",
                       "Root directory", "npm ci --no-audit --no-fund",
-                      "npm run deploy", "Enable Preview Builds"):
+                      "npm run deploy", "Enable Preview Builds", "Node.js 26.13.1 LTS", "npm 12.2.3"):
             self.assertIn(value, setup)
 
 
