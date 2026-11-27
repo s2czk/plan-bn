@@ -21,7 +21,7 @@ on:
       - '.github/workflows/tests.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   tests:
@@ -29,28 +29,47 @@ jobs:
     steps:
       - name: Pobierz repozytorium
         uses: actions/checkout@v7
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          ref: ${{ github.head_ref || github.ref_name }}
 
       - name: Przygotuj Python
         uses: actions/setup-python@v7
         with:
-          python-version: '3.11'
+          python-version: '3.14.10'
           cache: 'pip'
           cache-dependency-path: requirements.txt
 
       - name: Przygotuj Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '22'
+          node-version: '26.13.1'
 
       - name: Zainstaluj zależności Pythona
         run: python -m pip install -r requirements.txt
 
-      - name: Uruchom testy
+      - name: Sprawdź składnię skryptów Python
+        run: python -m compileall -q updater.py audit_plan.py push_dispatch.py tests
+
+      - name: Uruchom testy jednostkowe
         run: python -m unittest discover -s tests -v
 
-      - name: Zainstaluj narzędzia Cloudflare
+      - name: Pełny audyt źródłowego PDF i porównanie z opublikowanymi danymi
+        run: python audit_plan.py
+
+      - name: Ustaw przypiętą wersję npm
+        run: npm install --global npm@12.2.3
+
+      - name: Wygeneruj package-lock, jeśli jeszcze go nie ma
         working-directory: cloudflare
-        run: npm install --no-audit --no-fund
+        run: |
+          if [ ! -f package-lock.json ]; then
+            npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          fi
+
+      - name: Zainstaluj deterministyczne zależności Cloudflare
+        working-directory: cloudflare
+        run: npm ci --no-audit --no-fund
 
       - name: Testy API Cloudflare Worker
         working-directory: cloudflare
@@ -62,5 +81,29 @@ jobs:
           node --check src/index.js
           npx wrangler deploy --dry-run --outdir ./.test-build
 
-      - name: Sprawdź składnię Service Worker
-        run: node --check sw.js
+      - name: Sprawdź składnię Service Worker i wersje
+        run: |
+          node --check sw.js
+          node --version
+          npm --version
+          python --version
+
+      - name: Zapisz package-lock jako artefakt audytu
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cloudflare-package-lock
+          path: cloudflare/package-lock.json
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Zapisz wygenerowany package-lock w gałęzi PR
+        if: success() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cloudflare/package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: lock Cloudflare dependencies"
+            git push origin "HEAD:${GITHUB_HEAD_REF}"
+          fi
+

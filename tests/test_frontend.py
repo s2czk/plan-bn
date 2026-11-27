@@ -23,38 +23,43 @@ class FrontendChecks(unittest.TestCase):
 
     def test_fluid_color_theme_is_defined_and_accessible(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("--remote:#ffad1f", html)
-        self.assertIn("--onsite:#00f5d4", html)
-        self.assertIn("--purple:#a100ff", html)
+        self.assertIn("--remote:#c7ef7b", html)
+        self.assertIn("--onsite:#59d3e5", html)
+        self.assertIn("--purple:#a78bfa", html)
         self.assertIn(".class-card.cancelled{", html)
         self.assertIn(".class-card.cancelled:before", html)
-        self.assertIn("color:#1c203d", html)
-        self.assertIn('<meta name="theme-color" content="#070b24">', html)
+        self.assertIn("color:#f4f6ff", html)
+        self.assertIn('<meta name="theme-color" content="#071326">', html)
+        self.assertIn("backdrop-filter:blur(20px) saturate(135%)", html)
 
     def test_neon_aurora_visual_quality_tokens_are_present(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in (
-            "rgba(255,151,22,.90)",
-            "rgba(255,25,126,.82)",
-            "rgba(174,20,255,.62)",
-            "rgba(0,245,212,.58)",
-            "filter:saturate(1.85)",
-            "@keyframes mandaro-aurora",
-            ".class-card:after",
+            "rgba(21,39,68,.76)",
+            "rgba(8,20,39,.78)",
+            ".dashboard-overview",
+            ".dashboard-next",
+            ".dashboard-stat",
+            "box-shadow:inset 0 1px 0 rgba(255,255,255,.055)",
+            ".class-card.cancelled:before",
         ):
             self.assertIn(token, html)
 
     def test_manifest_is_valid_and_pwa_ready(self):
         manifest = json.loads((ROOT / "manifest.webmanifest").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["background_color"], "#05091f")
-        self.assertEqual(manifest["theme_color"], "#070b24")
+        self.assertEqual(manifest["background_color"], "#050a16")
+        self.assertEqual(manifest["theme_color"], "#071326")
         self.assertTrue(manifest["start_url"])
         self.assertTrue(manifest["icons"])
 
     def test_page_contains_requested_layout_and_author(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         for required in (
-            "linear-gradient(180deg,#070918 0%,#0c1230 52%,#111a43 100%)",
+            "Plan zajęć",
+            'id="dashboardOverview"',
+            'id="dashboardNextCard"',
+            'id="dashboardActiveCount"',
+            "linear-gradient(155deg,#050a16 0%,#08152a 48%,#0a1b34 100%)",
             "Bezpieczeństwo Narodowe",
             "weekStrip",
             "weekGrid",
@@ -294,6 +299,53 @@ console.log(JSON.stringify({
         self.assertEqual(output["html"].count("ODWOŁANE"), 4)
         self.assertIn("Wspólna polityka zagraniczna", output["html"])
 
+    def test_dashboard_summary_keeps_medical_leave_out_of_next_lesson(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        schedule = json.loads((ROOT / "schedule.json").read_text(encoding="utf-8"))
+        source_day = schedule["days"]["2026-11-19"]
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("Node.js is not installed in this environment")
+        time_start = html.find("    function dashboardTimeMinutes(")
+        summary_start = html.find("    function dashboardSummary(", time_start)
+        summary_end = html.find("    function renderDashboard(", summary_start)
+        self.assertGreaterEqual(time_start, 0)
+        self.assertGreater(summary_start, time_start)
+        self.assertGreater(summary_end, summary_start)
+        time_helper = html[time_start:summary_start].strip()
+        summary = html[summary_start:summary_end].strip()
+        cancelled_helper = re.search(r"function isCancelledItem\(item\)\{.*?\}", html)
+        mode_helper = re.search(r"function itemMode\(item,day\)\{.*?\}", html)
+        for name, code in (("dashboardSummary", summary), ("dashboardTimeMinutes", time_helper)):
+            self.assertTrue(code.startswith("function "+name), f"Brak funkcji {name}")
+        for name, match in (("isCancelledItem", cancelled_helper), ("itemMode", mode_helper)):
+            self.assertIsNotNone(match, f"Brak funkcji {name}")
+        script = (r"""
+const day = __DAY__;
+function localISODate(date) {
+  return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
+}
+""" .replace("__DAY__", json.dumps(source_day, ensure_ascii=False)) + "\n" + "\n".join([
+            time_helper, cancelled_helper.group(0), mode_helper.group(0), summary
+        ]) + r"""
+const result = dashboardSummary(day,"2026-11-19",new Date(2026,10,19,15,15));
+console.log(JSON.stringify({
+  activeCount:result.activeCount,
+  remoteCount:result.remoteCount,
+  cancelledCount:result.cancelledCount,
+  nextTime:result.nextItem && result.nextItem.time,
+  nextTitle:result.nextItem && result.nextItem.title,
+  nextLabel:result.nextLabel
+}));
+""")
+        result = subprocess.run([node, "-e", script], check=True, capture_output=True, text=True)
+        output = json.loads(result.stdout)
+        self.assertEqual(output["activeCount"], 1)
+        self.assertEqual(output["cancelledCount"], 4)
+        self.assertEqual(output["nextTime"], "18:30-20:00")
+        self.assertTrue(output["nextTitle"].startswith("Wspólna polityka zagraniczna"))
+        self.assertEqual(output["nextLabel"], "NAJBLIŻSZE")
+
     def test_explicit_date_deep_links_override_automatic_date(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("hasExplicitDate?queryDate:localISODate()", html)
@@ -383,12 +435,12 @@ console.log(JSON.stringify({
     def test_premium_neon_orb_button_skin_is_present(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn(".icon-button{", html)
-        self.assertIn("border-radius:50%", html)
-        self.assertIn("radial-gradient(circle at 35% 25%,#4937c7", html)
-        self.assertIn("0 0 19px rgba(58,91,255,.25)", html)
-        self.assertIn("linear-gradient(112deg,#7139ed 0%,#4934bd 53%,#304cc5 100%)", html)
-        self.assertIn("background:linear-gradient(110deg,#d0ff27,#a7f20c)", html)
-        self.assertIn("radial-gradient(ellipse at 100% 100%,rgba(133,42,255,.23)", html)
+        self.assertIn("border-radius:13px", html)
+        self.assertIn("background:linear-gradient(145deg,rgba(48,67,105,.7),rgba(12,26,49,.88))", html)
+        self.assertIn("backdrop-filter:blur(20px) saturate(135%)", html)
+        self.assertIn(".dashboard-next:after", html)
+        self.assertIn(".dashboard-stat.cancelled .dashboard-stat-value", html)
+        self.assertIn("linear-gradient(135deg,rgba(77,31,56,.72),rgba(28,20,44,.88))", html)
 
     def test_every_javascript_element_reference_exists(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -423,12 +475,14 @@ console.log(JSON.stringify({
         package_data = json.loads((ROOT / "cloudflare" / "package.json").read_text(encoding="utf-8"))
         self.assertEqual(package_data["scripts"]["deploy"], "wrangler deploy")
         self.assertEqual(package_data["scripts"]["preview"], "wrangler preview")
-        self.assertEqual(package_data["devDependencies"]["wrangler"], "4.158.0")
-        self.assertGreaterEqual(int(package_data["engines"]["node"].replace(">=", "")), 22)
+        self.assertEqual(package_data["devDependencies"]["wrangler"], "4.168.0")
+        self.assertEqual(package_data["engines"]["node"], ">=26.13.1")
+        self.assertEqual(package_data["packageManager"], "npm@12.2.3")
+        self.assertNotIn("web-push", package_data.get("devDependencies", {}))
 
     def test_service_worker_fetches_push_config_from_network_first(self):
         service_worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-        self.assertIn('pans-plan-shell-v11', service_worker)
+        self.assertIn('pans-plan-shell-v12', service_worker)
         self.assertIn('const isNavigation = request.mode === "navigate" || url.pathname.endsWith("/index.html")', service_worker)
         self.assertIn('const liveRequest = new Request(request, { cache: "no-store" })', service_worker)
         self.assertIn('const isPushConfig = url.pathname.endsWith("/push-config.js")', service_worker)
@@ -451,8 +505,8 @@ console.log(JSON.stringify({
     def test_push_backend_setup_is_documented(self):
         setup = (ROOT / "cloudflare" / "README.md").read_text(encoding="utf-8")
         for value in ("PUSH_WORKER_URL", "PUSH_DISPATCH_TOKEN", "VAPID_PRIVATE_KEY", "PUSH_KV",
-                      "Root directory", "npm install --no-audit --no-fund",
-                      "npm run deploy", "Enable Preview Builds"):
+                      "Root directory", "npm ci --no-audit --no-fund",
+                      "npm run deploy", "Enable Preview Builds", "Node.js 26.13.1 LTS", "npm 12.2.3"):
             self.assertIn(value, setup)
 
 

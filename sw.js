@@ -1,4 +1,4 @@
-const CACHE_NAME = "pans-plan-shell-v11";
+const CACHE_NAME = "pans-plan-shell-v12";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./push-config.js"];
 
 self.addEventListener("install", event => {
