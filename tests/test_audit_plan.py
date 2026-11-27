@@ -1,6 +1,6 @@
 import unittest
 
-from audit_plan import check_overlaps, compare_days
+from audit_plan import check_overlaps, compare_days, check_reference_medical_leave
 
 
 class ScheduleAuditTests(unittest.TestCase):
@@ -26,6 +26,39 @@ class ScheduleAuditTests(unittest.TestCase):
             compare_days(stored, parsed),
             {"missing": ["2026-11-14"], "added": ["2026-11-16"], "changed": ["2026-11-15"]},
         )
+
+    def test_reference_medical_leave_requires_exact_four_cancelled_blocks(self):
+        days = {
+            "2026-11-19": {
+                "items": [
+                    {
+                        "time": time, "title": "Podstawy ekonomii",
+                        "status": "ODWOŁANE", "status_reason": "Zwolnienie lekarskie",
+                        "status_source": "PDF_TEXT_AND_RED_FRAME",
+                    }
+                    for time in ("15:00-15:45", "15:45-16:30", "16:45-17:30", "17:30-18:15")
+                ] + [{"time": "18:30-20:00", "title": "Wspólna polityka zagraniczna i bezpieczeństwo"}]
+            }
+        }
+        self.assertEqual(check_reference_medical_leave(days)["result"], "PASS")
+
+    def test_reference_medical_leave_fails_if_red_frame_source_is_missing(self):
+        days = {
+            "2026-11-19": {
+                "items": [{
+                    "time": "15:00-15:45", "title": "Podstawy ekonomii",
+                    "status": "ODWOŁANE", "status_reason": "Zwolnienie lekarskie",
+                    "status_source": "PDF_TEXT",
+                }]
+            }
+        }
+        result = check_reference_medical_leave(days)
+        self.assertEqual(result["result"], "FAIL")
+        self.assertEqual(result["invalid_status_items"], 1)
+
+    def test_reference_medical_leave_is_not_applied_to_other_pdf_periods(self):
+        result = check_reference_medical_leave({"2027-01-10": {"items": []}})
+        self.assertEqual(result["result"], "NOT_PRESENT")
 
     def test_adjacent_classes_are_not_reported_as_overlapping(self):
         days = {
