@@ -455,6 +455,13 @@ def validate_day_source_text(date, source_text, day, red_frame_flags=None):
         remote = bool(re.search(r"Zdalnie|Zda\s*dalnie", chunk, re.IGNORECASE))
         red_frame = bool(red_frame_flags[index]) if red_frame_flags is not None else False
         expected_status, expected_reason, expected_status_source = detect_cancellation_status(chunk, red_frame)
+        # Zwolnienie lekarskie w planie PANS jest oznaczone jednocześnie tekstem
+        # i czerwoną ramką. Brak ramki oznacza niepewny odczyt PDF — nie publikujemy.
+        if expected_reason == "Zwolnienie lekarskie" and not red_frame:
+            raise RuntimeError(
+                f"{date} {match.group(0)}: wykryto zwolnienie lekarskie w tekście, "
+                "ale nie wykryto czerwonej ramki karty PDF."
+            )
         expected = {
             "przedmiot": (normalize_subject_title(item.get("title", "")), normalize_subject_title(expected_title)),
             "prowadzący": (item.get("lecturer", "PANS"), expected_lecturer),
