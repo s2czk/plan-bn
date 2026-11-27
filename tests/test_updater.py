@@ -37,6 +37,34 @@ class RedStatusBoxExtractionTests(unittest.TestCase):
         self.assertEqual(extract_red_status_boxes(page), [])
 
 
+    def test_extract_red_status_boxes_detects_red_stroked_rectangles(self):
+        class Page:
+            rects = [
+                {
+                    "x0": 100, "x1": 280, "top": 150, "bottom": 190,
+                    "stroking_color": (0.95, 0.08, 0.12),
+                    "non_stroking_color": None,
+                    "stroke": True, "fill": False,
+                },
+                {
+                    "x0": 300, "x1": 480, "top": 150, "bottom": 190,
+                    "stroking_color": (0.0, 0.2, 0.9),
+                    "non_stroking_color": None,
+                    "stroke": True, "fill": False,
+                },
+                {
+                    "x0": 100, "x1": 280, "top": 200, "bottom": 202,
+                    "stroking_color": (0.95, 0.08, 0.12),
+                    "non_stroking_color": None,
+                    "stroke": True, "fill": False,
+                },
+            ]
+            curves = []
+
+        boxes = extract_red_status_boxes(Page())
+        self.assertEqual(len(boxes), 1)
+        self.assertEqual(boxes[0], {"x0": 100.0, "x1": 280.0, "top": 150.0, "bottom": 190.0})
+
     def test_red_frame_flags_are_mapped_to_the_matching_time_card_only(self):
         words = [
             {"text": "15:00-15:45", "x0": 160, "x1": 205, "top": 100, "bottom": 110},
@@ -123,8 +151,10 @@ class SourceCardValidationTests(unittest.TestCase):
             "lecturer": "dr Małgorzata Guziń", "type": "ćwiczenia",
             "mode": "STACJONARNE",
         }]}
+        # Czerwona ramka jest obecna; ten test izoluje brak pola status,
+        # a osobny test sprawdza odrzucenie braku czerwonej ramki.
         with self.assertRaisesRegex(RuntimeError, "status"):
-            validate_day_source_text("2026-11-19", source, day, [False])
+            validate_day_source_text("2026-11-19", source, day, [True])
 
     def test_missing_source_card_is_a_hard_error(self):
         source = "15:00–15:45 Podstawy ekonomii dr Małgorzata Guziń ćwiczenia"
