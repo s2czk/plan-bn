@@ -142,7 +142,7 @@ class SourceCardValidationTests(unittest.TestCase):
             "status_reason": "Zwolnienie lekarskie", "status_source": "PDF_TEXT",
         }]}
         with self.assertRaisesRegex(RuntimeError, "czerwonej ramki"):
-            validate_day_source_text("2026-11-19", source, day, [False])
+            validate_day_source_text("2026-11-19", source, day, [True])
 
     def test_missing_medical_leave_status_is_a_hard_error(self):
         source = "15:00–15:45 Podstawy ekonomii dr Małgorzata Guziń ćwiczenia Zwolnienie lekarskie"
