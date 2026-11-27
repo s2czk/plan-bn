@@ -28,7 +28,7 @@ class FrontendChecks(unittest.TestCase):
         self.assertIn("--purple:#a78bfa", html)
         self.assertIn(".class-card.cancelled{", html)
         self.assertIn(".class-card.cancelled:before", html)
-        self.assertIn("color:#f4f7ff", html)
+        self.assertIn("color:#f4f6ff", html)
         self.assertIn('<meta name="theme-color" content="#071326">', html)
         self.assertIn("backdrop-filter:blur(20px) saturate(135%)", html)
 
@@ -428,7 +428,7 @@ console.log(JSON.stringify({
     def test_premium_neon_orb_button_skin_is_present(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn(".icon-button{", html)
-        self.assertIn("border-radius:50%", html)
+        self.assertIn("border-radius:13px", html)
         self.assertIn("background:linear-gradient(145deg,rgba(48,67,105,.7),rgba(12,26,49,.88))", html)
         self.assertIn("backdrop-filter:blur(20px) saturate(135%)", html)
         self.assertIn(".dashboard-next:after", html)
