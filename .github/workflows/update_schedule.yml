@@ -42,8 +42,9 @@ jobs:
           cache: 'pip'
           cache-dependency-path: requirements.txt
 
-      - name: Zainstaluj zależności
-        run: python -m pip install -r requirements.txt
+      - name: Zainstaluj i zweryfikuj zależności
+        run: |
+          python -m pip install -r requirements.txt
           python -m pip check
 
       - name: Sprawdź składnię i testy parsera, statusów, historii i kolejki Push
